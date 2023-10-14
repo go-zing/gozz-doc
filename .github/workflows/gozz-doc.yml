@@ -14,6 +14,7 @@ jobs:
 
       - name: build
         run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
           npm install npm@6.14.12
           npm install yarn@1.22.19
           yarn
