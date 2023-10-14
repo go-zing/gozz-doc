@@ -1,6 +1,7 @@
 module.exports = {
     title: 'Gozz',
     description: 'Gozz official documents page and user guides',
+    base: "gozz",
     locales: {
         '/': {
             lang: 'en-US',
