@@ -1,0 +1,28 @@
+name: gozz-doc deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: build
+        run: |
+          npm install yarn
+          yarn
+          yarn docs:build
+
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: docs/.vuepress/dist
+          external_repository: github.com/go-zing/gozz
+          publish_branch: main
+          cname: github.com
