@@ -14,7 +14,8 @@ jobs:
 
       - name: build
         run: |
-          npm install yarn
+          npm install npm@6.14.12
+          npm install yarn@1.22.19
           yarn
           yarn docs:build
 
