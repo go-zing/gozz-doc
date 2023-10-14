@@ -26,4 +26,4 @@ jobs:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: docs/.vuepress/dist
           external_repository: go-zing/gozz
-          publish_branch: main
+          publish_branch: gh-pages
