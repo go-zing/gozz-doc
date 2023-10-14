@@ -25,4 +25,3 @@ jobs:
           publish_dir: docs/.vuepress/dist
           external_repository: github.com/go-zing/gozz
           publish_branch: main
-          cname: github.com
