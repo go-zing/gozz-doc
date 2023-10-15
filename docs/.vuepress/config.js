@@ -36,15 +36,36 @@ module.exports = {
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
                 nav: [
-                    {text: "指南", link: "/zh/guide/"},
-                ],
-                sidebar: [
                     {
-                        title: "指南",
-                        collapsable: false,
-                        children: ['/zh/guide/',]
-                    }
+                        text: "指南", link: "/zh/guide/",
+                    },
                 ],
+                sidebar: {
+                    '/zh/guide/': [
+                        {
+                            title: "指南",
+                            collapsable: false,
+                            children: [
+                                '',
+                                {
+                                    title: "内置插件",
+                                    path: "/zh/guide/plugins/",
+                                    collapsable: false,
+                                    children: [
+                                        'plugins/api',
+                                        'plugins/doc',
+                                        'plugins/impl',
+                                        'plugins/option',
+                                        'plugins/orm',
+                                        'plugins/tag',
+                                        'plugins/wire',
+                                    ]
+                                },
+                                'past-and-present',
+                            ]
+                        },
+                    ],
+                }
             }
         },
         displayAllHeaders: true,
