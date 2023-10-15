@@ -50,6 +50,7 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 '',
+                                'how-it-works',
                                 {
                                     title: "内置插件",
                                     path: "/zh/guide/plugins/",

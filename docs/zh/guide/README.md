@@ -1,16 +1,19 @@
 # 介绍
 
-`Gozz` 由三部分组成：
+`Gozz` 由两部分组成：
 
-1. `Gozz-core` 是 `Gozz` 运行的内核，包含了对于 Golang 文件语法解析以及从解析后的 AST 中提取 `+zz:${plugin}` 风格注解
-   并解析为对应插件选项的工具，同时为各个插件提供包含 模版、生成、编辑、追加 文件的一系列封装库。
+- [gozz-core](https://github.com/go-zing/gozz-core) 是核心依赖库，包含了代码文件解析，注解解析，结构化注解对象，
+  运行时对象索引，缓存等核心功能依赖。同时为各个插件提供包含模版、生成、编辑、追加文件相关的工具依赖。
 
-2. `Gozz` 是用户使用 `Gozz` 的客户终端，即 cli 工具运行的入口，包含了对用户命令的解析，插件的加载和实例化，以及对外部扩展的加载。
+- [gozz](https://github.com/go-zing/gozz) 是用户使用 `Gozz` 的 cli 工具运行入口，
+  包含了对用户命令的解析，插件的加载和实例化，以及对外部扩展的加载。
 
-3. `Gozz` 中还提供了一系列强大的内置插件，囊括了作者在发起该项目时希望能够替自己解决以及将这些优秀设计快速落地到技术团队的一些核心功能需求，包括：
-    - 如何快速构建API和输出API、业务领域文档，并减低持续迭代的多分发校对成本
-    - 如何通过优化系统依赖架构提升项目可迭代性，同时优化多人大型项目协作效率
-    - 如何灵活切面化注入技术性功能，提升可观测性同时尽可能降低开发者的埋点工作量
+笔者还提供了一系列强大的内置插件，囊括了在以往工作中开发这些插件雏形时，
+希望能够规范化解决，以及将这些优秀设计实践在团队快速落地的一些技术性需求，包括：
+
+- 优化系统依赖架构设计提升项目质量和可维护性，提升多人大型项目人效协作效率
+- 快速构建API和输出API文档、业务领域文档，降低API及文档持续迭代和多分发的成本
+- 通过灵活切面化注入设计提升可观测性和降低变更复杂度，降低开发者工作量及扰动感知
 
 ## 理念
 
@@ -76,173 +79,3 @@ Gopher 对 Golang 本身的学习曲线
 实际上 微服务 只代表 服务在企业业务依赖领域设计中 的 `Micro` 或 `Pluggable` ，从来不代表 项目代码架构层级和设计的简单
 
 因此 如果你希望团队的微服务项目代码质量能够得到一定的提升 也欢迎使用 `Gozz` 去组织团队的开发
-
-## 工作原理
-
-`Gozz` 的核心工作简单概括，就是：将开发者在代码中符合条件的所有注解收集，并结合相关上下文提供给各个插件进行进一步的代码编辑或生成。
-
-要理解注解的分析和上下文，需要对 `Golang AST` 的基本概念有一定的了解。
-
-### Golang AST 简介
-
-在 `Golang AST` 中，我们大部分的代码块，可以被理解为一种 `Decl` 即 `Declaration`，也是由关键字识别的第一级代码块。
-
-而 `Decl` 中 主要又分为 `GenDecl` (generic) 和 `FuncDecl` (function)。
-
-可以粗略地认为，除 `func` 开头的 都是 `GenDecl`
-
-如
-
-```go
-package x
-
-// GenDecl
-import (
-	_ "go/ast"
-)
-
-// GenDecl
-var A = 1
-
-// GenDecl
-var (
-	B  = 2
-	B2 = 2
-)
-
-// GenDecl
-type C int
-
-// GenDecl
-type (
-	D  struct{}
-	D2 struct{}
-)
-
-// GenDecl
-const E = 3
-
-// GenDecl
-const (
-	F  = 4
-	F2 = 4
-)
-
-// FuncDecl
-func G() {}
-
-```
-
-而除了 `FuncDecl` 外，`GenDecl` 下的第二级定义被称为 `Spec`, 主要分为 `TypeSpec / ValueSpec / ImportSpec`。
-
-`Spec` 部分不会包含关键字，但是 `Spec` 的类型是由关键字判定的 (`const/var/import/type`)。
-
-```go
-package x
-
-// GenDecl
-import (
-	// ImportSpec
-	_ "go/ast"
-)
-
-// GenDecl
-var A = 1 // ValueSpec
-
-// GenDecl
-var (
-	// ValueSpec
-	B = 2
-	// ValueSpec
-	B2 = 2
-)
-
-// GenDecl
-type C int // TypeSpec
-
-// GenDecl
-type (
-	// TypeSpec
-	D struct{}
-	// TypeSpec
-	D2 struct{}
-)
-
-// GenDecl
-const E = 3 // ValueSpec
-
-// GenDecl
-const (
-	F  = 4 // ValueSpec
-	F2 = 4 // ValueSpec
-)
-
-```
-
-Golang 在处理注释时，如果注释紧贴对象，会被认为是该对象的注释，并分为两类 `Doc` 和 `Comment`。
-
-`Doc` 即为紧贴对象上方的注释，`Comment` 即为在对象后方的注释。
-
-`Decl` 类型对象只有 `Doc` 而 `Spec` 类型一般会有 `Doc` 和 `Comment`。
-
-如下：
-
-```go
-package x
-
-// GenDeclDoc
-import (
-	// ImportSpecDoc
-	_ "go/ast" // ImportSpecComment
-)
-
-// GenDeclDoc
-var A = 1 // ValueSpecComment
-
-// GenDeclDoc
-type (
-	// TypeSpecDoc
-	B struct {
-	} // TypeSpecComment
-
-	// TypeSpecDoc
-	B2 struct {
-	}
-)
-
-// FuncDeclDoc
-func x() {}
-
-```
-
-### 注解分析过程
-
-#### 语法解析
-
-启动后会遍历分析指定目录及子目录内所有 Golang 文件 `FuncDecl` 和 其他各种 `Spec` 的注释（包括 `Doc` 和 `Comment`），
-并分行匹配出注解。有注解的对象注释会被按行划分为 注解 和 文档。
-
-预处理阶段会收集出所有被注解的 `注解对象 AnnotatedDecl` ( 实际上除了 `FuncDecl` 之外都是 `Spec` )，
-并缓存相关的文件信息和 AST 解析信息在内存中。
-
-#### 注解解析
-
-在将注解对象正式分配给插件时，会将所有被注解对象的注解按行匹配出符合被调动插件的注解，
-每个注解对象都会被匹配到 0 ~ N 次。
-
-被匹配的**每条注解**会解析注解参数，并与运行命令的添加的额外参数进行合并，
-和被注解对象组成一个新的对象 `注解实例 DeclEntity`，
-每个插件的核心功能就是利用匹配到的若干个注解实例去进行不同的自定义代码分析处理。
-
-#### 全局运行时
-
-在一次命令运行中，可以指定多个插件按顺序执行，如
-
-```shell
-gozz run -p "api" -p "impl" -p "doc" -p "wire" ./
-```
-
-因为不同插件运行后可能会产生新的文件以及被注解对象，`Gozz` 在每个插件处理插件实例前都会重新对目标目录或文件进行遍历解析。
-
-由于之前的解析已经缓存了文件内容和解析的结果，只要文件没有被前置运行的插件修改，这些缓存都能够被有效复用。
-因此运行时指定多个插件，有效利用解析缓存，理论上会有更快的处理速度。
