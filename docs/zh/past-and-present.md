@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # 前世今生
 
 `Gozz` 的诞生没有借鉴任何已有 Golang 工具 或是 对某某轮子的复刻，而是笔者多年来对 Golang 开发经验和沉淀总结的系统方法论具象化。
@@ -412,3 +416,43 @@ type (
 
 `gozz:api` 在生成API路由表时，相对于以前的雏形实现最大的不同在于，默认模版将会生成Web框架无关的API路由表，
 开发可以使用这份路由表进行二次开发适配更多不同的Web框架，或独立地生成如 `Swagger` 或 `OpenAPI` 等API接口文档以及测试用例。
+
+另外在对接 `Interface.Method` 时，`Gozz` 已经弃用 `reflect` 方案，
+能够智能地根据函数签名生成类型安全 `invoke` 函数，提供和原生调用一致的性能。
+
+例：
+
+```go
+// API接口定义
+package service
+
+// +zz:api:./:prefix=books
+type BookService interface {
+	// +zz:api:get:
+	// List all books. return ListBook
+	List(ctx context.Context, query QueryBook) (ret ListBook, err error)
+}
+
+// 生成的API路由表
+package api
+
+func (s Apis) _BookService() (interface{}, []map[string]interface{}) {
+	t := s.BookService
+	return &t, []map[string]interface{}{
+		{
+			"name":     "List",
+			"method":   "get",
+			"resource": "",
+			"options": map[string]string{
+				"prefix": "books",
+			},
+			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+				var in QueryBook
+				if err := dec(&in); err != nil {
+					return nil, err
+				}
+				return t.List(ctx, in)
+			},
+		},
+
+```

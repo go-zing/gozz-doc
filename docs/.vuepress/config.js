@@ -39,6 +39,9 @@ module.exports = {
                     {
                         text: "指南", link: "/zh/guide/",
                     },
+                    {
+                        text: "前世今生", link: "/zh/past-and-present/",
+                    },
                 ],
                 sidebar: {
                     '/zh/guide/': [
@@ -61,7 +64,6 @@ module.exports = {
                                         'plugins/wire',
                                     ]
                                 },
-                                'past-and-present',
                             ]
                         },
                     ],
