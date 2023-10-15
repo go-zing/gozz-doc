@@ -1,7 +1,7 @@
 ---
 home: true
 actionText: 快速上手 →
-actionLink: ./guide/getting-started
+actionLink: ./guide/
 features:
   - title: 简洁易用、无侵入
     details: 在代码添加注释注解就能使用，注解语法直观，命令行参数简约，无其他运行时侵入依赖库。
@@ -9,6 +9,7 @@ features:
     details: 提供 自动化依赖注入、AOP接口代理、Interface -> Implement 生成同步、ORM结构体、API路由映射表 等内置插件。
   - title: 可定制高拓展性
     details: 代码生成模版可自定义，内核提供代码分析、编辑、生成等工具库，可通过 .so 扩展外部插件。
+footer: Apache-2.0 license | Copyright © 2023-present Maple Wu
 ---
 
 ### 一个从 0 到 1 的简单业务场景示例 体现 `Gozz` 的强大
@@ -486,7 +487,7 @@ func (QueryListBook) FieldDoc(f string) string { return _doc_QueryListBook[f] }
 
 都可以自定义修改模版文件，然后重新进行生成
 
-###### 注: *`gozz` 在生成目标文件目录已有 `${filename}.tmpl` 文件时 会优先使用 模版文件进行生成*
+##### 注: *`gozz` 在生成目标文件目录已有 `${filename}.tmpl` 文件时 会优先使用 模版文件进行生成*
 
 --- 
 
@@ -494,7 +495,7 @@ func (QueryListBook) FieldDoc(f string) string { return _doc_QueryListBook[f] }
 
 最后需要将 `/apis/zzgen.api.go` 中的 `Apis` 和 `HTTP控制器` 以及 `HTTP服务器` 进行绑定以提供 HTTP服务
 
-在项目根目录 创建以下文件
+在项目根目录 创建 `app.go`
 
 ```go
 // app.go
@@ -531,7 +532,7 @@ func ProvideHttpController() (controller HttpController) {
 	return
 }
 
-// 挂载 http.Handler 并 监听端口 提供服务
+// 组装并挂载 http.Handler 监听端口 提供服务
 func (app *Application) Run() (err error) {
 	handler := app.Handle(app.ApisProvider)
 	server := &http.Server{
@@ -674,28 +675,27 @@ var (
 
 ```go
 // +zz:impl:/impls:wire
-type BookService interface {
-
+type BookService interface{
+...
 ```
 
 生成实现类型时 会自动添加 `wire` 模块的 接口实现绑定注解
 
 ```go
 // +zz:wire:bind=types.BookService
-type BookServiceImpl struct{}
+type BookServiceImpl struct{
+...
 ```
 
-在实现类型的 `wire` 注解上 还可以添加 `aop` 选项
+在实现类型的 `wire` 注解上添加 `aop` 选项 重新运行 `gozz run -p "wire" ./`
 
 ```go
 // +zz:wire:bind=types.BookService:aop
-type BookServiceImpl struct{}
-
+type BookServiceImpl struct{
+...
 ```
 
-重新运行 `gozz run -p "wire" ./`
-
-生成的 `wire_gen.go` 发生了一点点变化 注意看代码块中添加的注释
+可见 生成的 `wire_gen.go` 对于 `bookServiceImpl` 的注入发生了变化 注意看代码块中添加的注释
 
 ```go
 // wire_gen.go
@@ -706,7 +706,10 @@ func Initialize_Application() (*Application, func(), error) {
 	bookServiceImpl := &impls.BookServiceImpl{}
 
 	// impls.BookServiceImpl 不会直接绑定到 types.BookService
-	// 而是经过了一层 _impl_aop_types_BookService
+	// 而是经过了一层 _impl_aop_types_BookService (在 wire_zzaop.go 中自动生成)
+	// 
+	// 即由 impls.BookServiceImpl -> types.BookService
+	// 变为 impls.BookServiceImpl -> _impl_aop_types_BookService -> types.BookService
 	main_impl_aop_types_BookService := &_impl_aop_types_BookService{
 		_aop_types_BookService: bookServiceImpl,
 	}
@@ -776,8 +779,6 @@ func (i _impl_aop_types_BookService) GetBook(p0 context.Context, p1 types.QueryB
 ---
 
 #### 小结
-
-感谢开发者们阅读完了这个篇幅并不算简短的简介
 
 至此 这个简单业务场景核心代码设计 从 0 到 1 的系统化集成 已经展现了 `gozz` 最基本和常用的一些功能
 

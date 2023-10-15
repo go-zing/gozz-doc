@@ -9,7 +9,7 @@ module.exports = {
         },
         '/zh/': {
             lang: 'zh-CN',
-            description: '一个基于编译时的 Golang 注解分析 及 插件化代码生成器工具链，快速落地工业级规范代码及提速业务开发。'
+            description: '基于编译时的 Golang 注解分析及代码生成器，提供开箱即用的架构强化和插件化扩展能力，协助落地企业级最佳实践、提速业务开发。'
         }
     },
     themeConfig: {
@@ -35,8 +35,16 @@ module.exports = {
                 ariaLabel: '选择语言',
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
-                nav: [],
-                sidebar: []
+                nav: [
+                    {text: "指南", link: "/zh/guide/"},
+                ],
+                sidebar: [
+                    {
+                        title: "指南",
+                        collapsable: false,
+                        children: ['/zh/guide/',]
+                    }
+                ],
             }
         },
         displayAllHeaders: true,
