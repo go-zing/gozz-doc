@@ -50,6 +50,7 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 '',
+                                'getting-started',
                                 'how-it-works',
                                 {
                                     title: "内置插件",

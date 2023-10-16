@@ -1,7 +1,7 @@
 ---
 home: true
 actionText: 快速上手 →
-actionLink: ./guide/
+actionLink: ./guide/getting-started
 features:
   - title: 简洁易用、无侵入
     details: 在代码添加注释注解就能使用，注解语法直观，命令行参数简约，无其他运行时侵入依赖库。
