@@ -360,11 +360,11 @@ type API interface{}
 ```go
 // /go/src/project/types/api.go
 
-// +zz:api:./
+// +zz:api:./apix
 type API interface{}
 ```
 
-以上不指定 `.go` 文件名例子生成的文件完整路径为  `/go/src/project/types/zzgen.api.go`
+以上不指定 `.go` 文件名例子生成的文件完整路径为  `/go/src/project/types/apix/zzgen.api.go`
 
 #### 5. 如果文件名是绝对路径，那么起点是 注解文件所在 `module` 项目根目录 ( `go.mod` 所在目录 )
 
@@ -384,11 +384,11 @@ type API interface{}
 ```go
 // /go/src/project/types/api.go
 
-// +zz:api:/
+// +zz:api:/apix
 type API interface{}
 ```
 
-以上不指定 `.go` 文件名例子生成的文件完整路径为  `/go/src/project/zzgen.api.go`
+以上不指定 `.go` 文件名例子生成的文件完整路径为  `/go/src/project/apix/zzgen.api.go`
 
 <br>
 
