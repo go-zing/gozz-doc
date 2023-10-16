@@ -128,6 +128,8 @@ gozz -x plugin.so run -p "plugin" ./
 
 注解遵循以下语法：
 
+以**注释**形式紧贴**代码声明对象**
+
 ```go
 // +zz:[PLUGIN]:[ARGS]:[OPTIONS]
 type T interface{}
@@ -137,7 +139,7 @@ type T interface{}
 
 不同插件在注册到内核时会有唯一的插件名标识，这个标识也会用来为各个插件匹配注解，忽略大小写。
 
-如：插件 `Foo` 会使用 `// +zz:foo` 匹配注解
+如：插件 `Foo` 会使用 `+zz:foo` 匹配注解
 
 ### ARGS - 必填参数
 
@@ -146,9 +148,9 @@ type T interface{}
 
 如：
 
-插件 `foo` 指定的参数数量为 2，符合要求注解为 `// +zz:foo:arg1:arg2`
+插件 `foo` 指定的参数数量为 2，符合要求注解为 `+zz:foo:arg1:arg2`
 
-而 `// +zz:foo:arg1` 或 `// +zz:foo` 会被忽略
+而 `+zz:foo:arg1` 或 `+zz:foo` 会被忽略
 
 #### 为什么要忽略
 
@@ -162,7 +164,7 @@ type T interface{}
 
 插件 `foo` 指定的参数数量为 2
 
-`// +zz:foo:arg1:arg2:arg3=value:arg4`
+`+zz:foo:arg1:arg2:arg3=value:arg4`
 
 将会被解析出 可选参数 `{"arg3":"value","arg4":""}`
 
@@ -197,10 +199,10 @@ type T interface{}
 
 即:
 
-- `// +zz:bar:arg3=value:arg4` 解析为 `{"arg3":"value","arg4":""}`
-- `// +zz:bar:arg3=value:arg4=true` 解析为 `{"arg3":"value","arg4":"true"}`
-- `// +zz:bar:arg3=value:arg4=false` 解析为 `{"arg3":"value"}`
-- `// +zz:bar:arg3=value:arg4=0` 解析为 `{"arg3":"value"}`
+- `+zz:bar:arg3=value:arg4` 解析为 `{"arg3":"value","arg4":""}`
+- `+zz:bar:arg3=value:arg4=true` 解析为 `{"arg3":"value","arg4":"true"}`
+- `+zz:bar:arg3=value:arg4=false` 解析为 `{"arg3":"value"}`
+- `+zz:bar:arg3=value:arg4=0` 解析为 `{"arg3":"value"}`
 
 ### 声明对象
 
@@ -331,7 +333,7 @@ type API interface{}
 
 支持的模版对象字段有 `Name` `Package`
 
-同时支持一系列字符串函数 `snake / lower / upper / camel ...` [详情见此](https://github.com/go-zing/gozz-core/blob/main/generate.go#L32)
+同时支持一系列字符串函数 `snake / camel ...` [详情见此](https://github.com/go-zing/gozz-core/blob/main/generate.go#L32)
 
 ```go
 // /go/src/project/types/api.go
