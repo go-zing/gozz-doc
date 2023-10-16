@@ -198,6 +198,48 @@ type T interface{}
 - `// +zz:bar:arg3=value:arg4=false` 解析为 `{"arg3":"value"}`
 - `// +zz:bar:arg3=value:arg4=0` 解析为 `{"arg3":"value"}`
 
+### 声明对象
+
+注解可以添加在 `Decl` 代码块，也可以添加给指定的 `Spec` 对象。
+
+不理解 `Decl` 和 `Spec` 定义的可以先看下 [原理](./how-it-works) 部分。
+
+```go
+package t
+
+// +zz:foo
+type (
+	T0 interface{}
+	T1 interface{}
+
+	// +zz:bar
+	T2 interface{}
+)
+
+// +zz:foo
+type T3 interface{}
+```
+
+在 `Decl` 范围声明的注解，会被复制给 `Decl` 内定义的所有 `Spec` 对象内，即上例等价于：
+
+```go
+package t
+
+type (
+	// +zz:foo
+	T0 interface{}
+	// +zz:foo
+	T1 interface{}
+
+	// +zz:foo
+	// +zz:bar
+	T2 interface{}
+)
+
+// +zz:foo
+type T3 interface{}
+```
+
 ### 多行注解
 
 #### 注解判定
