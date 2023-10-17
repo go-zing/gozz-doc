@@ -1,10 +1,10 @@
 # Wire
 
-提供自动化的依赖注入以及AOP切面代理生成。
+提供自动化的依赖注入以及静态AOP代理生成。
 
 依赖注入管理基于 [wire](https://github.com/google/wire) 实现。
 
-通过该插件可以更自动化，更规范，更简洁易用地维护依赖注入对象。
+通过该插件可以更自动化，更规范，更简洁易用地维护依赖注入对象和使用静态AOP代理。
 
 ## 使用
 
@@ -20,11 +20,48 @@
 
 #### `bind`
 
-将提供的对象绑定指定接口类型进行注入。
-
-即使用 `wire.Bind(new(InterfaceType), new(T))`
+将提供的对象绑定指定接口类型进行注入，对函数对象无效。
 
 示例：`+zz:wire:bind=io.ReadCloser`
+
+若对象为类型，即使用 `wire.Bind(new(InterfaceType), new(T))`
+
+若对象为值，即使用 `wire.InterfaceValue(new(InterfaceType), Value)`
+
+##### 外部接口
+
+绑定的 `interface` 如果来源于其他 `package` ，需要将该引入到 `import` 内，否则会无法识别。
+
+例：
+
+```go
+package x
+
+import (
+	"bytes"
+)
+
+// +zz:wire:bind=io.Closer
+var Buff = &bytes.Buffer{}
+```
+
+上述情况下会无法识别 `io` 来源。
+
+正确用法：
+
+```go
+package x
+
+import (
+	"bytes"
+	"io"
+)
+
+var _ = (*io.Closer)(nil)
+
+// +zz:wire:bind=io.Closer
+var Buff = &bytes.Buffer{}
+```
 
 #### `aop`
 
@@ -34,19 +71,11 @@
 
 示例：`+zz:wire:bind=io.ReadCloser:aop`
 
-#### `struct`
-
-仅对引用类型生效，即 `type T = T2` / `type T pkg.T3`，使用该选项使类型当作结构体类型注入。
-
-即使用 `wire.Struct(new(T), "*")`
-
-示例：`+zz:wire:struct`
-
-其他类型不需要使用该选项。
+详情可见[示例二](./wire.md#示例二)
 
 #### `field`
 
-将结构体对象的字段作为值提供注入。
+将结构体对象的字段作为值提供注入，仅对结构体类型生效。
 
 可使用 `*` 提供所有暴露字段
 
@@ -58,15 +87,17 @@
 
 指定对象为 `构建目标`，在参数指定路径创建 `构建函数` 和生成注入相关的声明( `wire_zset.go` )。
 
-当提供路径没有 `.go` 后缀时，默认使用 `wire_zinject.go` 为文件名
+当提供路径没有 `.go` 后缀时，默认使用 `wire_zinject.go` 为文件名。
 
 示例：`+zz:wire:inject=./`
 
 `构建函数` 为 `func Initialize_T() (T, func(), error)`
 
+仅对类型对象生效。
+
 #### `param`
 
-当对象使用 `inject` 被指定为 `构建目标` 时。`param` 中的类型会作为 `构建函数` 的参数。
+当类型对象使用 `inject` 被指定为 `构建目标` 时。`param` 中的类型会作为 `构建函数` 的参数。
 
 示例：`+zz:wire:inject=./:param=context.Context`
 
@@ -79,6 +110,24 @@
 可以使用 `!` 前缀，此情况会将对象放置入所有非前缀的组，规则类似 `go build -tag`。
 
 示例：`+zz:wire:set=!mock` / `+zz:wire:set=mock,unittest`
+
+### 其他约定规则
+
+#### 构造函数
+
+当类型对象代码文件内存在名为 <span v-pre>`Provide{{ .Name }}`</span> 的函数，且第一个返回值为该 类型 或 类型指针时，
+会使用该函数注入。
+
+例：
+
+```go
+// +zz:wire
+type Implement struct{}
+
+func ProvideImplement() (*Implement){
+return &Implement{}
+}
+```
 
 ## 示例
 
@@ -195,4 +244,280 @@ func Initialize_Target() (*Target, func(), error) {
 	return target, func() {
 	}, nil
 }
+```
+
+### 示例二
+
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/wire02)
+
+```
+/wire01/
+├── go.mod -> module github.com/go-zing/gozz-doc-examples/wire02
+└── types.go
+```
+
+```go
+// wire02/types.go
+package wire02
+
+// +zz:wire:bind=InterfaceX
+// +zz:wire:bind=InterfaceX2:aop
+type Interface interface {
+	Foo(ctx context.Context, param int) (result int, err error)
+	Bar(ctx context.Context, param int) (result int, err error)
+}
+
+type InterfaceX Interface
+type InterfaceX2 Interface
+
+// +zz:wire:inject=/
+type Target struct {
+	Interface
+	InterfaceX
+	InterfaceX2
+}
+
+// +zz:wire:bind=Interface
+type Implement struct{}
+
+func (Implement) Foo(ctx context.Context, param int) (result int, err error) {
+	return
+}
+
+func (Implement) Bar(ctx context.Context, param int) (result int, err error) {
+	return
+}
+```
+
+以上示例中：
+
+- 通过 `Implement` 可以实现 `Interface`。
+
+- `Interface` 绑定了两个别名类型 `InterfaceX` 和 `InterfaceX2`，其中对 `InterfaceX2` 的绑定添加了 `aop` 选项。
+
+- 最终的构造目标为 `Target`，依赖 `Interface`、`InterfaceX`、`InterfaceX2`。
+
+执行 `gozz run -p "wire" ./`，并观察生成的 `wire_gen.go`。
+
+```go
+// wire02/wire_gen.go
+package wire02
+
+func Initialize_Target() (*Target, func(), error) {
+	implement := &Implement{}
+	wire02_impl_aop_InterfaceX2 := &_impl_aop_InterfaceX2{
+		_aop_InterfaceX2: implement,
+	}
+	target := &Target{
+		Interface:   implement,
+		InterfaceX:  implement,
+		InterfaceX2: wire02_impl_aop_InterfaceX2,
+	}
+	return target, func() {
+	}, nil
+}
+```
+
+可见 在实现 `Interface` 和 `InterfaceX` 时，都是直接使用了 `Implement`，而添加 `aop` 选项的 `InterfaceX2`
+使用了 `_impl_aop_InterfaceX2` 的类型。
+
+在 `wire_zset.go` 中，可以看到两种类型不同的依赖声明。
+
+```go
+// wire02/wire_zset.go
+package wire02
+
+var (
+	_Set = wire.NewSet(
+		// github.com/go-zing/gozz-doc-examples/wire02.Implement
+		wire.Bind(new(Interface), new(*Implement)),
+		wire.Struct(new(Implement), "*"),
+
+		// github.com/go-zing/gozz-doc-examples/wire02.Interface
+		wire.Bind(new(InterfaceX), new(Interface)),
+		wire.Bind(new(_aop_InterfaceX2), new(Interface)),
+		wire.Struct(new(_impl_aop_InterfaceX2), "*"),
+		wire.Bind(new(InterfaceX2), new(*_impl_aop_InterfaceX2)),
+
+		// github.com/go-zing/gozz-doc-examples/wire02.Target
+		wire.Struct(new(Target), "*"),
+	)
+)
+```
+
+不同于 `InterfaceX` 的接口绑定(上方第11行)，本应绑定到 `InterfaceX2` 的 `Interface`
+被绑定到一个名为 `_aop_InterfaceX2` 的接口(上方第12行)。
+
+而真正被代替绑定到 `InterfaceX2` 的是名为 `impl_aop_InterfaceX2` 的结构体 (上方第13行)。
+
+在 `wire_zzaop.go` 中，我们可以看到 `aop_InterfaceX2` 和 `impl_aop_InterfaceX2` 的定义：
+
+```go
+// wire02/wire_zzaop.go
+package wire02
+
+type _aop_interceptor interface {
+	Intercept(v interface{}, name string, params, results []interface{}) (func(), bool)
+}
+
+// InterfaceX2
+type (
+	_aop_InterfaceX2      InterfaceX2
+	_impl_aop_InterfaceX2 struct{ _aop_InterfaceX2 }
+)
+
+func (i _impl_aop_InterfaceX2) Foo(p0 context.Context, p1 int) (r0 int, r1 error) {
+	if t, x := i._aop_InterfaceX2.(_aop_interceptor); x {
+		if up, ok := t.Intercept(i._aop_InterfaceX2, "Foo",
+			[]interface{}{&p0, &p1},
+			[]interface{}{&r0, &r1},
+		); up != nil {
+			defer up()
+		} else if !ok {
+			return
+		}
+	}
+	return i._aop_InterfaceX2.Foo(p0, p1)
+}
+
+func (i _impl_aop_InterfaceX2) Bar(p0 context.Context, p1 int) (r0 int, r1 error) {
+	if t, x := i._aop_InterfaceX2.(_aop_interceptor); x {
+		if up, ok := t.Intercept(i._aop_InterfaceX2, "Bar",
+			[]interface{}{&p0, &p1},
+			[]interface{}{&r0, &r1},
+		); up != nil {
+			defer up()
+		} else if !ok {
+			return
+		}
+	}
+	return i._aop_InterfaceX2.Bar(p0, p1)
+}
+```
+
+原 `Interface` 会用作 `_aop_InterfaceX2` 构造 `_impl_aop_InterfaceX2`。
+
+对原 `Interface` 的所有方法调用都会经过 `impl_aop_InterfaceX2` 的代理。
+
+通过代理方法的实现可以看到，通过开发者通过 `Intercept` 可以实现：
+
+- 在函数调用进行自定义前置和后置逻辑
+- 获取实际调用方及调用方法名
+- 对函数参数及返回值进行替换
+- 不经过实际调用方，直接终止调用
+
+#### 一些实用场景
+
+- 检查返回值错误，自动打印错误堆栈及调用信息，自动注入日志、链路追踪、埋点上报等。
+- 检查授权状态及访问权限。
+- 对调用参数和返回值进行自动缓存。
+- 检查或替换 `context.Context`，添加超时或检查中断。
+
+### 示例三
+
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/wire03)
+
+这个示例展示了几种场景：
+
+- 注入值对象
+- 使用值对象绑定接口
+- 引用类型作为结构体
+- 使用指定函数提供注入类型
+- 使用 `set` 对注入进行分组
+
+```go
+// wire03/types.go
+package wire03
+
+import (
+	"bytes"
+	"database/sql"
+	"io"
+)
+
+// provide value and interface value
+// +zz:wire:bind=io.Writer:aop
+// +zz:wire
+var Buffer = &bytes.Buffer{}
+
+// provide referenced type
+// +zz:wire
+type NullString nullString
+
+type nullString sql.NullString
+
+// use provider function to provide referenced type alias
+// +zz:wire
+type String = string
+
+func ProvideString() String {
+	return ""
+}
+
+// provide value from implicit type
+// +zz:wire
+var Bool = false
+
+// +zz:wire:inject=/
+type Target struct {
+	Buffer     *bytes.Buffer
+	Writer     io.Writer
+	NullString NullString
+}
+
+// mock set injector
+// +zz:wire:inject=/:set=mock
+type mockString sql.NullString
+
+// mock set string
+// provide type from function
+// +zz:wire:set=mock
+func MockString() String {
+	return "mock"
+}
+
+// mock set value
+// +zz:wire:set=mock
+var MockBool = true
+```
+
+执行 `gozz run -p "wire" ./`，注意观察生成的 `wire_zset.go`。
+
+
+```go
+// wire03/types.go
+package wire03
+
+var (
+	_Set = wire.NewSet(
+		// github.com/go-zing/gozz-doc-examples/wire03.Buffer
+		wire.InterfaceValue(new(_aop_io_Writer), Buffer),
+		wire.Struct(new(_impl_aop_io_Writer), "*"),
+		wire.Bind(new(io.Writer), new(*_impl_aop_io_Writer)),
+		wire.Value(Buffer),
+
+		// github.com/go-zing/gozz-doc-examples/wire03.NullString
+		wire.Struct(new(NullString), "*"),
+
+		// github.com/go-zing/gozz-doc-examples/wire03.String
+		ProvideString,
+
+		// github.com/go-zing/gozz-doc-examples/wire03.Bool
+		wire.Value(Bool),
+
+		// github.com/go-zing/gozz-doc-examples/wire03.Target
+		wire.Struct(new(Target), "*"),
+	)
+
+	_mockSet = wire.NewSet(
+		// github.com/go-zing/gozz-doc-examples/wire03.mockString
+		wire.Struct(new(mockString), "*"),
+
+		// github.com/go-zing/gozz-doc-examples/wire03.MockString
+		MockString,
+
+		// github.com/go-zing/gozz-doc-examples/wire03.MockBool
+		wire.Value(MockBool),
+	)
+)
 ```
