@@ -72,7 +72,7 @@
 
 指定 `set` 的对象，会被收集到独立的 `wire.NewSet` 组，无指定 `set` 会使用全局默认组。
 
-可以使用 `!` 前缀，此情况会将对象放置入所有非前缀的组，规则类似 `go build -tag`。
+可以使用 `!` 前缀，此情况会将对象放置入所有非前缀的组，规则类似 `go build -tags`。
 
 示例：`+zz:wire:set=!mock` / `+zz:wire:set=mock,unittest`
 
