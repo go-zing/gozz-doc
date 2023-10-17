@@ -1,6 +1,8 @@
 # Impl
 
-用于在指定目录下，生成 实现被注解 `interface` 的类型，以及同步需要实现的类方法。
+用于在指定路径文件夹下，生成 实现被注解 `interface` 的数据类型，以及同步需要实现的类方法。
+
+已存在的同名类方法会被同步方法签名(包括变量命名)，缺失的类型和类方法会在目标文件下追加。
 
 ## 使用
 
@@ -16,7 +18,7 @@
 
 #### `filename`
 
-实现接口的目标目录或文件，若提供非 `.go` 后缀目录，则使用 `impl.go` 作为文件名
+实现接口的目标文件夹或文件，若提供非 `.go` 后缀路径，则使用 `impl.go` 作为文件名
 
 示例： `+zz:impl:./impls/type.go`
 
@@ -89,7 +91,7 @@ func (impl *ReadCloserImpl) Read() {
 gozz run -p "impl" ./ 
 ```
 
-会在 `impl01/implements` 目录内查找名为 `ReadCloserImpl` 的类型定义，和收集该类型提供的 `类方法`。
+会在 `impl01/implements` 文件夹内查找名为 `ReadCloserImpl` 的类型定义，和收集该类型提供的 `类方法`。
 
 将已有 `类方法` 与被注解 `interface` 的方法一一对比后，会对同名方法进行函数签名同步，以及对不存在的进行补充。
 
@@ -123,7 +125,7 @@ func (impl *ReadCloserImpl) Close() error {
 
 ```go
 // impl02/types.go
-package project
+package impl02
 
 // +zz:impl:./implements:type=Impl:wire
 type ReadCloser interface {
@@ -132,7 +134,7 @@ type ReadCloser interface {
 }
 ```
 
-`gozz` 执行后，创建 `implements` 目录，并在 `./implements/impl.go` 下创建名为 `Impl` 的定义和类方法。
+`gozz` 执行后，创建 `implements` 文件夹，并在 `./implements/impl.go` 下创建名为 `Impl` 的定义和类方法。
 
 - 由于使用了 `wire` 选项，创建类型时会加上 `wire` 相关注解
 
@@ -174,7 +176,7 @@ func (impl Impl) Close() error {
 
 ```go
 // impl03/types.go
-package project
+package impl03
 
 // +zz:impl:./implements:type=*Impl:wire:aop
 type ReadCloser interface {
@@ -183,7 +185,7 @@ type ReadCloser interface {
 }
 ```
 
-`./implements/impl.go` 目录存在，且存在名为 `ReadCloserImpl` 的类型，有 `Read` 方法。
+`./implements/impl.go` 文件存在，且存在名为 `ReadCloserImpl` 的类型，有 `Read` 方法。
 
 ```go
 // impl03/implements/impl.go
@@ -239,13 +241,13 @@ func (impl Impl) Close() error {
 /impl04/
 ├── go.mod -> module github.com/go-zing/gozz-doc-examples/impl04
 ├── implements
-│   └── impl2.go
+│   └── read.go
 └── types.go
 ```
 
 ```go
 // impl04/types.go
-package project
+package impl04
 
 // +zz:impl:./implements:type=*Impl:wire:aop
 type ReadCloser interface {
@@ -254,10 +256,10 @@ type ReadCloser interface {
 }
 ```
 
-`./implements/impl2.go` 目录存在，且存在名为 `Impl` 的类型，有 `Read` 方法。
+`./implements/read.go` 文件存在，且存在名为 `Impl` 的类型，有 `Read` 方法。
 
 ```go
-// impl03/implements/impl2.go
+// impl04/implements/read.go
 package implements
 
 type Impl struct{}
@@ -268,10 +270,10 @@ func (impl *Impl) Read() {
 }
 ```
 
-`gozz` 执行后， `./implements/impl2.go` 的 `Read` 方法被同步。
+`gozz` 执行后， `./implements/read.go` 的 `Read` 方法被同步。
 
 ```go
-// impl03/implements/impl2.go
+// impl04/implements/read.go
 package implements
 
 type Impl struct{}
@@ -285,7 +287,7 @@ func (impl *Impl) Read(b []byte) (int, error) {
 `./implements/impl.go` 被创建，生成了缺失的 `Close` 方法
 
 ```go
-// impl03/implements/impl.go
+// impl04/implements/impl.go
 package implements
 
 func (impl *Impl) Close() error {
