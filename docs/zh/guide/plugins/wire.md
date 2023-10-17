@@ -417,12 +417,13 @@ func (i _impl_aop_InterfaceX2) Bar(p0 context.Context, p1 int) (r0 int, r1 error
 
 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/wire03)
 
-这个示例展示了几种场景：
+这个示例混合地展示了几种场景：
 
 - 注入值对象
 - 使用值对象绑定接口
 - 引用类型作为结构体
 - 使用指定函数提供注入类型
+- 使用结构体字段值进行注入
 - 使用 `set` 对注入进行分组
 
 ```go
@@ -476,13 +477,16 @@ func MockString() String {
 	return "mock"
 }
 
+// mock set struct type provide fields
+// +zz:wire:set=mock:field=*
+type MockConfig struct{ Bool bool }
+
 // mock set value
 // +zz:wire:set=mock
-var MockBool = true
+var mock = MockConfig{Bool: true}
 ```
 
 执行 `gozz run -p "wire" ./`，注意观察生成的 `wire_zset.go`。
-
 
 ```go
 // wire03/types.go
@@ -516,8 +520,11 @@ var (
 		// github.com/go-zing/gozz-doc-examples/wire03.MockString
 		MockString,
 
-		// github.com/go-zing/gozz-doc-examples/wire03.MockBool
-		wire.Value(MockBool),
+		// github.com/go-zing/gozz-doc-examples/wire03.MockConfig
+		wire.FieldsOf(new(MockConfig), "Bool"),
+
+		// github.com/go-zing/gozz-doc-examples/wire03.mock
+		wire.Value(mock),
 	)
 )
 ```
