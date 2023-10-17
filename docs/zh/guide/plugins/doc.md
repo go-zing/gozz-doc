@@ -26,7 +26,7 @@
 
 ### 示例一
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/doc01)
 
 ```
 /doc01/
@@ -164,7 +164,7 @@ func (Book) FieldDoc(f string) string { return _doc_Book[f] }
 
 ### 示例二
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/doc02)
 
 ```
 /doc02/

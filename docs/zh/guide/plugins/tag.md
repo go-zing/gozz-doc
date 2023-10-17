@@ -47,7 +47,7 @@ type T struct {
 
 ### 示例一
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag01)
 
 ```
 /tag01/
@@ -93,7 +93,7 @@ type User struct {
 
 ### 示例二
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag02)
 
 ```
 /tag02/
@@ -137,7 +137,7 @@ type User struct {
 
 ### 示例三
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag03)
 
 ```
 /tag03/
@@ -217,6 +217,8 @@ type (
 
 ### 示例四
 
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag04)
+
 ```go
 // tag04/types.go
 
@@ -244,7 +246,7 @@ type (
 		Id     string `bson:"id" json:"id"`
 		UserId string `bson:"user_id" json:"user_id"`
 		BookId string `bson:"book_id" json:"book_id"`
-		// +zz:tag:json,bson:{{ upper .FieldName }}
+		// +zz:tag:json,bson:{{ upper .FieldName | upper }}
 		CreatedAt time.Time `bson:"created_at" json:"created_at"`
 		// +zz:tag:+json:,omitempty
 		UpdatedAt time.Time `bson:"updated_at" json:"updated_at"`
@@ -295,7 +297,7 @@ type (
 
 ### 示例五
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag05)
 
 ```
 /tag05/

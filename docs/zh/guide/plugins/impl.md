@@ -50,7 +50,7 @@
 
 ### 示例一
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl01)
 
 ```
 /impl01/
@@ -115,7 +115,7 @@ func (impl *ReadCloserImpl) Close() error {
 
 ### 示例二
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl02)
 
 ```
 /impl02/
@@ -166,7 +166,7 @@ func (impl Impl) Close() error {
 
 ### 示例三
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl03)
 
 ```
 /impl03/
@@ -239,7 +239,7 @@ func (impl Impl) Close() error {
 
 ### 示例四
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl04)
 
 ```
 /impl04/

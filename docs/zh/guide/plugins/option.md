@@ -24,7 +24,7 @@
 
 ### 示例一
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/option01)
 
 ```
 /option01/
@@ -77,6 +77,8 @@ func WithPassword(v string) func(*Config) { return func(o *Config) { o.Password 
 ```
 
 ### 示例二
+
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/option02)
 
 对两个不同的结构体添加注解，并使用 `type` 选项。
 

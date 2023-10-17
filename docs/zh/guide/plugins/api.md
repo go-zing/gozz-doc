@@ -117,7 +117,7 @@ type BookService interface {
 
 ### 示例一
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/api01)
 
 ```
 /api01/
@@ -333,6 +333,8 @@ func (s Apis) _UserService() (interface{}, []map[string]interface{}) {
 通过自定义的 `options` 可以快速地组合和编排接口中间件及中间件参数，实现权限管理，服务自描述等常用功能。
 
 ### 示例二
+
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/api02)
 
 以下示例展示了 `invoke` 静态调用自动化生成的广泛支持范围。
 

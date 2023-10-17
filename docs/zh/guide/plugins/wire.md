@@ -84,7 +84,7 @@
 
 ### 示例一
 
-项目目录结构
+[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/wire01)
 
 ```
 /wire01/
