@@ -4,6 +4,8 @@
 
 依赖注入管理基于 [wire](https://github.com/google/wire) 实现。
 
+`gozz` 通过注解，提供更智能的场景推断，使用户可以在几乎
+
 通过该插件可以更自动化，更规范，更简洁易用地维护依赖注入对象和使用静态AOP代理。
 
 ## 使用
@@ -27,41 +29,6 @@
 若对象为类型，即使用 `wire.Bind(new(InterfaceType), new(T))`
 
 若对象为值，即使用 `wire.InterfaceValue(new(InterfaceType), Value)`
-
-##### 外部接口
-
-绑定的 `interface` 如果来源于其他 `package` ，需要将该引入到 `import` 内，否则会无法识别。
-
-例：
-
-```go
-package x
-
-import (
-	"bytes"
-)
-
-// +zz:wire:bind=io.Closer
-var Buff = &bytes.Buffer{}
-```
-
-上述情况下会无法识别 `io` 来源。
-
-正确用法：
-
-```go
-package x
-
-import (
-	"bytes"
-	"io"
-)
-
-var _ = (*io.Closer)(nil)
-
-// +zz:wire:bind=io.Closer
-var Buff = &bytes.Buffer{}
-```
 
 #### `aop`
 
@@ -127,6 +94,43 @@ type Implement struct{}
 func ProvideImplement() (*Implement){
 return &Implement{}
 }
+```
+
+#### 外部引用类型
+
+在 `bind` 中指定的 `interface` 如果来源于其他 `package` ，需要确保有 `import` 到注解当前文件，否则会无法识别。
+
+在 `param` 中指定的参数类型同理。
+
+例：
+
+```go
+package x
+
+import (
+	"bytes"
+)
+
+// +zz:wire:bind=io.Closer
+var Buff = &bytes.Buffer{}
+```
+
+上述情况下会无法识别 `io` 来源。
+
+正确用法：
+
+```go
+package x
+
+import (
+	"bytes"
+	"io"
+)
+
+var _ = (*io.Closer)(nil)
+
+// +zz:wire:bind=io.Closer
+var Buff = &bytes.Buffer{}
 ```
 
 ## 示例
