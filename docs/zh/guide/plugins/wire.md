@@ -95,11 +95,14 @@ go install github.com/google/wire/cmd/wire@latest
 
 ```go
 // +zz:wire
+package x
+
 type Implement struct{}
 
-func ProvideImplement() (*Implement){
-return &Implement{}
+func ProvideImplement() *Implement {
+	return &Implement{}
 }
+
 ```
 
 #### 外部引用类型
