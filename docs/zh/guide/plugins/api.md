@@ -157,7 +157,7 @@ type (
 
 例子中有两个接口，提供了对 `User` 和 `Book` 两实体基本的增删查改
 
-`gozz` 执行后，生成了 `zzgen.api.go` 和默认模版文件。
+执行 `gozz run -p "api" ./`，生成了 `zzgen.api.go` 和默认模版文件。
 
 ```go
 // api01/zzgen.api.go
@@ -387,7 +387,7 @@ type (
 )
 ```
 
-`gozz` 执行后，生成 `zzgen.api.go`。
+执行 `gozz run -p "api" ./`，生成了 `zzgen.api.go`。
 
 ```go
 // api02/zzgen.api.go

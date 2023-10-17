@@ -57,13 +57,13 @@ module.exports = {
                                     path: "/zh/guide/plugins/",
                                     collapsable: false,
                                     children: [
-                                        'plugins/api',
-                                        'plugins/doc',
-                                        'plugins/impl',
-                                        'plugins/option',
-                                        'plugins/orm',
-                                        'plugins/tag',
                                         'plugins/wire',
+                                        'plugins/api',
+                                        'plugins/impl',
+                                        'plugins/doc',
+                                        'plugins/tag',
+                                        'plugins/orm',
+                                        'plugins/option',
                                     ]
                                 },
                             ]

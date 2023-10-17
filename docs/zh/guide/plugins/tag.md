@@ -71,7 +71,7 @@ type User struct {
 
 当前没有定义标签。使用注解指定：字段名 `snake_case` 格式的 `json` `bson` 标签。
 
-`gozz` 执行后
+执行 `gozz run -p "tag" ./`
 
 ```go
 // tag01/types.go
@@ -117,7 +117,7 @@ type User struct {
 
 当前已有定义 `json` 标签。使用注解指定：字段名 `camel` 格式的 `json` `bson` 标签。
 
-`gozz` 执行后
+执行 `gozz run -p "tag" ./`
 
 ```go
 // tag02/types.go
@@ -179,7 +179,7 @@ type (
 
 当前没有定义标签。使用 `Decl` 注解为多个类型指定：字段名 `snake_case` 格式的 `json` `bson` 标签。
 
-`gozz` 执行后
+执行 `gozz run -p "tag" ./`
 
 ```go
 // tag03/types.go
@@ -254,7 +254,7 @@ type (
 
 对 [示例三](./tag.md#示例三) 中进行部分结构体和字段的定制化调整
 
-`gozz` 执行后
+执行 `gozz run -p "tag" ./`
 
 ```go
 // tag04/types.go
@@ -362,7 +362,7 @@ type (
 
 该例子包含了大部分常见的复杂类型以及结构体内嵌场景
 
-`gozz` 执行后
+执行 `gozz run -p "tag" ./`
 
 ```go
 // tag05/types.go

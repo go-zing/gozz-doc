@@ -49,7 +49,7 @@ type Config struct {
 }
 ```
 
-`gozz` 执行后，生成 `./zzgen.option.go` 文件
+执行 `gozz run -p "option" ./`，生成了 `zzgen.option.go` 文件
 
 ```go
 // option01/zzgen.option.go
@@ -104,7 +104,7 @@ type (
 )
 ```
 
-`gozz` 执行后，生成 `./zzgen.option.go` 文件
+执行 `gozz run -p "option" ./`，生成了 `zzgen.option.go` 文件
 
 ```go
 // option02/zzgen.option.go

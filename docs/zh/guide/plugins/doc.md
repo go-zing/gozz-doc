@@ -95,7 +95,9 @@ const (
 
 为代码中的对象添加注释
 
-`gozz` 运行后 生成了 `doc01/zzgen.doc.go` 和默认模版 `doc01/zzgen.doc.go.tmpl`
+执行 `gozz run -p "doc" ./`
+
+生成了 `doc01/zzgen.doc.go` 和默认模版 `doc01/zzgen.doc.go.tmpl`
 
 ```go
 // doc01/types.go
@@ -206,7 +208,8 @@ type T struct {
 
 这个示例会展示 `Golang AST` 对对象注释关联的有效判定范围
 
-`gozz` 执行后 注意观察 生成的 `zzgen.doc.go` 
+
+执行 `gozz run -p "doc" ./`，注意观察 生成的 `zzgen.doc.go` 
 
 ```go
 // doc02/zzgen.doc.go
