@@ -545,3 +545,5 @@ var (
 	)
 )
 ```
+
+可见使用 `gozz:wire` 后，掌握注解 `+zz:wire` 和 `bind` `inject` 两个选项就能满足大部分需求。
