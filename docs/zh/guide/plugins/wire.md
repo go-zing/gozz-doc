@@ -502,7 +502,7 @@ var mock = MockConfig{Bool: true}
 执行 `gozz run -p "wire" ./`，注意观察生成的 `wire_zset.go`。
 
 ```go
-// wire03/types.go
+// wire03/wire_zset.go
 package wire03
 
 var (
