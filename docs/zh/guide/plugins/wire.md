@@ -1,12 +1,10 @@
 # Wire
 
-提供自动化的依赖注入以及静态AOP代理生成。
+提供 `自动化依赖注入` 以及 `静态AOP代理` 生成。
 
-依赖注入管理基于 [wire](https://github.com/google/wire) 实现。
+依赖注入内核基于 [wire](https://github.com/google/wire) 实现。
 
-`gozz` 通过注解，提供更智能的场景推断，使用户可以在几乎
-
-通过该插件可以更自动化，更规范，更简洁易用地维护依赖注入对象和使用静态AOP代理。
+该插件通过注解分析，可以提供更智能的注入场景和注入类型推断，更为简洁易用。
 
 ## 使用
 
@@ -79,6 +77,14 @@
 示例：`+zz:wire:set=!mock` / `+zz:wire:set=mock,unittest`
 
 ### 其他约定规则
+
+#### 安装 `wire`
+
+为确保最后的依赖注入生成能够成功，使用前请安装 `wire`。
+
+```shell
+go install github.com/google/wire/cmd/wire@latest
+```
 
 #### 构造函数
 
