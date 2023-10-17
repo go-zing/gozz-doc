@@ -13,7 +13,7 @@ module.exports = {
         }
     },
     markdown: {
-        lineNumbers: true
+        lineNumbers: false
     },
     themeConfig: {
         repo: 'https://github.com/go-zing/gozz',

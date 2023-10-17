@@ -340,7 +340,7 @@ func Initialize_Target() (*Target, func(), error) {
 
 在 `wire_zset.go` 中，可以看到两种类型不同的依赖声明。
 
-```go
+```go{11-13}
 // wire02/wire_zset.go
 package wire02
 
@@ -362,10 +362,12 @@ var (
 )
 ```
 
-不同于 `InterfaceX` 的接口绑定(上方第11行)，本应绑定到 `InterfaceX2` 的 `Interface`
-被绑定到一个名为 `_aop_InterfaceX2` 的接口(上方第12行)。
+注意被高亮的代码：
 
-而真正被代替绑定到 `InterfaceX2` 的是名为 `impl_aop_InterfaceX2` 的结构体 (上方第13行)。
+不同于 `InterfaceX` 的接口绑定，本应绑定到 `InterfaceX2` 的 `Interface`
+被绑定到一个名为 `_aop_InterfaceX2` 的接口。
+
+而真正被代替绑定到 `InterfaceX2` 的是名为 `impl_aop_InterfaceX2` 的结构体。
 
 在 `wire_zzaop.go` 中，我们可以看到 `aop_InterfaceX2` 和 `impl_aop_InterfaceX2` 的定义：
 
