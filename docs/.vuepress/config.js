@@ -15,7 +15,6 @@ function getNavSidebar(lang, home, guide, story, plugin) {
             [lang + 'guide/']: [
                 {
                     title: guide,
-                    collapsable: false,
                     children: [
                         '',
                         'getting-started',
@@ -42,7 +41,7 @@ function getNavSidebar(lang, home, guide, story, plugin) {
 }
 
 module.exports = {
-    title: 'GOZZ',
+    title: 'Gozz',
     description: 'Gozz official documents page and user guides',
     base: "/gozz/",
     locales: {
