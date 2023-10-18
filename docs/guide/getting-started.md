@@ -312,7 +312,7 @@ type T interface{}
 
 How to handle repeat annotations is based on plugin implement and usage.
 
-## Some Conventions Over Configuration
+## Some Conventions
 
 ### about filepath and filename
 

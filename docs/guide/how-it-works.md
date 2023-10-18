@@ -1,4 +1,4 @@
-# Principle
+# How It Works
 
 The main workflow of `Gozz` in short：
 
