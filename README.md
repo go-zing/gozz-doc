@@ -1,6 +1,6 @@
 # Gozz Doc
 
-[Gozz Documentation](https://go-zing.github.io/gozz)
+[English](https://go-zing.github.io/gozz) | [简体中文](https://go-zing.github.io/gozz/zh)
 
 ## Showcase
 
