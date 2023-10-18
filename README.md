@@ -34,4 +34,4 @@ optional chaining.
 
 ## License
 
-[Apache-2.0](https://github.com/go-zing/gozz-doc-examples/blob/master/LICENSE)
+[Apache-2.0](https://github.com/go-zing/gozz-doc/blob/main/LICENSE)
