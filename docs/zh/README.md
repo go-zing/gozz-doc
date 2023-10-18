@@ -1,5 +1,7 @@
 ---
 home: true
+heroText:
+heroImage: /logo.png
 actionText: 快速上手 →
 actionLink: ./guide/getting-started
 features:
@@ -9,8 +11,12 @@ features:
     details: 提供 自动化依赖注入、AOP接口代理、Interface -> Implement 生成同步、ORM结构体、API路由映射表 等内置插件。
   - title: 可定制高拓展性
     details: 代码生成模版可自定义，内核提供代码分析、编辑、生成等工具库，可通过 .so 扩展外部插件。
-footer: Apache-2.0 license | Copyright © 2023-present Maple Wu
 ---
+
+
+::: slot footer
+[Apache-2.0 Licensed](https://github.com/go-zing/gozz/blob/main/LICENSE) | Copyright © 2023-present Maple Wu
+:::
 
 ### 一个从 0 到 1 的简单业务场景示例 体现 `Gozz` 的强大
 

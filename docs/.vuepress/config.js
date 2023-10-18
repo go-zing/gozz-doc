@@ -30,15 +30,21 @@ function getNavSidebar(lang, home, guide, story, plugin) {
         ],
         sidebar: {
             [lang + 'guide/']: [
-                '',
-                'getting-started',
-                'how-it-works',
                 {
-                    title: plugin,
-                    path: lang + "guide/plugins/",
+                    title: guide,
                     collapsable: false,
-                    children: getPlugins(lang),
-                },
+                    children: [
+                        '',
+                        'getting-started',
+                        'how-it-works',
+                        {
+                            title: plugin,
+                            path: lang + "guide/plugins/",
+                            collapsable: false,
+                            children: getPlugins(lang),
+                        },
+                    ]
+                }
             ],
         }
     }
@@ -66,6 +72,7 @@ module.exports = {
         lineNumbers: false
     },
     themeConfig: {
+        logo: '/logo.png',
         repo: 'go-zing/gozz',
         docsRepo: 'go-zing/gozz-doc',
         docsDir: 'docs',
