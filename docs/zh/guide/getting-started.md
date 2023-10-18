@@ -204,6 +204,17 @@ type T interface{}
 - `+zz:bar:arg3=value:arg4=false` 解析为 `{"arg3":"value"}`
 - `+zz:bar:arg3=value:arg4=0` 解析为 `{"arg3":"value"}`
 
+#### 参数转义
+
+部分插件参数值可能会出现 `:` 字符串的情况，可以使用 `\` 对 `:` 进行转义，对命令行参数及注解内参数均生效。
+
+即：
+
+`+zz:plugin:addr=localhost:8080` -> `+zz:plugin:addr=localhost\:8080`
+
+转义后，解析器在分隔注解参数时会先将 `\:` 替换为 `\u003A`，
+在分隔后再将子串转义替换成 `:` 。
+
 ### 声明对象
 
 注解可以添加在 `Decl` 代码块，也可以添加给指定的 `Spec` 对象。

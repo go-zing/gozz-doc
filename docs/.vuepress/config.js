@@ -52,7 +52,7 @@ function getNavSidebar(lang, home, guide, story, plugin) {
 
 module.exports = {
     head: [
-        ['link', {rel: 'icon', href: '/favicon.icon'}]
+        ['link', {rel: 'icon', href: '/favicon.ico'}]
     ],
     title: 'GOZZ',
     description: 'Gozz official documents page and user guides',
