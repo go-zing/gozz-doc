@@ -1,5 +1,48 @@
+function getNavSidebar(lang, home, guide, story, plugin) {
+    return {
+        nav: [
+            {
+                text: home, link: lang + "",
+            },
+            {
+                text: guide, link: lang + "guide/",
+            },
+            {
+                text: story, link: lang + "story/",
+            },
+        ],
+        sidebar: {
+            [lang + 'guide/']: [
+                {
+                    title: guide,
+                    collapsable: false,
+                    children: [
+                        '',
+                        'getting-started',
+                        'how-it-works',
+                        {
+                            title: plugin,
+                            path: lang + "guide/plugins/",
+                            collapsable: false,
+                            children: [
+                                'plugins/wire',
+                                'plugins/api',
+                                'plugins/impl',
+                                'plugins/doc',
+                                'plugins/tag',
+                                'plugins/orm',
+                                'plugins/option',
+                            ]
+                        },
+                    ]
+                },
+            ],
+        }
+    }
+}
+
 module.exports = {
-    title: 'Gozz',
+    title: 'GOZZ',
     description: 'Gozz official documents page and user guides',
     base: "/gozz/",
     locales: {
@@ -23,18 +66,13 @@ module.exports = {
         repo: 'go-zing/gozz',
         docsRepo: 'go-zing/gozz-doc',
         docsDir: 'docs',
-        docsBranch: 'master',
+        docsBranch: 'main',
         editLinks: true,
         smoothScroll: true,
         locales: {
             '/': {
                 label: 'English',
-                selectText: 'Languages',
-                ariaLabel: 'Select language',
-                editLinkText: 'Edit this page on GitHub',
-                lastUpdated: 'Last Updated',
-                nav: [],
-                sidebar: []
+                ...getNavSidebar('/', 'Home', 'Guide', 'Story', 'Internal Plugins'),
             },
             '/zh/': {
                 label: '简体中文',
@@ -42,41 +80,7 @@ module.exports = {
                 ariaLabel: '选择语言',
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
-                nav: [
-                    {
-                        text: "指南", link: "/zh/guide/",
-                    },
-                    {
-                        text: "前世今生", link: "/zh/past-and-present/",
-                    },
-                ],
-                sidebar: {
-                    '/zh/guide/': [
-                        {
-                            title: "指南",
-                            collapsable: false,
-                            children: [
-                                '',
-                                'getting-started',
-                                'how-it-works',
-                                {
-                                    title: "内置插件",
-                                    path: "/zh/guide/plugins/",
-                                    collapsable: false,
-                                    children: [
-                                        'plugins/wire',
-                                        'plugins/api',
-                                        'plugins/impl',
-                                        'plugins/doc',
-                                        'plugins/tag',
-                                        'plugins/orm',
-                                        'plugins/option',
-                                    ]
-                                },
-                            ]
-                        },
-                    ],
-                }
+                ...getNavSidebar('/zh/', '首页', '指南', '前世今生', '内置插件'),
             }
         },
         displayAllHeaders: true,
