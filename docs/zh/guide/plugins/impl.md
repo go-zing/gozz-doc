@@ -134,7 +134,7 @@ type ReadCloser interface {
 }
 ```
 
-执行 `gozz run -p "impl" ./` 
+执行 `gozz run -p "impl" ./`
 
 创建了 `implements` 文件夹，并在 `./implements/impl.go` 下生成了名为 `Impl` 的定义和类方法。
 
@@ -203,7 +203,7 @@ func (impl *ReadCloserImpl) Read() {
 
 但我们指定 `type=*Impl`，因此 `ReadCloserImpl` 不会受到任何影响。
 
-执行 `gozz run -p "impl" ./` 
+执行 `gozz run -p "impl" ./`
 
 在 `./implements/impl.go` 下创建名为 `Impl` 的 `struct` 和 类方法，
 包含 `wire` 的注解和 `aop` 选项，并使用指针方法。
@@ -274,9 +274,9 @@ func (impl *Impl) Read() {
 }
 ```
 
-执行 `gozz run -p "impl" ./` 
+执行 `gozz run -p "impl" ./`
 
- `./implements/read.go` 的 `Read` 方法被同步。
+`./implements/read.go` 的 `Read` 方法被同步。
 
 ```go
 // impl04/implements/read.go
