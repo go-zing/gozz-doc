@@ -12,3 +12,8 @@ features:
   - title: High Extensibility
     details: Customize generating templates, core-library for code analysis, edit and generate. external .so plugins supported.
 ---
+
+
+::: slot footer
+[Apache-2.0 Licensed](https://github.com/go-zing/gozz/blob/main/LICENSE) | Copyright © 2023-present Maple Wu
+:::
