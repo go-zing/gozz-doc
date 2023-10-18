@@ -4,9 +4,13 @@
   </a>
 </p>
 
+## Introduction
+
+This project serves as [Gozz](https://github.com/go-zing/gozz) documentation site src. Checkout:
+
 [English](https://go-zing.github.io/gozz) | [简体中文](https://go-zing.github.io/gozz/zh)
 
-## Introduction
+## Contributing
 
 This site is built with [VuePress](https://github.com/vuejs/vuepress).
 Site content is written in Markdown format located in src.
@@ -19,7 +23,8 @@ yarn
 yarn docs:dev
 ```
 
-This project requires Node.js to be `v14.0.0` or higher, because we use new JavaScript features in our code, such as optional chaining.
+This project requires Node.js to be `v14.0.0` or higher, because we use new JavaScript features in our code, such as
+optional chaining.
 
 ## Showcase
 
