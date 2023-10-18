@@ -51,7 +51,12 @@ function getNavSidebar(lang, home, guide, story, plugin) {
 }
 
 module.exports = {
-    title: 'Gozz',
+    head: [
+        [
+            {rel: 'icon', href: '/logo.png'}
+        ]
+    ],
+    title: 'GOZZ',
     description: 'Gozz official documents page and user guides',
     base: "/gozz/",
     locales: {
