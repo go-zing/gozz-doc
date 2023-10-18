@@ -61,7 +61,7 @@ gozz run -p "foo" -p "bar" ./
 ```
 
 When run with multi plugins, they would execute in specified order.
-Even parser may do analysis before every plugin execute,
+Even if parser may do analysis before every plugin execute,
 `Gozz` provide a file-meta based version cache for analysis results,
 So that it may got better performance when running with multi plugins than one.
 
@@ -117,9 +117,9 @@ go build --buildmode=plugin -o sqlite.so ./contrib/sqlite
 #### Precondition for install plugins
 
 - Version must be match between `gozz` built from and environment.
-- Plugin Repo must be adapted with gozz `gozz-core`.
+- Plugin Repo `gozz-core` must be adapted with gozz CLI.
 - Others factors effect compatibility of `go/plugin`.
-  checkout: [Article for Understanding Golang Plugins](https://tonybai.com/2021/07/19/understand-go-plugin/)。
+  checkout: [Understand Go Plugin](https://tonybai.com/2021/07/19/understand-go-plugin/)。
 
 ## Global Flags
 
@@ -184,7 +184,7 @@ Options `{"arg3":"value","arg4":""}` would present.
 
 #### Repeatable Optional Arguments
 
-Sometimes optional arguments accept slice value, they were often seperated with `,`, Example:
+Sometimes optional arguments accept slice value, they were often seperated with `,`. Example:
 
 ```go
 // +zz:foo:set=a,b,c,d
@@ -208,7 +208,7 @@ type T interface{}
 
 #### Boolean Option
 
-Sometimes, plugin would check whether a key exists in options to raise a flag.
+Sometimes, plugin would check whether a key exists in options.
 These were called `Boolean Option`.
 
 If a `Boolean Option` key's value is not empty. In additionally,

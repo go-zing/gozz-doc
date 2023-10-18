@@ -19,7 +19,7 @@ visit and detect node expression and do programing modify or analysis.
 It would provide more flexibility than treat codes as text.
 
 Golang provide official syntax parser `go/ast` library,
-so we could enjoy the `AST` as compiler,
+so we can get `AST` as same as compiler,
 also Golang provide `go/format` to convert `AST` into formatted text,
 that bring great convenience for Golang toolkit ecosystem.
 

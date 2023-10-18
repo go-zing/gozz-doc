@@ -1,12 +1,13 @@
 # Api
 
-用于从 `interface` 快速生成 `API路由表` 以及无外部框架依赖，类型安全的静态调用层代码。
+Generates `API Routing Map` and type-safe static invoker function from `interface`,
+without external framework dependencies.
 
-## 使用
+## Usage
 
-### 注解
+### Annotation
 
-需要在 `interface` 对象 及 方法 都添加注解
+Add annotations on `interface` and method fields
 
 ```go
 package x
@@ -16,16 +17,16 @@ type T interface {
 	// +zz:api:[method]:[resource]:[...options]
 	Method(param Param) (result Result, err error)
 
-	// 没有注解的方法会被忽略
+	// method without annotations would be ignored
 	InternalMethod(param Param) (result Result, err error)
 
-	// 继承的接口会被忽略
+	// anonymous field would be ignored
 	AnonymousT
 }
 
 ```
 
-示例：
+Example:
 
 ```go
 package x
@@ -37,37 +38,32 @@ type BookService interface {
 }
 ```
 
-### 注解对象
-
-`interface` 对象 及 `interface` 方法
-
-### 必填参数
-
-#### 用于 `interface` 对象
+### Exact Arguments For `interface`
 
 #### `filename`
 
-指定生成文件路径
+Specify generate filename.
 
-示例： `+zz:api:./`
+Example: `+zz:api:./`
 
-#### 用于 `interface` 方法
+### Exact Arguments For `interface` method
 
 #### `method`
 
-会作为 `API路由表` 中的一级属性
+would be main property in `API Routing Map`
 
 #### `resource`
 
-会作为 `API路由表` 中的一级属性
+would be main property in `API Routing Map`
 
-示例： `+zz:api:get:detail`
+Example: `+zz:api:get:detail`
 
-### 可选参数
+### Optional Arguments
 
-该插件可选参数可使用任意 `Key-Value`，所有可选参数会作为 `map[string]string` 类型，收集到 `API路由表` 的 `options` 字段。
+You can use any `Key-Value` pairs options in this plugin.
+They would be collect into `API Routing Map`'s field `options` as a `map[string]string`.
 
-`interface` 对象的可选参数 会尝试覆盖到 接口方法上。例：
+options on `interface` would try override `field` options：
 
 ```go
 package x
@@ -85,7 +81,7 @@ type BookService interface {
 }
 ```
 
-等价于
+is equal to:
 
 ```go
 package x
@@ -103,21 +99,21 @@ type BookService interface {
 }
 ```
 
-### 其他约定规则
+### Convention
 
-#### invoke 调用函数 生成
+#### Invoke Function Generation
 
-对满足条件的部分接口方法可以自动生成类型安全的 `invoke` 静态调用函数：
+Type-safe `invoke` static calling functions can be automatically generated for methods that meet the conditions:
 
-- 方法最多有 两个入参 及 两个返回值
-- 两个入参时，第一个入参类型必须为 `context.Context`，且第二个入参为不同类型
-- 两个返回值，第二个返回值类型必须为 `error`，且第一个返回值为不同类型
+- Methods have at most two params and two returns
+- If there are two params, the first param type must be `context.Context`, and the second must be different
+- If there are two returns, the second return type must be `error`, and the first must be different
 
-## 示例
+## Examples
 
-### 示例一
+### Example-01
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/api01)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/api01)
 
 ```
 /api01/
@@ -155,9 +151,9 @@ type (
 )
 ```
 
-例子中有两个接口，提供了对 `User` 和 `Book` 两实体基本的增删查改
+This Example has two `interface`, provide entity basic `CRUD` for `User` and `Book`.
 
-执行 `gozz run -p "api" ./`，生成了 `zzgen.api.go` 和默认模版文件。
+Execute `gozz run -p "api" ./`, and it generates file `zzgen.api.go` and template file.
 
 ```go
 // api01/zzgen.api.go
@@ -332,9 +328,9 @@ func (s Apis) _UserService() (interface{}, []map[string]interface{}) {
 
 通过自定义的 `options` 可以快速地组合和编排接口中间件及中间件参数，实现权限管理，服务自描述等常用功能。
 
-### 示例二
+### Example-02
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/api02)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/api02)
 
 以下示例展示了 `invoke` 静态调用自动化生成的广泛支持范围。
 

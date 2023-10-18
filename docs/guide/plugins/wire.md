@@ -6,23 +6,23 @@
 
 该插件通过注解分析，可以提供更智能的注入场景和注入类型推断，更为简洁易用。
 
-## 使用
+## Usage
 
-### 注解
+### Annotation
 
 `+zz:wire:[...options]`
 
-### 注解对象
+### Annotation Target
 
 所有对象
 
-### 可选参数
+### Optional Arguments
 
 #### `bind`
 
 将提供的对象绑定指定接口类型进行注入，对函数对象无效。
 
-示例：`+zz:wire:bind=io.ReadCloser`
+Example:`+zz:wire:bind=io.ReadCloser`
 
 若对象为类型，即使用 `wire.Bind(new(InterfaceType), new(T))`
 
@@ -34,7 +34,7 @@
 
 此时在生成 `wire_zset.go` 以外，还会生成 `wire_zzaop.go`。
 
-示例：`+zz:wire:bind=io.ReadCloser:aop`
+Example:`+zz:wire:bind=io.ReadCloser:aop`
 
 详情可见[示例二](wire.md#示例二)
 
@@ -46,7 +46,7 @@
 
 即使用 `wire.FieldsOf(new(T), "Field", "Field2", ...)`
 
-示例：`+zz:wire:field=*`
+Example:`+zz:wire:field=*`
 
 #### `inject`
 
@@ -54,7 +54,7 @@
 
 当提供路径没有 `.go` 后缀时，默认使用 `wire_zinject.go` 为文件名。
 
-示例：`+zz:wire:inject=./`
+Example:`+zz:wire:inject=./`
 
 `构建函数` 为 `func Initialize_T() (T, func(), error)`
 
@@ -68,7 +68,7 @@
 
 当类型对象使用 `inject` 被指定为 `构建目标` 时。`param` 中的类型会作为 `构建函数` 的参数。
 
-示例：`+zz:wire:inject=./:param=context.Context`
+Example:`+zz:wire:inject=./:param=context.Context`
 
 `构建函数` 为 `func Initialize_T(context.Context) (T, func(), error)`
 
@@ -78,7 +78,7 @@
 
 可以使用 `!` 前缀，此情况会将对象放置入所有非前缀的组，规则类似 `go build -tags`。
 
-示例：`+zz:wire:set=!mock` / `+zz:wire:set=mock,unittest`
+Example:`+zz:wire:set=!mock` / `+zz:wire:set=mock,unittest`
 
 ### 其他约定规则
 
@@ -145,11 +145,11 @@ var _ = (*io.Closer)(nil)
 var Buff = &bytes.Buffer{}
 ```
 
-## 示例
+## Examples
 
-### 示例一
+### Example-01
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/wire01)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/wire01)
 
 ```
 /wire01/
@@ -262,9 +262,9 @@ func Initialize_Target() (*Target, func(), error) {
 }
 ```
 
-### 示例二
+### Example-02
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/wire02)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/wire02)
 
 ```
 /wire01/
@@ -431,9 +431,9 @@ func (i _impl_aop_InterfaceX2) Bar(p0 context.Context, p1 int) (r0 int, r1 error
 - 对调用参数和返回值进行自动缓存。
 - 检查或替换 `context.Context`，添加超时或检查中断。
 
-### 示例三
+### Example-03
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/wire03)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/wire03)
 
 这个示例混合地展示了几种场景：
 

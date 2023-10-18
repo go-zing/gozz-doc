@@ -2,31 +2,31 @@
 
 通过 `dsn` 连接数据库 `driver` ，读取 `schema` 信息生成 `ORM` 结构体定义及相关辅助代码。
 
-## 使用
+## Usage
 
-### 注解
+### Annotation
 
 `+zz:orm:[schema]:[...options]`
 
-### 注解对象
+### Annotation Target
 
 所有对象
 
-### 必填参数
+### Exact Arguments
 
 #### `schema`
 
 要读取的数据库 `schema` 名，多个可用 `,` 分隔。
 
-示例： `+zz:orm:my_database`
+Example: `+zz:orm:my_database`
 
-### 可选参数
+### Optional Arguments
 
 #### `filename`
 
 指定生成的文件路径，默认 `./zzgen.orm.go`
 
-示例： `+zz:orm:schema:filename=./models/`
+Example: `+zz:orm:schema:filename=./models/`
 
 #### `driver`
 
@@ -36,23 +36,23 @@
 
 默认 `mysql`。
 
-示例： `+zz:orm:schema:driver=sqlite`
+Example: `+zz:orm:schema:driver=sqlite`
 
 #### `type`
 
 指定生成时的数据类型映射。 格式 `${数据库DATA_TYPE}=${Golang类型}`
 
-示例： `+zz:orm:schema:type=varchar=MyString`
+Example: `+zz:orm:schema:type=varchar=MyString`
 
 可以使用 `,` 连接多个指定类型。
 
-示例： `+zz:orm:schema:type=varchar=MyString,varchar(255)=string,int unsign=uint`
+Example: `+zz:orm:schema:type=varchar=MyString,varchar(255)=string,int unsign=uint`
 
 数据库格式匹配的优先级由不同 `schemadriver` 自行控制。
 
 若要指定 `Nullable` 类型，可使用 `*` 前缀。
 
-示例： `+zz:orm:schema:type=*varchar=sql.NullString,*json=*json.RawMessage`
+Example: `+zz:orm:schema:type=*varchar=sql.NullString,*json=*json.RawMessage`
 
 #### `table`
 
@@ -60,7 +60,7 @@
 
 可以使用 `,` 连接多个表。
 
-示例： `+zz:orm:schema:table=user,car,order`
+Example: `+zz:orm:schema:table=user,car,order`
 
 #### `password`
 
@@ -72,7 +72,7 @@
 
 使用者可以只提供 `password`，就能通过默认安装地址和用户完成访问。
 
-建议通过以以下方式使用，示例：
+建议通过以以下方式使用，Example:
 
 ```shell
 read -s pwd && gozz run -p "orm:password=${pwd}" ./
@@ -84,15 +84,15 @@ read -s pwd && gozz run -p "orm:password=${pwd}" ./
 
 涉及 `:` 时要使用 `\` 进行[参数转义](../getting-started.md#参数转义)
 
-示例：
+Example:
 
 ```shell
 read -s pwd && gozz run -p "orm:dsn=dev_user\:${pwd}@tcp(192.168.1.2\:3306)/" ./
 ```
 
-## 示例
+## Examples
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/orm01) [示例SQL](https://github.com/datacharmer/test_db/blob/master/employees.sql)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/orm01) [示例SQL](https://github.com/datacharmer/test_db/blob/master/employees.sql)
 
 ```
 /orm01/

@@ -2,29 +2,29 @@
 
 用于快速生成 `Functional Options` 风格代码
 
-## 使用
+## Usage
 
-### 注解
+### Annotation
 
 `+zz:option`
 
-### 注解对象
+### Annotation Target
 
 `struct` 类型对象
 
-### 可选参数
+### Optional Arguments
 
 #### `type`
 
 为生成的函数选项创建一个指定的类型名
 
-示例：`+zz:option:type=Option`
+Example:`+zz:option:type=Option`
 
-## 示例
+### Example-01
 
-### 示例一
+### Example-01
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/option01)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/option01)
 
 ```
 /option01/
@@ -76,9 +76,9 @@ func WithPassword(v string) func(*Config) { return func(o *Config) { o.Password 
 
 ```
 
-### 示例二
+### Example-02
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/option02)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/option02)
 
 对两个不同的结构体添加注解，并使用 `type` 选项。
 

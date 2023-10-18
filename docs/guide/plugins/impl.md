@@ -4,31 +4,31 @@
 
 已存在的同名类方法会被同步方法签名(包括变量命名)，缺失的类型和类方法会在目标文件下追加。
 
-## 使用
+## Usage
 
-### 注解
+### Annotation
 
 `+zz:impl:[filename]:[...options]`
 
-### 注解对象
+### Annotation Target
 
 `interface` 类型对象
 
-### 必填参数
+### Exact Arguments
 
 #### `filename`
 
 实现接口的目标文件夹或文件，若提供非 `.go` 后缀路径，则使用 `impl.go` 作为文件名
 
-示例： `+zz:impl:./impls/type.go`
+Example: `+zz:impl:./impls/type.go`
 
-### 可选参数
+### Optional Arguments
 
 #### `type`
 
 指定目标类型名，若生成指针类方法，则需要加上 `*` 前缀，默认使用 `*${接口名}Impl`
 
-示例： `+zz:impl:./impls:type=*Impl`
+Example: `+zz:impl:./impls:type=*Impl`
 
 #### `wire`
 
@@ -36,7 +36,7 @@
 
 若目标类型已存在则不生效。
 
-示例： `+zz:impl:./impls:wire`
+Example: `+zz:impl:./impls:wire`
 
 #### `aop`
 
@@ -44,13 +44,13 @@
 
 若目标类型已存在或没有 `wire` 参数则不生效。
 
-示例： `+zz:impl:./impls:wire:aop`
+Example: `+zz:impl:./impls:wire:aop`
 
-## 示例
+## Examples
 
-### 示例一
+### Example-01
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl01)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/impl01)
 
 ```
 /impl01/
@@ -113,9 +113,9 @@ func (impl *ReadCloserImpl) Close() error {
 }
 ```
 
-### 示例二
+### Example-02
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl02)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/impl02)
 
 ```
 /impl02/
@@ -164,9 +164,9 @@ func (impl Impl) Close() error {
 }
 ```
 
-### 示例三
+### Example-03
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl03)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/impl03)
 
 ```
 /impl03/
@@ -237,9 +237,9 @@ func (impl Impl) Close() error {
 }
 ```
 
-### 示例四
+### Example-04
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/impl04)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/impl04)
 
 ```
 /impl04/

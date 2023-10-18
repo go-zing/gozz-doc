@@ -2,23 +2,23 @@
 
 模版化管理结构体字段标签
 
-## 使用
+## Usage
 
-### 注解
+### Annotation
 
 `+zz:tag:[tag]:[format]`
 
-### 注解对象
+### Annotation Target
 
 所有 `TypeSpec` 对象 和 被注解类型内部的结构体 `Field`
 
-### 必填参数
+### Exact Arguments
 
 #### `tag`
 
 生成标签的 Key，若有多 Key 重复 Value 可使用 `,` 分隔
 
-示例： <span v-pre> `+zz:tag:json,form,bson,sql:{{ snake .FieldName }}` </span>
+Example: <span v-pre> `+zz:tag:json,form,bson,sql:{{ snake .FieldName }}` </span>
 
 <br>
 
@@ -41,13 +41,13 @@ type T struct {
 
 生成标签的 Value，模版数据包含 字段名 `FieldName` 和 字段文档 `Doc`，可以使用各种内置字符串处理模版函数。
 
-示例： <span v-pre> `+zz:tag:json,form,bson,sql:{{ snake .FieldName }}` </span>
+Example: <span v-pre> `+zz:tag:json,form,bson,sql:{{ snake .FieldName }}` </span>
 
-## 示例
+## Examples
 
-### 示例一
+### Example-01
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag01)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag01)
 
 ```
 /tag01/
@@ -91,9 +91,9 @@ type User struct {
 
 新增标签的顺序会按 KEY 字典序排序
 
-### 示例二
+### Example-02
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag02)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag02)
 
 ```
 /tag02/
@@ -135,9 +135,9 @@ type User struct {
 
 `json` 标签值被更新为 `camelCase`，`bson` 标签被生成到代码中。
 
-### 示例三
+### Example-03
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag03)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag03)
 
 ```
 /tag03/
@@ -215,9 +215,9 @@ type (
 
 `bson` `json` 标签按格式插入到所有类型中
 
-### 示例四
+### Example-04
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag04)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag04)
 
 ```go
 // tag04/types.go
@@ -295,9 +295,9 @@ type (
 
 被定制化的结构体和字段标签按格式更新
 
-### 示例五
+### Example-05
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag05)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag05)
 
 ```
 /tag05/

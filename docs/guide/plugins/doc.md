@@ -2,17 +2,17 @@
 
 用于生成被注解对象的注释映射表，以及部分包含字段类型的字段注释映射。
 
-## 使用
+## Usage
 
-### 注解
+### Annotation
 
 `+zz:doc:[...options]`
 
-### 注解对象
+### Annotation Target
 
 除 `FuncDecl` 外支持的所有对象
 
-### 可选参数
+### Optional Arguments
 
 #### `label`
 
@@ -20,13 +20,13 @@
 
 可使用 `label` 对常量或变量进行分组，实现枚举或注册表的自动化管理。
 
-示例： `+zz:doc:label=enum_type`
+Example: `+zz:doc:label=enum_type`
 
-## 示例
+## Examples
 
-### 示例一
+### Example-01
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/doc01)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/doc01)
 
 ```
 /doc01/
@@ -164,7 +164,7 @@ func (Book) FieldDoc(f string) string { return _doc_Book[f] }
 
 ### Example-02
 
-[示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/doc02)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/doc02)
 
 ```
 /doc02/
