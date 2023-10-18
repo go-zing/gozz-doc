@@ -1,3 +1,20 @@
+const fs = require("fs");
+const path = require("path");
+
+
+function getPlugins(lang) {
+    try {
+        return fs
+            .readdirSync(path.resolve(__dirname, `..${lang}guide/plugins/`))
+            .filter(f => f !== 'README.md')
+            .map(filename => 'plugins/' + filename.slice(0, -3))
+            .sort()
+    } catch (e) {
+        return []
+    }
+}
+
+
 function getNavSidebar(lang, home, guide, story, plugin) {
     return {
         nav: [
@@ -13,27 +30,14 @@ function getNavSidebar(lang, home, guide, story, plugin) {
         ],
         sidebar: {
             [lang + 'guide/']: [
+                '',
+                'getting-started',
+                'how-it-works',
                 {
-                    title: guide,
-                    children: [
-                        '',
-                        'getting-started',
-                        'how-it-works',
-                        {
-                            title: plugin,
-                            path: lang + "guide/plugins/",
-                            collapsable: false,
-                            children: [
-                                'plugins/wire',
-                                'plugins/api',
-                                'plugins/impl',
-                                'plugins/doc',
-                                'plugins/tag',
-                                'plugins/orm',
-                                'plugins/option',
-                            ]
-                        },
-                    ]
+                    title: plugin,
+                    path: lang + "guide/plugins/",
+                    collapsable: false,
+                    children: getPlugins(lang),
                 },
             ],
         }
@@ -71,7 +75,7 @@ module.exports = {
         locales: {
             '/': {
                 label: 'English',
-                ...getNavSidebar('/', 'Home', 'Guide', 'Story', 'Internal Plugins'),
+                ...getNavSidebar('/', 'Home', 'Guide', 'Story', 'Plugins'),
             },
             '/zh/': {
                 label: '简体中文',
@@ -79,7 +83,7 @@ module.exports = {
                 ariaLabel: '选择语言',
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
-                ...getNavSidebar('/zh/', '首页', '指南', '前世今生', '内置插件'),
+                ...getNavSidebar('/zh/', '首页', '指南', '前世今生', '插件'),
             }
         },
         displayAllHeaders: true,

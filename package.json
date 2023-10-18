@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "author": "Maple Wu",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "devDependencies": {
     "vuepress": "^1.9.10"
   },
