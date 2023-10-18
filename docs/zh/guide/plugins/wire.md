@@ -98,15 +98,14 @@ go install github.com/google/wire/cmd/wire@latest
 例：
 
 ```go
-// +zz:wire
 package x
 
+// +zz:wire
 type Implement struct{}
 
 func ProvideImplement() *Implement {
 	return &Implement{}
 }
-
 ```
 
 #### 外部引用类型
