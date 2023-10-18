@@ -12,12 +12,16 @@ module.exports = {
             description: '基于编译时的 Golang 注解分析及代码生成器，提供开箱即用的架构强化和插件化扩展能力，协助落地企业级最佳实践、提速业务开发。'
         }
     },
+    plugins: [
+        ['vuepress-plugin-smooth-scroll', true],
+        ['@vuepress/back-to-top', true],
+    ],
     markdown: {
         lineNumbers: false
     },
     themeConfig: {
-        repo: 'https://github.com/go-zing/gozz',
-        docsRepo: 'https://github.com/go-zing/gozz-doc',
+        repo: 'go-zing/gozz',
+        docsRepo: 'go-zing/gozz-doc',
         docsDir: 'docs',
         docsBranch: 'master',
         editLinks: true,
