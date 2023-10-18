@@ -1,6 +1,6 @@
 # 快速上手
 
-`Gozz` 命令行工具基于 [cobra](https://github.com/spf13/cobra) 构建，命令行交互语法遵循格式：
+`Gozz` CLI 基于 [cobra](https://github.com/spf13/cobra) 构建，命令行交互语法遵循格式：
 
 ```shell
 gozz [--GLOBAL-FLAGS] [COMMAND] [--COMMAND-FLAGS] [ARGS]

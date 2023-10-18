@@ -55,16 +55,15 @@ module.exports = {
         ['link', {rel: 'icon', href: '/favicon.ico'}]
     ],
     title: 'GOZZ',
-    description: 'Gozz official documents page and user guides',
     base: "/gozz/",
     locales: {
         '/': {
             lang: 'en-US',
-            description: 'A golang compile time ast generator and template-programing toolkits'
+            description: 'Golang Annotation Analyzer and Template-Programing Kits'
         },
         '/zh/': {
             lang: 'zh-CN',
-            description: '基于编译时的 Golang 注解分析及代码生成器，提供开箱即用的架构强化和插件化扩展能力，协助落地企业级最佳实践、提速业务开发。'
+            description: 'Golang 注解分析及模板化代码工具'
         }
     },
     plugins: [

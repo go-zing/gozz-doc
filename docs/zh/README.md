@@ -1,16 +1,16 @@
 ---
 home: true
-heroText:
+heroText: Gozz
 heroImage: /logo.png
 actionText: 快速上手 →
 actionLink: ./guide/getting-started
 features:
-  - title: 简洁易用、无侵入
-    details: 在代码添加注释注解就能使用，注解语法直观，命令行参数简约，无其他运行时侵入依赖库。
+  - title: 简洁易用无侵入
+    details: 直观明了的注解语法，干净利落的命令行工具，以及无需添加运行时依赖就能使用的生成代码。
   - title: 内置强大插件
-    details: 提供 自动化依赖注入、AOP接口代理、Interface -> Implement 生成同步、ORM结构体、API路由映射表 等内置插件。
-  - title: 可定制高拓展性
-    details: 代码生成模版可自定义，内核提供代码分析、编辑、生成等工具库，可通过 .so 扩展外部插件。
+    details: 自动化依赖注入、AOP接口代理、Interface -> Implement 同步、ORM、API路由表等。
+  - title: 高拓展性
+    details: 可自定义生成模版，提供代码分析、编辑、生成等内核库，基于 .so 快速开发和扩展外部插件。
 ---
 
 
