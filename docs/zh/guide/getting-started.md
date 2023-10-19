@@ -1,5 +1,13 @@
 # 快速上手
 
+## 安装
+
+```shell
+go install github.com/go-zing/gozz@latest
+```
+
+## 使用
+
 `Gozz` CLI 基于 [cobra](https://github.com/spf13/cobra) 构建，命令行交互语法遵循格式：
 
 ```shell

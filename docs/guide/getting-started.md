@@ -1,5 +1,13 @@
 # Get Started
 
+## Install
+
+```shell
+go install github.com/go-zing/gozz@latest
+```
+
+## Usage
+
 `Gozz` CLI is built with [cobra](https://github.com/spf13/cobra), command syntax as follows:
 
 ```shell
