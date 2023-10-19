@@ -429,7 +429,9 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 			"options": map[string]string{
 				"path": "ret",
 			},
-			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return t.Ret(), nil },
+			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+				return t.Ret(), nil
+			},
 		},
 		{
 			"name":     "Error",
@@ -437,7 +439,9 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 			"options": map[string]string{
 				"path": "error",
 			},
-			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return nil, t.Error() },
+			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+				return nil, t.Error()
+			},
 		},
 		{
 			"name":     "RetError",
@@ -445,7 +449,9 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 			"options": map[string]string{
 				"path": "ret_error",
 			},
-			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return t.RetError() },
+			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+				return t.RetError()
+			},
 		},
 		{
 			"name":     "Context",
