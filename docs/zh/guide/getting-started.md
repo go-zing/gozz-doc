@@ -1,12 +1,14 @@
 # 快速上手
 
-## 安装
+## 使用
+
+### 安装
 
 ```shell
 go install github.com/go-zing/gozz@latest
 ```
 
-## 使用
+### 命令行
 
 `Gozz` CLI 基于 [cobra](https://github.com/spf13/cobra) 构建，命令行交互语法遵循格式：
 
@@ -14,7 +16,7 @@ go install github.com/go-zing/gozz@latest
 gozz [--GLOBAL-FLAGS] [COMMAND] [--COMMAND-FLAGS] [ARGS]
 ```
 
-## 环境
+### 环境
 
 `Gozz` 在启动时会自动加载用户目录 `~/.gozz/plugins/` 下的 `.so` 插件，期间发生的异常会被忽略。
 
@@ -74,7 +76,7 @@ gozz run -p "foo:key=value:key2=value2" ./
 
 `+zz:foo:key=value3(已有值未被覆盖):key2=value2(缺省值使用默认)`
 
-### [WIP] `gozz install`
+### `gozz install`
 
 用法
 
@@ -117,9 +119,9 @@ go build --buildmode=plugin -o sqlite.so ./contrib/sqlite
 - 其他影响 Golang 插件机制的环境因素：
   [一文搞懂Go语言的plugin](https://tonybai.com/2021/07/19/understand-go-plugin/)。
 
-## 全局参数
+### 全局参数
 
-### `-x / --extension [filename]`
+#### `-x / --extension [filename]`
 
 例：
 

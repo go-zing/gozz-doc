@@ -1,12 +1,14 @@
 # Get Started
 
-## Install
+## Usage
+
+### Install
 
 ```shell
 go install github.com/go-zing/gozz@latest
 ```
 
-## Usage
+## CLI
 
 `Gozz` CLI is built with [cobra](https://github.com/spf13/cobra), command syntax as follows:
 
@@ -14,7 +16,7 @@ go install github.com/go-zing/gozz@latest
 gozz [--GLOBAL-FLAGS] [COMMAND] [--COMMAND-FLAGS] [ARGS]
 ```
 
-## Environment
+### Environment
 
 `Gozz` would lookup `.so` plugins in user's home directory `~/.gozz/plugins/` when starts up,
 exception raised during these default plugins loading would be ignored.
@@ -86,7 +88,7 @@ If annotation `+zz:foo:key=value3` got default option `key=value:key2=value2`, t
 
 `+zz:foo:key=value3(key exist,ignore):key2=value2(override from default)`
 
-### [WIP] `gozz install`
+### `gozz install`
 
 Usage:
 
@@ -129,9 +131,9 @@ go build --buildmode=plugin -o sqlite.so ./contrib/sqlite
 - Others factors effect compatibility of `go/plugin`.
   checkout: [Understand Go Plugin](https://tonybai.com/2021/07/19/understand-go-plugin/)。
 
-## Global Flags
+### Global Flags
 
-### `-x / --extension [filename]`
+#### `-x / --extension [filename]`
 
 Example:
 
