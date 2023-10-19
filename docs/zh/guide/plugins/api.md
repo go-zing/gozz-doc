@@ -41,9 +41,7 @@ type BookService interface {
 
 `interface` 对象 及 `interface` 方法
 
-### 必填参数
-
-#### 用于 `interface` 对象
+### 必填参数 `interface` 对象
 
 #### `filename`
 
@@ -51,7 +49,7 @@ type BookService interface {
 
 示例： `+zz:api:./`
 
-#### 用于 `interface` 方法
+### 必填参数 `interface` 方法
 
 #### `method`
 

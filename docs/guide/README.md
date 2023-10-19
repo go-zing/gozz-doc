@@ -2,13 +2,13 @@
 
 `Gozz` was made from two parts：
 
+- [gozz](https://github.com/go-zing/gozz) is CLI for the project.
+  It manages the runtime of process,
+  parses commands and invokes plugins or extension plugins.
 - [gozz-core](https://github.com/go-zing/gozz-core) provides core library,
   contains code and annotations parsing, object types,
   caches and so one core functional dependencies.
   It also provides tools on handing codes and files for plugins.
-- [gozz](https://github.com/go-zing/gozz) is CLI for the project.
-  It manages the runtime of process,
-  parses commands and invokes plugins or extension plugins.
 
 `Gozz` a series of built-in plug-ins,
 dedicated to providing tool-based solutions for some of the technical needs,
@@ -80,23 +80,23 @@ There is a point in [The mythical man-month](https://en.wikipedia.org/wiki/The_M
 about `conceptual integrity`.
 This system design concept is also one that the author agrees with:
 
-**The core architecture design of the system needs to be autocratically controlled by a few people**
+**The core architecture design of the system needs to be autocratically controlled by a few people.**
 
 Therefore, the team needs a core senior role to provide the `Gozz` configuration suitable for the team,
 and maintain the generated templates and adaptation layers.
 
-Within the team, the use of `Gozz` should not cause too much disagreement.
+Within the team, how to configure `Gozz` and its templates should not cause too much disagreement.
 
-Other members only need to follow the team's specifications to run `Gozz` within `Makefile` or DevOps pipeline,
-execute them before commit or build.
+Other members should follow the team's specifications to run `Gozz` within `Makefile` or DevOps pipeline,
+and execute them before commit or build.
 
 <br>
 
 Ensuring production stability,
-`Gozz` still encourages all team roles to actively explore and learn how to optimize the
+`Gozz` still encourages every team roles to actively explore and learn how to optimize the
 architectural design of business and projects, and do more and better things at lower costs.
 
-`Gozz` will also provide some best practices in project examples for developers to refer to.
+We would also provide some best practices in project examples for developers to refer to.
 
 ### Micro or Monolith
 
@@ -109,7 +109,7 @@ reconstruction needs of some code system projects with lines and lines of codes.
 
 Microservices only represent the `Micro / Pluggable / Extensible`
 of individual services in the design of business dependency areas,
-but it never means that the project code architecture level and design are simple.
+but it never means that the project code architecture and design may be simple.
 Or the service has fewer maintenance staff.
 
 If you want to improve the code quality and collaboration efficiency of your team's projects,
