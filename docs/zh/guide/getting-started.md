@@ -193,16 +193,16 @@ type T interface{}
 
 #### Boolean Option
 
-部分可选参数，插件会以某个 Key 存在与否 作为 `Boolean Option`。
+部分可选参数，插件判断以某个Key是否存在，来判断特性是否开启。
 
 此类参数如果 Value 不为空，会额外判断 Value 是否为 `0 / false / null` 等否定含义。
 
 即:
 
-- `+zz:bar:arg3=value:arg4` 解析为 `{"arg3":"value","arg4":""}`
-- `+zz:bar:arg3=value:arg4=true` 解析为 `{"arg3":"value","arg4":"true"}`
-- `+zz:bar:arg3=value:arg4=false` 解析为 `{"arg3":"value"}`
-- `+zz:bar:arg3=value:arg4=0` 解析为 `{"arg3":"value"}`
+- `+zz:bar:arg3=value:arg4` -> `{"arg3":"value","arg4":""}`
+- `+zz:bar:arg3=value:arg4=true` -> `{"arg3":"value","arg4":"true"}`
+- `+zz:bar:arg3=value:arg4=false` -> `{"arg3":"value"}`
+- `+zz:bar:arg3=value:arg4=0` -> `{"arg3":"value"}`
 
 #### 参数转义
 
@@ -292,7 +292,7 @@ type T2 interface{}
 type T interface{}
 ```
 
-## 大于配置的约定
+## 其他约定
 
 ### 生成文件路径
 
@@ -429,16 +429,5 @@ type API interface{}
 若有，则会直接读取该模版文件作为生成模版。
 
 否则，将会使用插件内建的默认模版文本，并输出为 `${filename}.impl` 模版文件在生成代码同目录。
-
-<br>
-
-[WIP] 代码模版生成类的插件都支持添加 `template=${filename}` 可选参数，例：
-
-```go
-// +zz:api:/:template=/.gozz/api.tmpl
-type API interface{}
-```
-
-模版文件和生成文件的路径定位规则一致，没有 `.tmpl` 后缀时，会使用生成文件名加上 `.tmpl` 后缀作为模版文件名。
 
 

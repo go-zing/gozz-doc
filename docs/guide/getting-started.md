@@ -450,15 +450,3 @@ This example would get filepath `/go/src/project/types/zzgen.api.go`
 For most of the code generation, we would check whether exist file named `${filename}.impl` in directory.
 
 If it exists, it would be used as generate template. Else, a builtin template with this name would be generated.
-
-### Specified Template
-
-[WIP] Plugins may support optional arguments `template=${filename}` for specified template filepath:
-
-```go
-// +zz:api:/:template=/.gozz/api.tmpl
-type API interface{}
-```
-
-
-

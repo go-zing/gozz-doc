@@ -14,7 +14,7 @@ package x
 
 // +zz:api:[filename]:[...options]
 type T interface {
-	// +zz:api:[method]:[resource]:[...options]
+	// +zz:api:[resource]:[...options]
 	Method(param Param) (result Result, err error)
 
 	// method without annotations would be ignored
@@ -44,19 +44,32 @@ type BookService interface {
 
 Specify generate filename.
 
-Example: `+zz:api:./`
+Example:
+
+```go
+package x
+
+// +zz:api:./
+type T interface{}
+```
 
 ### Exact Arguments For `interface` method
-
-#### `method`
-
-would be main property in `API Routing Map`
 
 #### `resource`
 
 would be main property in `API Routing Map`
 
-Example: `+zz:api:get:detail`
+Example:
+
+```go
+package x
+
+// +zz:api:./
+type T interface {
+	// +zz:api:get|detail
+	Method()
+}
+```
 
 ### Optional Arguments
 
@@ -70,13 +83,13 @@ package x
 
 // +zz:api:./:prefix=book:role=read
 type BookService interface {
-	// +zz:api:get:
+	// +zz:api:get
 	ListBook() (book []Book, err error)
-	// +zz:api:get:{id}
+	// +zz:api:get|{id}
 	GetBook(id int) (book Book, err error)
-	// +zz:api:post:{id}:role=write
+	// +zz:api:post|{id}:role=write
 	NewBook(book Book) (id int, err error)
-	// +zz:api:put:{id}:role=write
+	// +zz:api:put|{id}:role=write
 	UpdateBook(book Book) (err error)
 }
 ```
@@ -88,13 +101,13 @@ package x
 
 // +zz:api:./
 type BookService interface {
-	// +zz:api:get::prefix=book:role=read
+	// +zz:api:get:prefix=book:role=read
 	ListBook() (book []Book, err error)
-	// +zz:api:get:{id}:prefix=book:role=read
+	// +zz:api:get|{id}:prefix=book:role=read
 	GetBook(id int) (book Book, err error)
-	// +zz:api:post:{id}:prefix=book:role=write
+	// +zz:api:post|{id}:prefix=book:role=write
 	NewBook(book Book) (id int, err error)
-	// +zz:api:put:{id}:prefix=book:role=write
+	// +zz:api:put|{id}:prefix=book:role=write
 	UpdateBook(book Book) (err error)
 }
 ```
@@ -128,24 +141,24 @@ package api01
 // +zz:api:./:prefix={{ snake .Name }}:id={{ .Name }}.{{ .FieldName }}
 type (
 	BookService interface {
-		// +zz:api:get:
+		// +zz:api:get
 		List(ctx context.Context, query QueryBook) (ret ListBook, err error)
-		// +zz:api:get:{id}
+		// +zz:api:get|{id}
 		Get(ctx context.Context, query QueryBook) (data DataBook, err error)
-		// +zz:api:post:
+		// +zz:api:post
 		Create(ctx context.Context, form FormBook) (data DataBook, err error)
-		// +zz:api:put:{id}
+		// +zz:api:put|{id}
 		Edit(ctx context.Context, form FormBook) (data DataBook, err error)
 	}
 
 	UserService interface {
-		// +zz:api:get:
+		// +zz:api:get
 		List(ctx context.Context, query QueryUser) (ret ListUser, err error)
-		// +zz:api:get:{id}
+		// +zz:api:get|{id}
 		Get(ctx context.Context, query QueryUser) (data DataBook, err error)
-		// +zz:api:post:
+		// +zz:api:post
 		Create(ctx context.Context, query FormUser) (data DataBook, err error)
-		// +zz:api:put:{id}
+		// +zz:api:put|{id}
 		Edit(ctx context.Context, form FormUser) (data DataBook, err error)
 	}
 )
@@ -184,8 +197,7 @@ func (s Apis) _BookService() (interface{}, []map[string]interface{}) {
 	return &t, []map[string]interface{}{
 		{
 			"name":     "List",
-			"method":   "get",
-			"resource": "",
+			"resource": "get",
 			"options": map[string]string{
 				"id":     "BookService.List",
 				"prefix": "book_service",
@@ -200,8 +212,7 @@ func (s Apis) _BookService() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "Get",
-			"method":   "get",
-			"resource": "{id}",
+			"resource": "get|{id}",
 			"options": map[string]string{
 				"id":     "BookService.Get",
 				"prefix": "book_service",
@@ -216,8 +227,7 @@ func (s Apis) _BookService() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "Create",
-			"method":   "post",
-			"resource": "",
+			"resource": "post",
 			"options": map[string]string{
 				"id":     "BookService.Create",
 				"prefix": "book_service",
@@ -232,8 +242,7 @@ func (s Apis) _BookService() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "Edit",
-			"method":   "put",
-			"resource": "{id}",
+			"resource": "put|{id}",
 			"options": map[string]string{
 				"id":     "BookService.Edit",
 				"prefix": "book_service",
@@ -254,8 +263,7 @@ func (s Apis) _UserService() (interface{}, []map[string]interface{}) {
 	return &t, []map[string]interface{}{
 		{
 			"name":     "List",
-			"method":   "get",
-			"resource": "",
+			"resource": "get",
 			"options": map[string]string{
 				"id":     "UserService.List",
 				"prefix": "user_service",
@@ -270,8 +278,7 @@ func (s Apis) _UserService() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "Get",
-			"method":   "get",
-			"resource": "{id}",
+			"resource": "get|{id}",
 			"options": map[string]string{
 				"id":     "UserService.Get",
 				"prefix": "user_service",
@@ -286,8 +293,7 @@ func (s Apis) _UserService() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "Create",
-			"method":   "post",
-			"resource": "",
+			"resource": "post",
 			"options": map[string]string{
 				"id":     "UserService.Create",
 				"prefix": "user_service",
@@ -302,8 +308,7 @@ func (s Apis) _UserService() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "Edit",
-			"method":   "put",
-			"resource": "{id}",
+			"resource": "put|{id}",
 			"options": map[string]string{
 				"id":     "UserService.Edit",
 				"prefix": "user_service",
@@ -339,48 +344,48 @@ This example would show wide scope supporting of `invoke` static function genera
 // api02/types.go
 package api02
 
-// +zz:api:./
+// +zz:api:./:path={{ snake .FieldName }}
 type (
 	T interface {
-		// +zz:api:get:
+		// +zz:api:get
 		Empty()
-		// +zz:api:get:
+		// +zz:api:get
 		Ret() (ret int)
-		// +zz:api:get:
+		// +zz:api:get
 		Error() (err error)
-		// +zz:api:get:
+		// +zz:api:get
 		RetError() (ret int, err error)
-		// +zz:api:get:
+		// +zz:api:get
 		Context(ctx context.Context)
-		// +zz:api:get:
+		// +zz:api:get
 		ContextRet(ctx context.Context) (ret int)
-		// +zz:api:get:
+		// +zz:api:get
 		ContextError(ctx context.Context) (err error)
-		// +zz:api:get:
+		// +zz:api:get
 		ContextRetError(ctx context.Context) (ret int, err error)
-		// +zz:api:get:
+		// +zz:api:get
 		Param(param int)
-		// +zz:api:get:
+		// +zz:api:get
 		ParamRet(param int) (ret error)
-		// +zz:api:get:
+		// +zz:api:get
 		ParamError(param int) (err error)
-		// +zz:api:get:
+		// +zz:api:get
 		ParamRetError(param int) (ret int, err error)
-		// +zz:api:get:
+		// +zz:api:get
 		ContextParam(ctx context.Context, param int)
-		// +zz:api:get:
+		// +zz:api:get
 		ContextParamRet(ctx context.Context, param int) (ret int)
-		// +zz:api:get:
+		// +zz:api:get
 		ContextParamError(ctx context.Context, param int) (err error)
-		// +zz:api:get:
+		// +zz:api:get
 		ContextParamRetError(ctx context.Context, param int) (ret int, err error)
-		// +zz:api:get:
+		// +zz:api:get
 		ComplexParam(param map[context.Context][]struct {
 			Field []func(context.Context) interface {
 				context.Context
 			}
 		})
-		// +zz:api:get:
+		// +zz:api:get
 		PtrParam(*int)
 	}
 )
@@ -409,9 +414,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 	return &t, []map[string]interface{}{
 		{
 			"name":     "Empty",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "empty",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				t.Empty()
 				return nil, nil
@@ -419,30 +425,34 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "Ret",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
-			"invoke":   func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return t.Ret(), nil },
+			"resource": "get",
+			"options": map[string]string{
+				"path": "ret",
+			},
+			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return t.Ret(), nil },
 		},
 		{
 			"name":     "Error",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
-			"invoke":   func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return nil, t.Error() },
+			"resource": "get",
+			"options": map[string]string{
+				"path": "error",
+			},
+			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return nil, t.Error() },
 		},
 		{
 			"name":     "RetError",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
-			"invoke":   func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return t.RetError() },
+			"resource": "get",
+			"options": map[string]string{
+				"path": "ret_error",
+			},
+			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) { return t.RetError() },
 		},
 		{
 			"name":     "Context",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				t.Context(ctx)
 				return nil, nil
@@ -450,36 +460,40 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ContextRet",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context_ret",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				return t.ContextRet(ctx), nil
 			},
 		},
 		{
 			"name":     "ContextError",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context_error",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				return nil, t.ContextError(ctx)
 			},
 		},
 		{
 			"name":     "ContextRetError",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context_ret_error",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				return t.ContextRetError(ctx)
 			},
 		},
 		{
 			"name":     "Param",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "param",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -491,9 +505,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ParamRet",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "param_ret",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -504,9 +519,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ParamError",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "param_error",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -517,9 +533,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ParamRetError",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "param_ret_error",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -530,9 +547,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ContextParam",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context_param",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -544,9 +562,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ContextParamRet",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context_param_ret",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -557,9 +576,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ContextParamError",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context_param_error",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -570,9 +590,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ContextParamRetError",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "context_param_ret_error",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
@@ -583,9 +604,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "ComplexParam",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "complex_param",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in map[context.Context][]struct {
 					Field []func(context.Context) interface {
@@ -601,9 +623,10 @@ func (s Apis) _T() (interface{}, []map[string]interface{}) {
 		},
 		{
 			"name":     "PtrParam",
-			"method":   "get",
-			"resource": "",
-			"options":  map[string]string{},
+			"resource": "get",
+			"options": map[string]string{
+				"path": "ptr_param",
+			},
 			"invoke": func(ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 				var in int
 				if err := dec(&in); err != nil {
