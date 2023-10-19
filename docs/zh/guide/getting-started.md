@@ -79,7 +79,7 @@ gozz run -p "foo:key=value:key2=value2" ./
 用法
 
 ```shell
-gozz install [--output/-o] [--filename/-f] [repository] 
+gozz install [--output/-o] [--filepath/-f] [repository] 
 ```
 
 运行该指令会尝试将提供的 `repository` 代码编译为 `.so` 插件文件，并安装至用户目录 `~/.gozz/plugins`
@@ -90,11 +90,11 @@ gozz install [--output/-o] [--filename/-f] [repository]
 当 `repository` 带有网络协议前缀时，如 `ssh://、git://、http://、https://` ，会使用 `git` 进行仓库远程下载，
 否则会视为本地文件路径。
 
-#### 可选参数 `--output / -o "filename"`
+#### 可选参数 `--output / -o`
 
 指定该参数时，编译结果会输出为指定文件名，不再自动安装到用户目录。
 
-#### 可选参数 `--filename / -f "filename"`
+#### 可选参数 `--filename / -f`
 
 指定该参数时，编译会使用该参数作为相对路径进行编译。
 

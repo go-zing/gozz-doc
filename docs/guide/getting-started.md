@@ -91,7 +91,7 @@ If annotation `+zz:foo:key=value3` got default option `key=value:key2=value2`, t
 Usage:
 
 ```shell
-gozz install [--output/-o] [--filename/-f] [repository] 
+gozz install [--output/-o] [--filepath/-f] [repository] 
 ```
 
 This command would try complies `repository` into `.so` plugin,
@@ -102,13 +102,13 @@ then saves in user's plugins path `~/.gozz/plugins` ( or environment `GOZZ_PLUGI
 if `repository` starts with network protocol, such as `ssh:// git:// http:// https://`,
 it try downloads these url with `git`, otherwise use url as local filepath.
 
-#### Flag `--output / -o "filename"`
+#### Flag `--output / -o`
 
 If it was specified, build results would output as provided filename, and do not install into plugins dir.
 
-#### Flag `--filename / -f "filename"`
+#### Flag `--filepath / -f`
 
-If it was specified, build plugins with this relative filename from repository root.
+If it was specified, build plugins with this relative filepath from repository root.
 
 Example:
 
