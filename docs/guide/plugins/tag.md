@@ -1,6 +1,6 @@
 # Tag
 
-模版化管理结构体字段标签
+Manager struct field tag in templating mode.
 
 ## Usage
 
@@ -10,21 +10,21 @@
 
 ### Annotation Target
 
-所有 `TypeSpec` 对象 和 被注解类型内部的结构体 `Field`
+All `TypeSpec` object and struct fields in annotated type.
 
 ### Exact Arguments
 
 #### `tag`
 
-生成标签的 Key，若有多 Key 重复 Value 可使用 `,` 分隔
+Specify tag key, if there are multi key with same value, use `,` to separate them.
 
 Example: <span v-pre> `+zz:tag:json,form,bson,sql:{{ snake .FieldName }}` </span>
 
 <br>
 
-注解字段的 `tag` 可以使用 `+` 前缀，去对类型注解同个 `tag` 进行补充
+Use `tag` begins with `+`, to append same key value.
 
-示例:
+Example:
 
 ```go
 package x
@@ -39,7 +39,8 @@ type T struct {
 
 #### `format`
 
-生成标签的 Value，模版数据包含 字段名 `FieldName` 和 字段文档 `Doc`，可以使用各种内置字符串处理模版函数。
+Specify generate tag value, could use template data contains `FieldName` and field doc `Doc`.
+Strings functions like `snake` / `camel`  are also provided.
 
 Example: <span v-pre> `+zz:tag:json,form,bson,sql:{{ snake .FieldName }}` </span>
 
@@ -69,7 +70,7 @@ type User struct {
 }
 ```
 
-当前没有定义标签。使用注解指定：字段名 `snake_case` 格式的 `json` `bson` 标签。
+Use annotation to specify `json` `bson` in snake case `FieldName`
 
 执行 `gozz run -p "tag" ./`
 
@@ -87,9 +88,9 @@ type User struct {
 }
 ```
 
-`bson` `json` 标签被插入到代码中
+`bson` `json` tags were correctly generated.
 
-新增标签的顺序会按 KEY 字典序排序
+New tags would follow letter order by key.
 
 ### Example-02
 
@@ -115,9 +116,9 @@ type User struct {
 }
 ```
 
-当前已有定义 `json` 标签。使用注解指定：字段名 `camel` 格式的 `json` `bson` 标签。
+This struct has exist `json` tag, use annotation to specify camel case `json` `bson`.
 
-执行 `gozz run -p "tag" ./`
+Execute `gozz run -p "tag" ./`.
 
 ```go
 // tag02/types.go
@@ -133,7 +134,7 @@ type User struct {
 }
 ```
 
-`json` 标签值被更新为 `camelCase`，`bson` 标签被生成到代码中。
+All `json` tags were updated as `camelCase` and `bson` tags were generated.
 
 ### Example-03
 
@@ -177,9 +178,10 @@ type (
 )
 ```
 
-当前没有定义标签。使用 `Decl` 注解为多个类型指定：字段名 `snake_case` 格式的 `json` `bson` 标签。
+These struct do not have any tags.
+Use `Decl` scope annotation to specify snake case `json` `bson`.
 
-执行 `gozz run -p "tag" ./`
+Execute `gozz run -p "tag" ./`.
 
 ```go
 // tag03/types.go
@@ -213,7 +215,7 @@ type (
 )
 ```
 
-`bson` `json` 标签按格式插入到所有类型中
+Tags `bson` `json` were generated in desired format.
 
 ### Example-04
 
@@ -254,9 +256,9 @@ type (
 )
 ```
 
-对 [示例三](tag.md#示例三) 中进行部分结构体和字段的定制化调整
+This example have a bit difference with [Example-03](./tag.md#example-03) about some struct and field.
 
-执行 `gozz run -p "tag" ./`
+Execute `gozz run -p "tag" ./`.
 
 ```go
 // tag04/types.go
@@ -293,7 +295,7 @@ type (
 )
 ```
 
-被定制化的结构体和字段标签按格式更新
+The specify struct and fields were updated as desired.
 
 ### Example-05
 
@@ -362,9 +364,9 @@ type (
 )
 ```
 
-该例子包含了大部分常见的复杂类型以及结构体内嵌场景
+This example shows most common complex types and struct embed.
 
-执行 `gozz run -p "tag" ./`
+Execute `gozz run -p "tag" ./`
 
 ```go
 // tag05/types.go
@@ -423,4 +425,4 @@ type (
 )
 ```
 
-所有场景的结构体字段标签都可以被成功处理。
+All these cases were supported.

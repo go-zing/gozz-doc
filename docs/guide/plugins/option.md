@@ -1,6 +1,6 @@
 # Option
 
-用于快速生成 `Functional Options` 风格代码
+Generates `Functional Options` style codes
 
 ## Usage
 
@@ -10,17 +10,17 @@
 
 ### Annotation Target
 
-`struct` 类型对象
+`struct` object
 
 ### Optional Arguments
 
 #### `type`
 
-为生成的函数选项创建一个指定的类型名
+Specify type name for option function
 
 Example:`+zz:option:type=Option`
 
-### Example-01
+## Example
 
 ### Example-01
 
@@ -49,7 +49,7 @@ type Config struct {
 }
 ```
 
-执行 `gozz run -p "option" ./`，生成了 `zzgen.option.go` 文件
+Execute `gozz run -p "option" ./`, and it generates file `zzgen.option.go` and template file.
 
 ```go
 // option01/zzgen.option.go
@@ -80,7 +80,7 @@ func WithPassword(v string) func(*Config) { return func(o *Config) { o.Password 
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/option02)
 
-对两个不同的结构体添加注解，并使用 `type` 选项。
+Add annotations on different struct with option `type`.
 
 ```go
 // option02/types.go
@@ -106,7 +106,7 @@ type (
 )
 ```
 
-执行 `gozz run -p "option" ./`，生成了 `zzgen.option.go` 文件
+Execute `gozz run -p "option" ./`, and it generates file `zzgen.option.go` and template file.
 
 ```go
 // option02/zzgen.option.go

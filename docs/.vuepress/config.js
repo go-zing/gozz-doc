@@ -18,15 +18,9 @@ function getPlugins(lang) {
 function getNavSidebar(lang, home, guide, story, plugin) {
     return {
         nav: [
-            {
-                text: home, link: lang + "",
-            },
-            {
-                text: guide, link: lang + "guide/",
-            },
-            {
-                text: story, link: lang + "story/",
-            },
+            {text: home, link: lang + "",},
+            {text: guide, link: lang + "guide/",},
+            // {text: story, link: lang + "story/",},
         ],
         sidebar: {
             [lang + 'guide/']: [

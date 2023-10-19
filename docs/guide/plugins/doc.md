@@ -1,6 +1,6 @@
 # Doc
 
-用于生成被注解对象的注释映射表，以及部分包含字段类型的字段注释映射。
+Generates comments mapping table for annotated object, as well as fields comments.
 
 ## Usage
 
@@ -10,15 +10,15 @@
 
 ### Annotation Target
 
-除 `FuncDecl` 外支持的所有对象
+All object except of `FuncDecl`.
 
 ### Optional Arguments
 
 #### `label`
 
-仅对 `ValueSpec` 类型对象生效，即全局常量和变量
+This option only works for `ValueSpec` object, such as `const` and `var` .
 
-可使用 `label` 对常量或变量进行分组，实现枚举或注册表的自动化管理。
+Use `label` to group values, to implement enum values or value set.
 
 Example: `+zz:doc:label=enum_type`
 
@@ -93,11 +93,9 @@ const (
 )
 ```
 
-为代码中的对象添加注释
+Add comments on object.
 
-执行 `gozz run -p "doc" ./`
-
-生成了 `doc01/zzgen.doc.go` 和默认模版 `doc01/zzgen.doc.go.tmpl`
+Execute `gozz run -p "doc" ./`, and it generates file `zzgen.doc.go` and template file.
 
 ```go
 // doc01/types.go
@@ -156,11 +154,11 @@ func (User) FieldDoc(f string) string { return _doc_User[f] }
 func (Book) FieldDoc(f string) string { return _doc_Book[f] }
 ```
 
-所有注解对象的注释根据  `TypeSpec` 或 `ValueSpec` 收集到了 `_types_doc` 和 `_values_doc`。
-
-`interface` 和 `struct` 类型提供了字段注释的索引，对数据类型提供了 `FieldDoc` 的类方法。
-
-`_values_doc` 下再通过注解指定的 `label` 对不同的值进行分组。
+- Annotated object comments were collected in `_types_doc` and `_values_doc`,
+  according to `TypeSpec` or `ValueSpec`.
+- Type `interface` and `struct` also contain comments for field.
+- For data type, common `FieldDoc` method were generated.
+- Values were grouped in `_values_doc` with different label.
 
 ### Example-02
 
@@ -206,10 +204,9 @@ type T struct {
 // 18
 ```
 
-这个示例会展示 `Golang AST` 对对象注释关联的有效判定范围
+This example would show you how `Golang AST` were detect object comments.
 
-
-执行 `gozz run -p "doc" ./`，注意观察 生成的 `zzgen.doc.go` 
+Execute `gozz run -p "doc" ./`, and focus on `zzgen.doc.go` generated.
 
 ```go
 // doc02/zzgen.doc.go

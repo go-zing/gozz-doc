@@ -1,8 +1,9 @@
 # Impl
 
-用于在指定路径文件夹下，生成 实现被注解 `interface` 的数据类型，以及同步需要实现的类方法。
+Generates or sync `implement` of `interface` type,
+and methods of `interface` to implements in specify filepath.
 
-已存在的同名类方法会被同步方法签名(包括变量命名)，缺失的类型和类方法会在目标文件下追加。
+Exist methods signature would be synced, and missing methods would be appended in file.
 
 ## Usage
 
@@ -12,13 +13,15 @@
 
 ### Annotation Target
 
-`interface` 类型对象
+Object `interface`
 
 ### Exact Arguments
 
 #### `filename`
 
-实现接口的目标文件夹或文件，若提供非 `.go` 后缀路径，则使用 `impl.go` 作为文件名
+File or directory of implement type.
+
+If filepath do not ends with `.go` provided, use `impl.go` as default filename.
 
 Example: `+zz:impl:./impls/type.go`
 
@@ -26,23 +29,25 @@ Example: `+zz:impl:./impls/type.go`
 
 #### `type`
 
-指定目标类型名，若生成指针类方法，则需要加上 `*` 前缀，默认使用 `*${接口名}Impl`
+Specify implement type name.
+
+Add `*` prefix if pointer receiver were desired. Default: `*${interface name}Impl`
 
 Example: `+zz:impl:./impls:type=*Impl`
 
 #### `wire`
 
-为生成的类型加上 `wire` 插件接口注入的注解，即 `+zz:wire:bind=${接口名}`。
+Add `wire` plugin annotation when generating implement type: `+zz:wire:bind=${interface name}`.
 
-若目标类型已存在则不生效。
+It has no effect if implement type exist.
 
 Example: `+zz:impl:./impls:wire`
 
 #### `aop`
 
-需要与 `wire` 同时使用，会在生成 `wire` 注解时加上 `aop` 选项。
+Add `aop` option on `wire` annotations, should be used with `wire`.
 
-若目标类型已存在或没有 `wire` 参数则不生效。
+It has no effect if implement type exist or `wire` were not used.
 
 Example: `+zz:impl:./impls:wire:aop`
 
@@ -71,7 +76,7 @@ type ReadCloser interface {
 }
 ```
 
-在 `impl01/implements/impl.go` 中有 `ReadCloserImpl` 的定义，但只有 `Read` 方法
+We got `ReadCloserImpl` in `impl01/implements/impl.go`. But contains only `Read`.
 
 ```go
 // impl01/implements/impl.go
@@ -80,22 +85,20 @@ package implements
 type ReadCloserImpl struct{}
 
 func (impl *ReadCloserImpl) Read() {
-	// 实现的逻辑代码
 	...
 }
 ```
 
-在项目内执行
+Execute `gozz run -p "impl" ./ `.
 
-```shell
-gozz run -p "impl" ./ 
-```
+Plugin would lookup implement type named `ReadCloserImpl` in `impl01/implements`.
+And collect class methods of this implement type.
 
-会在 `impl01/implements` 文件夹内查找名为 `ReadCloserImpl` 的类型定义，和收集该类型提供的 `类方法`。
+After comparing existing class methods and interface methods,
+class method's signatures would be sync with same name interface method,
+and those that do not exist would be supplemented.
 
-将已有 `类方法` 与被注解 `interface` 的方法一一对比后，会对同名方法进行函数签名同步，以及对不存在的进行补充。
-
-如下：将 `Read` 的函数签名修改至和 `interface` 定义一致，以及补充缺失的 `Close` 方法
+Example: `Read` would be synced as `interface` defined. And `Close` that missing before were appended.
 
 ```go
 // impl01/implements/impl.go
@@ -104,7 +107,6 @@ package implements
 type ReadCloserImpl struct{}
 
 func (impl *ReadCloserImpl) Read(b []byte) (int, error) {
-	// 实现的逻辑代码
 	...
 }
 
@@ -134,13 +136,13 @@ type ReadCloser interface {
 }
 ```
 
-执行 `gozz run -p "impl" ./`
+Execute `gozz run -p "impl" ./`.
 
-创建了 `implements` 文件夹，并在 `./implements/impl.go` 下生成了名为 `Impl` 的定义和类方法。
+Directory `implements` were generated.
+Also `Impl` type and methods were generated in `./implements/impl.go`.
 
-- 由于使用了 `wire` 选项，创建类型时会加上 `wire` 相关注解
-
-- 由于指定 `type=Impl` 没有 `*` 前缀，创建的方法不会使用指针方法
+- Annotation for `wire` plugin were added because option `wire`.
+- Methods would not have pointer receiver because option `type=Impl` does not start with `*`.
 
 ```go
 // impl02/implements/impl.go
@@ -187,7 +189,7 @@ type ReadCloser interface {
 }
 ```
 
-`./implements/impl.go` 文件存在，且存在名为 `ReadCloserImpl` 的类型，有 `Read` 方法。
+File `./implements/impl.go` exists, and contains type `ReadCloserImpl` and method `Read`.
 
 ```go
 // impl03/implements/impl.go
@@ -196,17 +198,14 @@ package implements
 type ReadCloserImpl struct{}
 
 func (impl *ReadCloserImpl) Read() {
-	// 实现的逻辑代码
 	...
 }
 ```
 
-但我们指定 `type=*Impl`，因此 `ReadCloserImpl` 不会受到任何影响。
+Because we had specified type name `type=*Impl`, it would not have any effects to type `ReadCloserImpl`.
 
-执行 `gozz run -p "impl" ./`
-
-在 `./implements/impl.go` 下创建名为 `Impl` 的 `struct` 和 类方法，
-包含 `wire` 的注解和 `aop` 选项，并使用指针方法。
+Execute `gozz run -p "impl" ./`, and generate struct `Impl` and class methods in `./implements/impl.go`,
+using pointer receiver and annotations with option `wire` `aop`.
 
 ```go
 // impl03/implements/impl.go
@@ -219,7 +218,6 @@ import (
 type ReadCloserImpl struct{}
 
 func (impl *ReadCloserImpl) Read() {
-	// 实现的逻辑代码
 	...
 }
 
@@ -260,7 +258,7 @@ type ReadCloser interface {
 }
 ```
 
-`./implements/read.go` 文件存在，且存在名为 `Impl` 的类型，有 `Read` 方法。
+File `./implements/read.go` exists, contains type `Impl` and its method `Read`.
 
 ```go
 // impl04/implements/read.go
@@ -274,9 +272,9 @@ func (impl *Impl) Read() {
 }
 ```
 
-执行 `gozz run -p "impl" ./`
+Execute `gozz run -p "impl" ./`,
 
-`./implements/read.go` 的 `Read` 方法被同步。
+Method `Read` in `./implements/read.go` were synced.
 
 ```go
 // impl04/implements/read.go
@@ -290,7 +288,7 @@ func (impl *Impl) Read(b []byte) (int, error) {
 }
 ```
 
-`./implements/impl.go` 被创建，生成了缺失的 `Close` 方法
+File `./implements/impl.go` generated, with method `Close`.
 
 ```go
 // impl04/implements/impl.go

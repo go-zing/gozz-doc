@@ -1,10 +1,12 @@
 # Wire
 
-提供 `自动化依赖注入` 以及 `静态AOP代理` 生成。
+Provide automatic DI and static AOP proxy generate.
 
-依赖注入内核基于 [wire](https://github.com/google/wire) 实现。
+The DI core implement was based on [wire](https://github.com/google/wire).
 
-该插件通过注解分析，可以提供更智能的注入场景和注入类型推断，更为简洁易用。
+This plugin could make use of annotation context analysis,
+provide more intelligent inject types and inject provide cases,
+could be much more simply and easier.
 
 ## Usage
 
@@ -14,88 +16,89 @@
 
 ### Annotation Target
 
-所有对象
+All objects.
 
 ### Optional Arguments
 
 #### `bind`
 
-将提供的对象绑定指定接口类型进行注入，对函数对象无效。
+Bind annotated type with specify interface.
 
 Example:`+zz:wire:bind=io.ReadCloser`
 
-若对象为类型，即使用 `wire.Bind(new(InterfaceType), new(T))`
-
-若对象为值，即使用 `wire.InterfaceValue(new(InterfaceType), Value)`
-
 #### `aop`
 
-当对象已经使用了 `bind` 时，为绑定的接口创建接口调用代理，并替换绑定。
+If `bind` was used, generate interface invoke proxy for bind interface and replace binding.
 
-此时在生成 `wire_zset.go` 以外，还会生成 `wire_zzaop.go`。
+In this case, plugin would generate `wire_zzaop.go` besides of `wire_zset.go`.
 
 Example:`+zz:wire:bind=io.ReadCloser:aop`
 
-详情可见[示例二](wire.md#示例二)
+Checkout [Example-02](wire.md#example-02) for detail.
 
 #### `field`
 
-将结构体对象的字段作为值提供注入，并不再使用字段组装此类型对象实例，仅对结构体类型生效。
+Use struct object fields as inject provide,
+and do not construct this struct value from fields anymore.
+This option is only use for struct.
 
-可使用 `*` 提供所有暴露字段
+Default: `*` to export all exported fields.
 
-即使用 `wire.FieldsOf(new(T), "Field", "Field2", ...)`
+- Use `,` to join multi fields.
 
-Example:`+zz:wire:field=*`
+Example: `+zz:wire:field` `+zz:wire:field=User,Config`
 
 #### `inject`
 
-指定对象为 `构建目标`，在参数指定路径创建 `构建函数` 和生成注入相关的声明( `wire_zset.go` )。
+Specify this object as `injectors target`,
+it would generate `injectors` constructor functions and wire info (`wire_zset.go`) in specify filepath.
 
-当提供路径没有 `.go` 后缀时，默认使用 `wire_zinject.go` 为文件名。
+if filepath does not have suffix `.go`, use `wire_zinject` as default `injectors` filename.
 
-Example:`+zz:wire:inject=./`
+Example: `+zz:wire:inject=./`
 
-`构建函数` 为 `func Initialize_T() (T, func(), error)`
+Function `injectors` follows format: `func Initialize_T(...Params) (T, func(), error)`.
 
-仅对类型对象生效。
-
-当类型为结构体类型时，将会初始化为对象指针，即 `func Initialize_T() (*T, func(), error)`。
-
-可以同时拥有多个 `构建目标`，当这些指定路径目录不一致时，相关文件会被多次生成。
+- This option only works for `type` object.
+- If annotated type is `struct`, pointer type would return as : `func Initialize_T(...Params) (*T, func(), error)`.
+- This option could be used in different objects and filepath,
+  and files would generate in different filepath.
 
 #### `param`
 
-当类型对象使用 `inject` 被指定为 `构建目标` 时。`param` 中的类型会作为 `构建函数` 的参数。
+If object has used option `inject`, specify type in `param` to be used as constructor params.
 
-Example:`+zz:wire:inject=./:param=context.Context`
+Example: `+zz:wire:inject=./:param=context.Context`
 
-`构建函数` 为 `func Initialize_T(context.Context) (T, func(), error)`
+It would get constructor: `func Initialize_T(context.Context) (T, func(), error)`.
 
 #### `set`
 
-指定 `set` 的对象，会被收集到独立的 `wire.NewSet` 组，无指定 `set` 会使用全局默认组。
+If `set` was specified, object would be collected into independent `wire.NewSet` named `_${set}Set`,
+or use default global set named `_Set`.
 
-可以使用 `!` 前缀，此情况会将对象放置入所有非前缀的组，规则类似 `go build -tags`。
+- You could use `!` prefix to do flexibly grouping, just like `go build -tags`。
 
 Example:`+zz:wire:set=!mock` / `+zz:wire:set=mock,unittest`
 
-### 其他约定规则
+### Other Convention
 
-#### 安装 `wire`
+#### Install `wire`
 
-为确保最后的依赖注入生成能够成功，使用前请安装 `wire`。
+To ensure the DI core would be executed successful, please install `wire`:
 
 ```shell
 go install github.com/google/wire/cmd/wire@latest
 ```
 
-#### 构造函数
+#### Constructor
 
-当类型对象代码文件内存在名为 <span v-pre>`Provide{{ .Name }}`</span> 的函数，且第一个返回值为该 类型 或 类型指针时，
-会使用该函数注入。
+If annotated type object file exist function named
+<span v-pre>`Provide{{ .Name }}`</span>,
+and this function have the same type or type pointer as first return,
+it would be used as inject provider.
 
-例：
+Example:
 
 ```go
 package x
@@ -108,13 +111,15 @@ func ProvideImplement() *Implement {
 }
 ```
 
-#### 外部引用类型
+#### Referenced Type
 
-在 `bind` 中指定的 `interface` 如果来源于其他 `package` ，需要确保有 `import` 到注解当前文件，否则会无法识别。
+If `interface` in `bind` option was came from other `package`,
+to make sure it was imported in annotated file.
+Otherwise, we could not know what exactly this package is.
 
-在 `param` 中指定的参数类型同理。
+The value specified in `param` is the same.
 
-例：
+Example:
 
 ```go
 package x
@@ -127,9 +132,9 @@ import (
 var Buff = &bytes.Buffer{}
 ```
 
-上述情况下会无法识别 `io` 来源。
+In this case, we could not know what exactly `io` is.
 
-正确用法：
+Correct Usage:
 
 ```go
 package x
@@ -188,13 +193,15 @@ type Target struct {
 }
 ```
 
-以上例子中，我们需要从提供的各种类型中构建出 `Target`，而这些类型又以一定的关系相互依赖。
+In this example, we want to construct `Target` from provided types,
+and these types were dependent in some relation.
 
-在添加注解后，执行 `gozz run -p "wire" ./`
+Execute `gozz run -p "wire" ./`.
 
-生成了 `wire_gen.go` `wire_zinject.go` `wire_zset.go` 三个文件
+It would generate files `wire_gen.go` `wire_zinject.go` `wire_zset.go`.
 
-`wire_zset.go` 中包含了 使用 `wire` 时原来要人工描述的注入对象及 `对象组` 声明。
+File `wire_zset.go` includes `wire` declarations that we should provide maintain in manually before.
+Now they were generated automatically.
 
 ```go
 // wire01/wire_zset.go
@@ -222,7 +229,8 @@ var (
 )
 ```
 
-`wire_zinject.go` 中包含了 使用 `wire` 时原来要人工描述的 `构造函数` 以及要使用的 `对象组`。
+File `wire_zinject.go` includes constructor and what set it's specified to use,
+that we should maintain in manually before. And they were generated automatically now.
 
 ```go
 // wire01/wire_zinject.go
@@ -238,7 +246,7 @@ func Initialize_Target() (*Target, func(), error) {
 }
 ```
 
-`wire_gen.go` 是生成成功后，自动调用 `wire` 生成的文件，提供了生成的依赖注入构造函数实现。
+At last, we got `wire_gen.go` from `wire`, the DI constructor to provide target we want.
 
 ```go
 // wire01/wire_gen.go
@@ -305,15 +313,13 @@ func (Implement) Bar(ctx context.Context, param int) (result int, err error) {
 }
 ```
 
-以上示例中：
+In this example
 
-- 通过 `Implement` 可以实现 `Interface`。
+- We provided struct `Implement` to bind with `Interface`。
+- And `Interface` was bind with `InterfaceX` and `InterfaceX2`, but `InterfaceX2` uses option `aop`。
+- The inject target was `Target`, depends on `Interface`,`InterfaceX`,`InterfaceX2`.
 
-- `Interface` 绑定了两个别名类型 `InterfaceX` 和 `InterfaceX2`，其中对 `InterfaceX2` 的绑定添加了 `aop` 选项。
-
-- 最终的构造目标为 `Target`，依赖 `Interface`、`InterfaceX`、`InterfaceX2`。
-
-执行 `gozz run -p "wire" ./`，并观察生成的 `wire_gen.go`。
+Execute `gozz run -p "wire" ./`, and focus on `wire_gen.go`.
 
 ```go
 // wire02/wire_gen.go
@@ -334,10 +340,11 @@ func Initialize_Target() (*Target, func(), error) {
 }
 ```
 
-可见 在实现 `Interface` 和 `InterfaceX` 时，都是直接使用了 `Implement`，而添加 `aop` 选项的 `InterfaceX2`
-使用了 `_impl_aop_InterfaceX2` 的类型。
+We could find out, while implement `Interface` and `InterfaceX`,
+both of them use struct `Implement`,
+but `InterfaceX2` with option `aop` added, was implement from `impl_aop_InterfaceX2`.
 
-在 `wire_zset.go` 中，可以看到两种类型不同的依赖声明。
+In `wire_zset.go` we could found different `wire` declaration of them.
 
 ```go{11-13}
 // wire02/wire_zset.go
@@ -361,14 +368,14 @@ var (
 )
 ```
 
-注意被高亮的代码：
+Focus on the highlight lines.
 
-不同于 `InterfaceX` 的接口绑定，本应绑定到 `InterfaceX2` 的 `Interface`
-被绑定到一个名为 `_aop_InterfaceX2` 的接口。
+Different from `InterfaceX`,
+`InterfaceX2` was bind to `_aop_InterfaceX2` than `Interface`.
 
-而真正被代替绑定到 `InterfaceX2` 的是名为 `impl_aop_InterfaceX2` 的结构体。
+And `impl_aop_InterfaceX2` take that place of and bind to `InterfaceX2`.
 
-在 `wire_zzaop.go` 中，我们可以看到 `aop_InterfaceX2` 和 `impl_aop_InterfaceX2` 的定义：
+We could found declaration of  `aop_InterfaceX2` and `impl_aop_InterfaceX2` in `wire_zzaop.go`:
 
 ```go
 // wire02/wire_zzaop.go
@@ -413,36 +420,36 @@ func (i _impl_aop_InterfaceX2) Bar(p0 context.Context, p1 int) (r0 int, r1 error
 }
 ```
 
-原 `Interface` 会用作 `_aop_InterfaceX2` 构造 `_impl_aop_InterfaceX2`。
+Struct `_impl_aop_InterfaceX2` was made of  `Interface` and implement `_aop_InterfaceX2`.
 
-对原 `Interface` 的所有方法调用都会经过 `impl_aop_InterfaceX2` 的代理。
+So that all methods call of `Interface` would be proxy intercepted by `impl_aop_InterfaceX2`.
 
-通过代理方法的实现可以看到，通过开发者通过 `Intercept` 可以实现：
+And developers could do these awesome things through `Intercept`:
 
-- 在函数调用进行自定义前置和后置逻辑
-- 获取实际调用方及调用方法名
-- 对函数参数及返回值进行替换
-- 不经过实际调用方，直接终止调用
+- Inject some custom hooks before and after method execute.
+- Get caller and method name in these hooks.
+- Replace arguments and returns.
+- Cancel or skip method call.
 
-#### 一些实用场景
+#### Some Useful Cases
 
-- 检查返回值错误，自动打印错误堆栈及调用信息，自动注入日志、链路追踪、埋点上报等。
-- 检查授权状态及访问权限。
-- 对调用参数和返回值进行自动缓存。
-- 检查或替换 `context.Context`，添加超时或检查中断。
+- Check returns error and save caller stack, do some logging, alerting, tracing and metrics.
+- Check auth status and permissions.
+- Do automatic cache with arguments and returns
+- Handle `context.Context` to check cancel or add timeout deadline.
 
 ### Example-03
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/wire03)
 
-这个示例混合地展示了几种场景：
+This Example show complex cases：
 
-- 注入值对象
-- 使用值对象绑定接口
-- 引用类型作为结构体
-- 使用指定函数提供注入类型
-- 使用结构体字段值进行注入
-- 使用 `set` 对注入进行分组
+- Inject values as providers.
+- Bind values as interfaces.
+- Build referenced struct type.
+- Inject provider function.
+- Inject struct fields as providers.
+- Group sets by option `set`.
 
 ```go
 // wire03/types.go
@@ -504,7 +511,7 @@ type MockConfig struct{ Bool bool }
 var mock = MockConfig{Bool: true}
 ```
 
-执行 `gozz run -p "wire" ./`，注意观察生成的 `wire_zset.go`。
+Execute `gozz run -p "wire" ./`, and focus on `wire_zset.go`.
 
 ```go
 // wire03/wire_zset.go
@@ -547,4 +554,4 @@ var (
 )
 ```
 
-可见使用 `gozz:wire` 后，掌握注解 `+zz:wire` 和 `bind` `inject` 两个选项就能满足大部分需求。
+We could satisfy most of the needs using `+zz:wire` and options `bind` `inject` only.

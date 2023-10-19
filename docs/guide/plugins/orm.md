@@ -1,6 +1,7 @@
 # Orm
 
-通过 `dsn` 连接数据库 `driver` ，读取 `schema` 信息生成 `ORM` 结构体定义及相关辅助代码。
+Connects `schemadriver` with `dsn`,
+loads `schema` info for generating `ORM` struct and codes.
 
 ## Usage
 
@@ -8,71 +9,74 @@
 
 `+zz:orm:[schema]:[...options]`
 
-### Annotation Target
-
-所有对象
-
 ### Exact Arguments
 
 #### `schema`
 
-要读取的数据库 `schema` 名，多个可用 `,` 分隔。
+Specify database `schema` to loads.
 
-Example: `+zz:orm:my_database`
+- Use `,` to separate multi value.
+
+Example: `+zz:orm:my_database,my_database2`
 
 ### Optional Arguments
 
 #### `filename`
 
-指定生成的文件路径，默认 `./zzgen.orm.go`
+Generate target filepath, default: `./zzgen.orm.go`.
 
 Example: `+zz:orm:schema:filename=./models/`
 
 #### `driver`
 
-指定使用生成 `schemadriver`，此 `driver` 不同于 `sql.Driver`，为本工具独立维护对不同数据库种类的不同类型的生成器。
+Specify `schemadriver`.
 
-外部生成器可通过 `.so` 插件形式加载。
+This `driver` is not `sql.Driver`,
+but it is the interface for plugin loading different kind of database schema.
+External extension interface could be loaded from `.so`.
 
-默认 `mysql`。
+default: `mysql`。
 
 Example: `+zz:orm:schema:driver=sqlite`
 
 #### `type`
 
-指定生成时的数据类型映射。 格式 `${数据库DATA_TYPE}=${Golang类型}`
+Specify type mapping from database type to golang type,
+format as: `${database DATA_TYPE}=${Golang type}`
 
 Example: `+zz:orm:schema:type=varchar=MyString`
 
-可以使用 `,` 连接多个指定类型。
+- Use `,` to join multi types.
 
 Example: `+zz:orm:schema:type=varchar=MyString,varchar(255)=string,int unsign=uint`
 
-数据库格式匹配的优先级由不同 `schemadriver` 自行控制。
+The priority of type matching would be controlled by `schemadriver` implement.
 
-若要指定 `Nullable` 类型，可使用 `*` 前缀。
+- Use `*` to specify `Nullable` type.
 
 Example: `+zz:orm:schema:type=*varchar=sql.NullString,*json=*json.RawMessage`
 
 #### `table`
 
-指定生成的数据表，默认 `*` 即选取全部数据表进行生成。
+Specify database tables to generates from, default: `*` for all tables.
 
-可以使用 `,` 连接多个表。
+- Use `,` to join multi tables.
 
 Example: `+zz:orm:schema:table=user,car,order`
 
 #### `password`
 
-通常开发者都是在本地开发环境进行 `orm` 的生成和基于生成内容进行开发。
+Generally, developer would use `orm` to generate code in local develop environment,
+And database in this case mostly were installed and exported as default connection.
 
-因此 `driver` 会提供一个对应数据库类型默认安装本地连接的 `dsn` 模版。
+So `schemadriver` should provide a default `dsn` template for default database connection.
 
-如 `mysql` 通常为 `root:${pwd}@tcp(localhost:3306)/`
+For example: `mysql` use `root:${pwd}@tcp(localhost:3306)/`.
 
-使用者可以只提供 `password`，就能通过默认安装地址和用户完成访问。
+Users could provide `password` only and
+complete all configuration to access the schema source database.
 
-建议通过以以下方式使用，Example:
+We suggest to use this plugin as example:
 
 ```shell
 read -s pwd && gozz run -p "orm:password=${pwd}" ./
@@ -80,9 +84,10 @@ read -s pwd && gozz run -p "orm:password=${pwd}" ./
 
 #### `dsn`
 
-如果对数据库连接地址有额外需求，可通过提供完整 `dsn` 进行访问。
+You could also provide full `dsn` url to access.
 
-涉及 `:` 时要使用 `\` 进行[参数转义](../getting-started.md#参数转义)
+If you have letter `:` in argument,
+you should use `\` to [argument escape](../getting-started.md#argument-escape).
 
 Example:
 
@@ -92,7 +97,7 @@ read -s pwd && gozz run -p "orm:dsn=dev_user\:${pwd}@tcp(192.168.1.2\:3306)/" ./
 
 ## Examples
 
-[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/orm01) [示例SQL](https://github.com/datacharmer/test_db/blob/master/employees.sql)
+[Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/orm01) [Example SQL](https://github.com/datacharmer/test_db/blob/master/employees.sql)
 
 ```
 /orm01/
@@ -109,7 +114,7 @@ type employees struct{}
 
 ```
 
-执行 `gozz run -p "orm:password=***" ./` 生成 `zzgen.orm.go` 和模版文件。
+Execute `gozz run -p "orm:password=***" ./`, and it generates file `zzgen.orm.go` and template file.
 
 ```go
 // orm01/zzgen.orm.go
