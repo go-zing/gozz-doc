@@ -1,16 +1,12 @@
 export default ({router}) => {
-    router.onReady(() => {
-        if (typeof window !== 'undefined') {
-            const {hash} = document.location;
-            const h = decodeURIComponent(hash.substring(1))
+    if (typeof process === 'undefined' || process.env.VUE_ENV !== 'server') {
+        router.onReady(() => {
+            const h = decodeURIComponent(window.location.hash.substring(1))
             if (h) {
                 setTimeout(() => {
-                    const el = document.getElementById(h);
-                    if (el) {
-                        el.scrollIntoView()
-                    }
+                    document.getElementById(h)?.scrollIntoView()
                 }, 200)
             }
-        }
-    });
+        })
+    }
 };
