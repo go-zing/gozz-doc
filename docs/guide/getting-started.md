@@ -178,7 +178,7 @@ but rejects `+zz:foo:arg1` and `+zz:foo`.
 
 If an argument could have default value, it should not be a exact argument.
 
-Checkout [Design Concept](./README.md#design-concept).
+Checkout [Design Concept](README.md#design-concept).
 
 ### `OPTIONS` - Optional Arguments
 
@@ -248,7 +248,7 @@ Parses replace `\:` with `\u003A` before annotation split, and replace `\u003A` 
 
 Annotation could be added on `Decl` blocks, and also `Spec` Object.
 
-You can check out [Principle](./how-it-works.md#Principle) to know about what is `Decl` and `Spec`.
+You can check out [Principle](how-it-works.md#Principle) to know about what is `Decl` and `Spec`.
 
 ```go
 package t

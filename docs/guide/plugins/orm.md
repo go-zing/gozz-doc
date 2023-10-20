@@ -99,81 +99,8 @@ read -s pwd && gozz run -p "orm:dsn=dev_user\:${pwd}@tcp(192.168.1.2\:3306)/" ./
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/orm01) [Example SQL](https://github.com/datacharmer/test_db/blob/master/employees.sql)
 
-```
-/orm01/
-├── go.mod -> module github.com/go-zing/gozz-doc-examples/orm01
-└── types.go
-```
-
-```go
-// orm01/types.go
-package orm01
-
-// +zz:orm:{{ .Name }}
-type employees struct{}
-
-```
+<<< @/gozz-doc-examples/orm01/types.go
 
 Execute `gozz run -p "orm:password=***" ./`, and it generates file `zzgen.orm.go` and template file.
 
-```go
-// orm01/zzgen.orm.go
-package orm01
-
-var tables = []interface{}{
-	CurrentDeptEmp{},
-	Departments{},
-	DeptEmp{},
-	DeptEmpLatestDate{},
-	DeptManager{},
-	Employees{},
-	Salaries{},
-	Titles{},
-}
-
-// employees.current_dept_emp
-// VIEW
-const TableCurrentDeptEmp = "current_dept_emp"
-
-type CurrentDeptEmp struct {
-	// emp_no : int
-	EmpNo int
-	// dept_no : char(4)
-	DeptNo string
-	// from_date : NULLABLE date
-	FromDate interface{}
-	// to_date : NULLABLE date
-	ToDate interface{}
-}
-
-func (CurrentDeptEmp) TableName() string { return TableCurrentDeptEmp }
-
-func (m *CurrentDeptEmp) FieldMapping() map[string]interface{} {
-	return map[string]interface{}{
-		"emp_no":    &m.EmpNo,
-		"dept_no":   &m.DeptNo,
-		"from_date": &m.FromDate,
-		"to_date":   &m.ToDate,
-	}
-}
-
-type SliceCurrentDeptEmp []CurrentDeptEmp
-
-func (s *SliceCurrentDeptEmp) Range(f func(interface{}, bool) bool) {
-	for i := 0; ; i++ {
-		if c := i >= len(*s); !c {
-			if !f(&(*s)[i], c) {
-				return
-			}
-		} else if n := append(*s, CurrentDeptEmp{}); f(&n[i], c) {
-			*s = n
-		} else {
-			*s = n[:i]
-			return
-		}
-	}
-}
-
-...
-
-```
+<<< @/gozz-doc-examples/orm01/zzgen.orm.go

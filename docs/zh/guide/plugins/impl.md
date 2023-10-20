@@ -60,30 +60,11 @@
 └── types.go
 ```
 
-```go
-// impl01/types.go
-package impl01
-
-// +zz:impl:./implements
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl01/types.go
 
 在 `impl01/implements/impl.go` 中有 `ReadCloserImpl` 的定义，但只有 `Read` 方法
 
-```go
-// impl01/implements/impl.go
-package implements
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read() {
-	// 实现的逻辑代码
-	...
-}
-```
+<<< @/gozz-doc-examples/impl01/implements/impl.pre.go
 
 在项目内执行
 
@@ -97,21 +78,7 @@ gozz run -p "impl" ./
 
 如下：将 `Read` 的函数签名修改至和 `interface` 定义一致，以及补充缺失的 `Close` 方法
 
-```go
-// impl01/implements/impl.go
-package implements
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read(b []byte) (int, error) {
-	// 实现的逻辑代码
-	...
-}
-
-func (impl *ReadCloserImpl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl01/implements/impl.go
 
 ### 示例二
 
@@ -123,16 +90,7 @@ func (impl *ReadCloserImpl) Close() error {
 └── types.go
 ```
 
-```go
-// impl02/types.go
-package impl02
-
-// +zz:impl:./implements:type=Impl:wire
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl02/types.go
 
 执行 `gozz run -p "impl" ./`
 
@@ -142,27 +100,7 @@ type ReadCloser interface {
 
 - 由于指定 `type=Impl` 没有 `*` 前缀，创建的方法不会使用指针方法
 
-```go
-// impl02/implements/impl.go
-package implements
-
-import (
-	"github.com/go-zing/gozz-doc-examples/impl02"
-)
-
-var _ impl02.ReadCloser = (*Impl)(nil)
-
-// +zz:wire:bind=impl02.ReadCloser
-type Impl struct{}
-
-func (impl Impl) Read(b []byte) (int, error) {
-	panic("not implemented")
-}
-
-func (impl Impl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl02/implements/impl.go
 
 ### 示例三
 
@@ -176,30 +114,11 @@ func (impl Impl) Close() error {
 └── types.go
 ```
 
-```go
-// impl03/types.go
-package impl03
-
-// +zz:impl:./implements:type=*Impl:wire:aop
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl03/types.go
 
 `./implements/impl.go` 文件存在，且存在名为 `ReadCloserImpl` 的类型，有 `Read` 方法。
 
-```go
-// impl03/implements/impl.go
-package implements
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read() {
-	// 实现的逻辑代码
-	...
-}
-```
+<<< @/gozz-doc-examples/impl03/implements/impl.pre.go
 
 但我们指定 `type=*Impl`，因此 `ReadCloserImpl` 不会受到任何影响。
 
@@ -208,34 +127,7 @@ func (impl *ReadCloserImpl) Read() {
 在 `./implements/impl.go` 下创建名为 `Impl` 的 `struct` 和 类方法，
 包含 `wire` 的注解和 `aop` 选项，并使用指针方法。
 
-```go
-// impl03/implements/impl.go
-package implements
-
-import (
-	"github.com/go-zing/gozz-doc-examples/impl03"
-)
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read() {
-	// 实现的逻辑代码
-	...
-}
-
-var _ impl03.ReadCloser = (*Impl)(nil)
-
-// +zz:wire:bind=impl03.ReadCloser:aop
-type Impl struct{}
-
-func (impl Impl) Read(b []byte) (int, error) {
-	panic("not implemented")
-}
-
-func (impl Impl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl03/implements/impl.go
 
 ### 示例四
 
@@ -249,54 +141,18 @@ func (impl Impl) Close() error {
 └── types.go
 ```
 
-```go
-// impl04/types.go
-package impl04
-
-// +zz:impl:./implements:type=*Impl:wire:aop
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl04/types.go
 
 `./implements/read.go` 文件存在，且存在名为 `Impl` 的类型，有 `Read` 方法。
 
-```go
-// impl04/implements/read.go
-package implements
-
-type Impl struct{}
-
-func (impl *Impl) Read() {
-	// 实现的逻辑代码
-	...
-}
-```
+<<< @/gozz-doc-examples/impl04/implements/read.pre.go
 
 执行 `gozz run -p "impl" ./`
 
 `./implements/read.go` 的 `Read` 方法被同步。
 
-```go
-// impl04/implements/read.go
-package implements
-
-type Impl struct{}
-
-func (impl *Impl) Read(b []byte) (int, error) {
-	// 实现的逻辑代码
-	...
-}
-```
+<<< @/gozz-doc-examples/impl04/implements/read.go
 
 `./implements/impl.go` 被创建，生成了缺失的 `Close` 方法
 
-```go
-// impl04/implements/impl.go
-package implements
-
-func (impl *Impl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl04/implements/impl.go

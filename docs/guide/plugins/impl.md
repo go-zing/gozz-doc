@@ -65,29 +65,11 @@ Example: `+zz:impl:./impls:wire:aop`
 └── types.go
 ```
 
-```go
-// impl01/types.go
-package impl01
-
-// +zz:impl:./implements
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl01/types.go
 
 We got `ReadCloserImpl` in `impl01/implements/impl.go`. But contains only `Read`.
 
-```go
-// impl01/implements/impl.go
-package implements
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read() {
-	...
-}
-```
+<<< @/gozz-doc-examples/impl01/implements/impl.pre.go
 
 Execute `gozz run -p "impl" ./ `.
 
@@ -100,20 +82,7 @@ and those that do not exist would be supplemented.
 
 Example: `Read` would be synced as `interface` defined. And `Close` that missing before were appended.
 
-```go
-// impl01/implements/impl.go
-package implements
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read(b []byte) (int, error) {
-	...
-}
-
-func (impl *ReadCloserImpl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl01/implements/impl.go
 
 ### Example-02
 
@@ -125,16 +94,7 @@ func (impl *ReadCloserImpl) Close() error {
 └── types.go
 ```
 
-```go
-// impl02/types.go
-package impl02
-
-// +zz:impl:./implements:type=Impl:wire
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl02/types.go
 
 Execute `gozz run -p "impl" ./`.
 
@@ -144,27 +104,7 @@ Also `Impl` type and methods were generated in `./implements/impl.go`.
 - Annotation for `wire` plugin were added because option `wire`.
 - Methods would not have pointer receiver because option `type=Impl` does not start with `*`.
 
-```go
-// impl02/implements/impl.go
-package implements
-
-import (
-	"github.com/go-zing/gozz-doc-examples/impl02"
-)
-
-var _ impl02.ReadCloser = (*Impl)(nil)
-
-// +zz:wire:bind=impl02.ReadCloser
-type Impl struct{}
-
-func (impl Impl) Read(b []byte) (int, error) {
-	panic("not implemented")
-}
-
-func (impl Impl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl02/implements/impl.go
 
 ### Example-03
 
@@ -178,62 +118,18 @@ func (impl Impl) Close() error {
 └── types.go
 ```
 
-```go
-// impl03/types.go
-package impl03
-
-// +zz:impl:./implements:type=*Impl:wire:aop
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl03/types.go
 
 File `./implements/impl.go` exists, and contains type `ReadCloserImpl` and method `Read`.
 
-```go
-// impl03/implements/impl.go
-package implements
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read() {
-	...
-}
-```
+<<< @/gozz-doc-examples/impl03/implements/impl.pre.go
 
 Because we had specified type name `type=*Impl`, it would not have any effects to type `ReadCloserImpl`.
 
 Execute `gozz run -p "impl" ./`, and generate struct `Impl` and class methods in `./implements/impl.go`,
 using pointer receiver and annotations with option `wire` `aop`.
 
-```go
-// impl03/implements/impl.go
-package implements
-
-import (
-	"github.com/go-zing/gozz-doc-examples/impl03"
-)
-
-type ReadCloserImpl struct{}
-
-func (impl *ReadCloserImpl) Read() {
-	...
-}
-
-var _ impl03.ReadCloser = (*Impl)(nil)
-
-// +zz:wire:bind=impl03.ReadCloser:aop
-type Impl struct{}
-
-func (impl Impl) Read(b []byte) (int, error) {
-	panic("not implemented")
-}
-
-func (impl Impl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl03/implements/impl.go
 
 ### Example-04
 
@@ -247,54 +143,18 @@ func (impl Impl) Close() error {
 └── types.go
 ```
 
-```go
-// impl04/types.go
-package impl04
-
-// +zz:impl:./implements:type=*Impl:wire:aop
-type ReadCloser interface {
-	Read(b []byte) (int, error)
-	Close() error
-}
-```
+<<< @/gozz-doc-examples/impl04/types.go
 
 File `./implements/read.go` exists, contains type `Impl` and its method `Read`.
 
-```go
-// impl04/implements/read.go
-package implements
-
-type Impl struct{}
-
-func (impl *Impl) Read() {
-	// 实现的逻辑代码
-	...
-}
-```
+<<< @/gozz-doc-examples/impl04/implements/read.pre.go
 
 Execute `gozz run -p "impl" ./`,
 
 Method `Read` in `./implements/read.go` were synced.
 
-```go
-// impl04/implements/read.go
-package implements
-
-type Impl struct{}
-
-func (impl *Impl) Read(b []byte) (int, error) {
-	// 实现的逻辑代码
-	...
-}
-```
+<<< @/gozz-doc-examples/impl04/implements/read.go
 
 File `./implements/impl.go` generated, with method `Close`.
 
-```go
-// impl04/implements/impl.go
-package implements
-
-func (impl *Impl) Close() error {
-	panic("not implemented")
-}
-```
+<<< @/gozz-doc-examples/impl04/implements/impl.go

@@ -156,42 +156,7 @@ var Buff = &bytes.Buffer{}
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/wire01)
 
-```
-/wire01/
-├── go.mod -> module github.com/go-zing/gozz-doc-examples/wire01
-└── types.go
-```
-
-```go
-// /wire01/types.go
-package wire01
-
-// +zz:wire
-type StructA struct{}
-
-// +zz:wire
-type StructB struct {
-	InterfaceC
-}
-
-// +zz:wire:bind=InterfaceC
-type StructC struct {
-	StructA
-}
-
-func (StructC) Foo() {}
-
-type InterfaceC interface {
-	Foo()
-}
-
-// +zz:wire:inject=./
-type Target struct {
-	StructA
-	StructB
-	InterfaceC
-}
-```
+<<< @/gozz-doc-examples/wire01/types.go
 
 In this example, we want to construct `Target` from provided types,
 and these types were dependent in some relation.
@@ -203,115 +168,22 @@ It would generate files `wire_gen.go` `wire_zinject.go` `wire_zset.go`.
 File `wire_zset.go` includes `wire` declarations that we should provide maintain in manually before.
 Now they were generated automatically.
 
-```go
-// wire01/wire_zset.go
-package wire01
-
-import (
-	wire "github.com/google/wire"
-)
-
-var (
-	_Set = wire.NewSet(
-		// github.com/go-zing/gozz-doc-examples/wire01.StructA
-		wire.Struct(new(StructA), "*"),
-
-		// github.com/go-zing/gozz-doc-examples/wire01.StructB
-		wire.Struct(new(StructB), "*"),
-
-		// github.com/go-zing/gozz-doc-examples/wire01.StructC
-		wire.Bind(new(InterfaceC), new(*StructC)),
-		wire.Struct(new(StructC), "*"),
-
-		// github.com/go-zing/gozz-doc-examples/wire01.Target
-		wire.Struct(new(Target), "*"),
-	)
-)
-```
+<<< @/gozz-doc-examples/wire01/wire_zset.go
 
 File `wire_zinject.go` includes constructor and what set it's specified to use,
 that we should maintain in manually before. And they were generated automatically now.
 
-```go
-// wire01/wire_zinject.go
-package wire01
-
-import (
-	wire "github.com/google/wire"
-)
-
-// github.com/go-zing/gozz-doc-examples/wire01.Target
-func Initialize_Target() (*Target, func(), error) {
-	panic(wire.Build(_Set))
-}
-```
+<<< @/gozz-doc-examples/wire01/wire_zinject.go
 
 At last, we got `wire_gen.go` from `wire`, the DI constructor to provide target we want.
 
-```go
-// wire01/wire_gen.go
-package wire01
-
-func Initialize_Target() (*Target, func(), error) {
-	structA := StructA{}
-	structC := &StructC{
-		StructA: structA,
-	}
-	structB := StructB{
-		InterfaceC: structC,
-	}
-	target := &Target{
-		StructA:    structA,
-		StructB:    structB,
-		InterfaceC: structC,
-	}
-	return target, func() {
-	}, nil
-}
-```
+<<< @/gozz-doc-examples/wire01/wire_gen.go
 
 ### Example-02
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/wire02)
 
-```
-/wire01/
-├── go.mod -> module github.com/go-zing/gozz-doc-examples/wire02
-└── types.go
-```
-
-```go
-// wire02/types.go
-package wire02
-
-// +zz:wire:bind=InterfaceX
-// +zz:wire:bind=InterfaceX2:aop
-type Interface interface {
-	Foo(ctx context.Context, param int) (result int, err error)
-	Bar(ctx context.Context, param int) (result int, err error)
-}
-
-type InterfaceX Interface
-type InterfaceX2 Interface
-
-// +zz:wire:inject=/
-type Target struct {
-	Interface
-	InterfaceX
-	InterfaceX2
-}
-
-// +zz:wire:bind=Interface
-type Implement struct{}
-
-func (Implement) Foo(ctx context.Context, param int) (result int, err error) {
-	return
-}
-
-func (Implement) Bar(ctx context.Context, param int) (result int, err error) {
-	return
-}
-```
+<<< @/gozz-doc-examples/wire02/types.go
 
 In this example
 
@@ -321,24 +193,7 @@ In this example
 
 Execute `gozz run -p "wire" ./`, and focus on `wire_gen.go`.
 
-```go
-// wire02/wire_gen.go
-package wire02
-
-func Initialize_Target() (*Target, func(), error) {
-	implement := &Implement{}
-	wire02_impl_aop_InterfaceX2 := &_impl_aop_InterfaceX2{
-		_aop_InterfaceX2: implement,
-	}
-	target := &Target{
-		Interface:   implement,
-		InterfaceX:  implement,
-		InterfaceX2: wire02_impl_aop_InterfaceX2,
-	}
-	return target, func() {
-	}, nil
-}
-```
+<<< @/gozz-doc-examples/wire02/wire_gen.go{13-20}
 
 We could find out, while implement `Interface` and `InterfaceX`,
 both of them use struct `Implement`,
@@ -346,27 +201,7 @@ but `InterfaceX2` with option `aop` added, was implement from `impl_aop_Interfac
 
 In `wire_zset.go` we could found different `wire` declaration of them.
 
-```go{11-13}
-// wire02/wire_zset.go
-package wire02
-
-var (
-	_Set = wire.NewSet(
-		// github.com/go-zing/gozz-doc-examples/wire02.Implement
-		wire.Bind(new(Interface), new(*Implement)),
-		wire.Struct(new(Implement), "*"),
-
-		// github.com/go-zing/gozz-doc-examples/wire02.Interface
-		wire.Bind(new(InterfaceX), new(Interface)),
-		wire.Bind(new(_aop_InterfaceX2), new(Interface)),
-		wire.Struct(new(_impl_aop_InterfaceX2), "*"),
-		wire.Bind(new(InterfaceX2), new(*_impl_aop_InterfaceX2)),
-
-		// github.com/go-zing/gozz-doc-examples/wire02.Target
-		wire.Struct(new(Target), "*"),
-	)
-)
-```
+<<< @/gozz-doc-examples/wire02/wire_zset.go{19-22}
 
 Focus on the highlight lines.
 
@@ -377,48 +212,7 @@ And `impl_aop_InterfaceX2` take that place of and bind to `InterfaceX2`.
 
 We could found declaration of  `aop_InterfaceX2` and `impl_aop_InterfaceX2` in `wire_zzaop.go`:
 
-```go
-// wire02/wire_zzaop.go
-package wire02
-
-type _aop_interceptor interface {
-	Intercept(v interface{}, name string, params, results []interface{}) (func(), bool)
-}
-
-// InterfaceX2
-type (
-	_aop_InterfaceX2      InterfaceX2
-	_impl_aop_InterfaceX2 struct{ _aop_InterfaceX2 }
-)
-
-func (i _impl_aop_InterfaceX2) Foo(p0 context.Context, p1 int) (r0 int, r1 error) {
-	if t, x := i._aop_InterfaceX2.(_aop_interceptor); x {
-		if up, ok := t.Intercept(i._aop_InterfaceX2, "Foo",
-			[]interface{}{&p0, &p1},
-			[]interface{}{&r0, &r1},
-		); up != nil {
-			defer up()
-		} else if !ok {
-			return
-		}
-	}
-	return i._aop_InterfaceX2.Foo(p0, p1)
-}
-
-func (i _impl_aop_InterfaceX2) Bar(p0 context.Context, p1 int) (r0 int, r1 error) {
-	if t, x := i._aop_InterfaceX2.(_aop_interceptor); x {
-		if up, ok := t.Intercept(i._aop_InterfaceX2, "Bar",
-			[]interface{}{&p0, &p1},
-			[]interface{}{&r0, &r1},
-		); up != nil {
-			defer up()
-		} else if !ok {
-			return
-		}
-	}
-	return i._aop_InterfaceX2.Bar(p0, p1)
-}
-```
+<<< @/gozz-doc-examples/wire02/wire_zzaop.go{15-16}
 
 Struct `_impl_aop_InterfaceX2` was made of  `Interface` and implement `_aop_InterfaceX2`.
 
@@ -451,107 +245,10 @@ This Example show complex cases：
 - Inject struct fields as providers.
 - Group sets by option `set`.
 
-```go
-// wire03/types.go
-package wire03
-
-import (
-	"bytes"
-	"database/sql"
-	"io"
-)
-
-// provide value and interface value
-// +zz:wire:bind=io.Writer:aop
-// +zz:wire
-var Buffer = &bytes.Buffer{}
-
-// provide referenced type
-// +zz:wire
-type NullString nullString
-
-type nullString sql.NullString
-
-// use provider function to provide referenced type alias
-// +zz:wire
-type String = string
-
-func ProvideString() String {
-	return ""
-}
-
-// provide value from implicit type
-// +zz:wire
-var Bool = false
-
-// +zz:wire:inject=/
-type Target struct {
-	Buffer     *bytes.Buffer
-	Writer     io.Writer
-	NullString NullString
-}
-
-// mock set injector
-// +zz:wire:inject=/:set=mock
-type mockString sql.NullString
-
-// mock set string
-// provide type from function
-// +zz:wire:set=mock
-func MockString() String {
-	return "mock"
-}
-
-// mock set struct type provide fields
-// +zz:wire:set=mock:field=*
-type MockConfig struct{ Bool bool }
-
-// mock set value
-// +zz:wire:set=mock
-var mock = MockConfig{Bool: true}
-```
+<<< @/gozz-doc-examples/wire03/types.go
 
 Execute `gozz run -p "wire" ./`, and focus on `wire_zset.go`.
 
-```go
-// wire03/wire_zset.go
-package wire03
-
-var (
-	_Set = wire.NewSet(
-		// github.com/go-zing/gozz-doc-examples/wire03.Buffer
-		wire.InterfaceValue(new(_aop_io_Writer), Buffer),
-		wire.Struct(new(_impl_aop_io_Writer), "*"),
-		wire.Bind(new(io.Writer), new(*_impl_aop_io_Writer)),
-		wire.Value(Buffer),
-
-		// github.com/go-zing/gozz-doc-examples/wire03.NullString
-		wire.Struct(new(NullString), "*"),
-
-		// github.com/go-zing/gozz-doc-examples/wire03.String
-		ProvideString,
-
-		// github.com/go-zing/gozz-doc-examples/wire03.Bool
-		wire.Value(Bool),
-
-		// github.com/go-zing/gozz-doc-examples/wire03.Target
-		wire.Struct(new(Target), "*"),
-	)
-
-	_mockSet = wire.NewSet(
-		// github.com/go-zing/gozz-doc-examples/wire03.mockString
-		wire.Struct(new(mockString), "*"),
-
-		// github.com/go-zing/gozz-doc-examples/wire03.MockString
-		MockString,
-
-		// github.com/go-zing/gozz-doc-examples/wire03.MockConfig
-		wire.FieldsOf(new(MockConfig), "Bool"),
-
-		// github.com/go-zing/gozz-doc-examples/wire03.mock
-		wire.Value(mock),
-	)
-)
-```
+<<< @/gozz-doc-examples/wire03/wire_zset.go
 
 We could satisfy most of the needs using `+zz:wire` and options `bind` `inject` only.

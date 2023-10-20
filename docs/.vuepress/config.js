@@ -27,6 +27,7 @@ function getNavSidebar(lang, home, guide, story, plugin) {
                 {
                     title: guide,
                     collapsable: false,
+                    sidebar: 'auto',
                     children: [
                         '',
                         'getting-started',
@@ -77,10 +78,12 @@ module.exports = {
         smoothScroll: true,
         locales: {
             '/': {
+                lang: 'en-US',
                 label: 'English',
                 ...getNavSidebar('/', 'Home', 'Guide', 'Story', 'Plugins'),
             },
             '/zh/': {
+                lang: 'zh-CN',
                 label: '简体中文',
                 selectText: '选择语言',
                 ariaLabel: '选择语言',
