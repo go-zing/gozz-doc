@@ -5,8 +5,8 @@ Rather than `Gozz` provides these built-in plugins,
 Actually in order to integrate these plugins,
 we develop the toolkits named `Gozz`.
 
-- [Wire](wire.md) Automated dependency injection and AOP proxy。
-- [Api](api.md) Generate API routes based on `interface`。
+- [Wire](wire.md) Autowire DI and AOP proxy。
+- [Api](api.md) Generate API routing and invoker based on `interface`。
 - [Impl](impl.md) Sync `interface` and `implement`。
 - [Doc](doc.md) Generate runtime documentation based on comments。
 - [Tag](tag.md) Manage structure field tags in templating。

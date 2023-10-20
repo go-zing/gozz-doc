@@ -103,13 +103,13 @@ gozz install [--output/-o] [--filepath/-f] [repository]
 例：
 
 ```shell
-gozz install https://github.com/go-zing/gozz-plugins -f ./contrib/sqlite -o sqlite.so
+gozz install https://github.com/go-zing/gozz-plugins -f ./ormdrivers/mysql -o sqlite.so
 ```
 
 则会下载远程项目，在项目内进行插件编译
 
 ```
-go build --buildmode=plugin -o sqlite.so ./contrib/sqlite
+go build --buildmode=plugin -o sqlite.so ./ormdrivers/mysql
 ```
 
 #### 使用该指令成功安装外部插件需要满足以下前提：
@@ -222,8 +222,10 @@ type T interface{}
 
 `+zz:plugin:addr=localhost:8080` -> `+zz:plugin:addr=localhost\:8080`
 
-转义后，解析器在分隔注解参数时会先将 `\:` 替换为 `\u003A`，
-在分隔后再将子串转义替换成 `:` 。
+:::warning 转义原理
+解析器在分隔注解参数时会先将 `\:` 替换为 `\u003A`，
+在分隔后再将子串转义替换成 `:`。
+:::
 
 ### 声明对象
 
@@ -434,10 +436,12 @@ type API interface{}
 
 ### 生成模版
 
-对于覆盖式模版生成代码，生成代码文件前会检查该目录是否存在已有的 `${filename}.impl` 文件。
+对于覆盖式模版生成代码，生成代码文件前会检查该目录是否存在已有的 `${filename}.tmpl` 文件。
 
 若有，则会直接读取该模版文件作为生成模版。
 
-否则，将会使用插件内建的默认模版文本，并输出为 `${filename}.impl` 模版文件在生成代码同目录。
+否则，将会使用插件内建的默认模版文本，并输出为 `${filename}.tmpl` 模版文件在生成代码同目录。
 
-
+:::tip
+若要重置模版文件，请删除已存在的 `.tmpl` 模版文件，再重新进行生成默认模版。
+:::

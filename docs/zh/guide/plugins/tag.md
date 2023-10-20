@@ -49,7 +49,7 @@ type T struct {
 
 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag01)
 
-<<< @/gozz-doc-examples/tag01/types.pre.go
+<<< @/gozz-doc-examples/tag01/.types.pre.go
 
 当前没有定义标签。使用注解指定：字段名 `snake_case` 格式的 `json` `bson` 标签。
 
@@ -65,7 +65,7 @@ type T struct {
 
 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag02)
 
-<<< @/gozz-doc-examples/tag02/types.pre.go
+<<< @/gozz-doc-examples/tag02/.types.pre.go
 
 当前已有定义 `json` 标签。使用注解指定：字段名 `camel` 格式的 `json` `bson` 标签。
 
@@ -79,7 +79,7 @@ type T struct {
 
 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag03)
 
-<<< @/gozz-doc-examples/tag03/types.pre.go
+<<< @/gozz-doc-examples/tag03/.types.pre.go
 
 当前没有定义标签。使用 `Decl` 注解为多个类型指定：字段名 `snake_case` 格式的 `json` `bson` 标签。
 
@@ -93,7 +93,7 @@ type T struct {
 
 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag04)
 
-<<< @/gozz-doc-examples/tag04/types.pre.go
+<<< @/gozz-doc-examples/tag04/.types.pre.go
 
 对 [示例三](./tag.md#示例三) 中进行部分结构体和字段的定制化调整
 
@@ -107,7 +107,7 @@ type T struct {
 
 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/tag05)
 
-<<< @/gozz-doc-examples/tag05/types.pre.go
+<<< @/gozz-doc-examples/tag05/.types.pre.go
 
 该例子包含了大部分常见的复杂类型以及结构体内嵌场景
 

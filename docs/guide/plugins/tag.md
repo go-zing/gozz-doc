@@ -50,7 +50,7 @@ Example: <span v-pre> `+zz:tag:json,form,bson,sql:{{ snake .FieldName }}` </span
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag01)
 
-<<< @/gozz-doc-examples/tag01/types.pre.go
+<<< @/gozz-doc-examples/tag01/.types.pre.go
 
 Use annotation to specify `json` `bson` in snake case `FieldName`
 
@@ -66,7 +66,7 @@ New tags would follow letter order by key.
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag02)
 
-<<< @/gozz-doc-examples/tag02/types.pre.go
+<<< @/gozz-doc-examples/tag02/.types.pre.go
 
 This struct has exist `json` tag, use annotation to specify camel case `json` `bson`.
 
@@ -80,7 +80,7 @@ All `json` tags were updated as `camelCase` and `bson` tags were generated.
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag03)
 
-<<< @/gozz-doc-examples/tag03/types.pre.go
+<<< @/gozz-doc-examples/tag03/.types.pre.go
 
 These struct do not have any tags.
 Use `Decl` scope annotation to specify snake case `json` `bson`.
@@ -95,7 +95,7 @@ Tags `bson` `json` were generated in desired format.
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag04)
 
-<<< @/gozz-doc-examples/tag04/types.pre.go
+<<< @/gozz-doc-examples/tag04/.types.pre.go
 
 This example have a little different from [Example-03](tag.md#example-03) about some struct and field.
 
@@ -109,7 +109,7 @@ The specify struct and fields were updated as desired.
 
 [Example Project](https://github.com/go-zing/gozz-doc-examples/tree/main/tag05)
 
-<<< @/gozz-doc-examples/tag05/types.pre.go
+<<< @/gozz-doc-examples/tag05/.types.pre.go
 
 This example shows most common complex types and struct embed.
 

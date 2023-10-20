@@ -10,17 +10,17 @@
   caches and so one core functional dependencies.
   It also provides tools on handing codes and files for plugins.
 
-`Gozz` a series of built-in plug-ins,
+`Gozz` provides a series of [built-in plugins](plugins),
 dedicated to providing tool-based solutions for some of the technical needs,
-that have been summarized and accumulated in the past:
+that have been summarized and accumulated in the past.
 
-- Guide and optimize system dependency architecture design,
-  improve project quality and maintainability,
-  and improve team project collaboration efficiency
-- Quickly build, integrate and iterate APIs and output documents,
-  to reduce the cost of continuous changes and multiple distributions
-- Improve observability and reduce change complexity through flexible aspect injection design,
-  reducing developer workload and disturbance perception
+Also you can explore more external plugins in [gozz-plugins](https://github.com/go-zing/gozz-plugins).
+
+:::tip Style
+`Gozz` emphasizes progressive idempotent equation generation,
+and provide stable automated code iteration integration through consistent commands and configurations to fulfill
+requirements continuous changing.
+:::
 
 ## Vision
 
@@ -70,9 +70,11 @@ Then, using `Gozz` well requires a certain amount of pre-knowledge:
 <br>
 
 
-If you have experience using `JAVA Spring`, congratulations, you can have certain cognitive advantages.
+::: tip
+If you have experience using `JAVA Spring`, you can have certain cognitive advantages.
 
-`Gozz` learned some important design ideas of `JAVA Spring`, but it is by no means a poor imitation.
+`Gozz` learned some important design ideas of `JAVA Spring`, but **it is by no means a poor imitation.**
+:::
 
 ### Team
 

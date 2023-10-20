@@ -69,7 +69,7 @@ Example: `+zz:impl:./impls:wire:aop`
 
 We got `ReadCloserImpl` in `impl01/implements/impl.go`. But contains only `Read`.
 
-<<< @/gozz-doc-examples/impl01/implements/impl.pre.go
+<<< @/gozz-doc-examples/impl01/implements/.impl.pre.go
 
 Execute `gozz run -p "impl" ./ `.
 
@@ -122,7 +122,7 @@ Also `Impl` type and methods were generated in `./implements/impl.go`.
 
 File `./implements/impl.go` exists, and contains type `ReadCloserImpl` and method `Read`.
 
-<<< @/gozz-doc-examples/impl03/implements/impl.pre.go
+<<< @/gozz-doc-examples/impl03/implements/.impl.pre.go
 
 Because we had specified type name `type=*Impl`, it would not have any effects to type `ReadCloserImpl`.
 
@@ -147,7 +147,7 @@ using pointer receiver and annotations with option `wire` `aop`.
 
 File `./implements/read.go` exists, contains type `Impl` and its method `Read`.
 
-<<< @/gozz-doc-examples/impl04/implements/read.pre.go
+<<< @/gozz-doc-examples/impl04/implements/.read.pre.go
 
 Execute `gozz run -p "impl" ./`,
 

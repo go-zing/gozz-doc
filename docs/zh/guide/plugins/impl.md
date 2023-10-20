@@ -64,7 +64,7 @@
 
 在 `impl01/implements/impl.go` 中有 `ReadCloserImpl` 的定义，但只有 `Read` 方法
 
-<<< @/gozz-doc-examples/impl01/implements/impl.pre.go
+<<< @/gozz-doc-examples/impl01/implements/.impl.pre.go
 
 在项目内执行
 
@@ -118,7 +118,7 @@ gozz run -p "impl" ./
 
 `./implements/impl.go` 文件存在，且存在名为 `ReadCloserImpl` 的类型，有 `Read` 方法。
 
-<<< @/gozz-doc-examples/impl03/implements/impl.pre.go
+<<< @/gozz-doc-examples/impl03/implements/.impl.pre.go
 
 但我们指定 `type=*Impl`，因此 `ReadCloserImpl` 不会受到任何影响。
 
@@ -145,7 +145,7 @@ gozz run -p "impl" ./
 
 `./implements/read.go` 文件存在，且存在名为 `Impl` 的类型，有 `Read` 方法。
 
-<<< @/gozz-doc-examples/impl04/implements/read.pre.go
+<<< @/gozz-doc-examples/impl04/implements/.read.pre.go
 
 执行 `gozz run -p "impl" ./`
 

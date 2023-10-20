@@ -115,13 +115,13 @@ If it was specified, build plugins with this relative filepath from repository r
 Example:
 
 ```bash
-gozz install https://github.com/go-zing/gozz-plugins -f ./contrib/sqlite -o sqlite.so
+gozz install https://github.com/go-zing/gozz-plugins -f ./ormdrivers/mysql -o sqlite.so
 ```
 
 `Gozz` would download this remote repo and build it with command:
 
 ```
-go build --buildmode=plugin -o sqlite.so ./contrib/sqlite
+go build --buildmode=plugin -o sqlite.so ./ormdrivers/mysql
 ```
 
 #### Precondition for install plugins
@@ -241,8 +241,9 @@ Example:
 
 `+zz:plugin:addr=localhost:8080` -> `+zz:plugin:addr=localhost\:8080`
 
-While parsing annotations,
-Parses replace `\:` with `\u003A` before annotation split, and replace `\u003A` with `:` as last.
+:::warning Escape principle
+Parser replace `\:` with `\u003A` before annotation separating, and replace `\u003A` with `:` as last.
+:::
 
 ### Declaration Object
 
@@ -322,7 +323,7 @@ type T interface{}
 
 How to handle repeat annotations is based on plugin implement and usage.
 
-## Some Conventions
+## Conventions
 
 ### about filepath and filename
 
@@ -460,3 +461,8 @@ This example would get filepath `/go/src/project/types/zzgen.api.go`
 For most of the code generation, we would check whether exist file named `${filename}.impl` in directory.
 
 If it exists, it would be used as generate template. Else, a builtin template with this name would be generated.
+
+:::tip
+To reset template, please delete existed `.tmpl` file and regenerate builtin template.
+:::
+
