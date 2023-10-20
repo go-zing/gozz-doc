@@ -14,7 +14,13 @@
 dedicated to providing tool-based solutions for some of the technical needs,
 that have been summarized and accumulated in the past.
 
-Also you can explore more external plugins in [gozz-plugins](https://github.com/go-zing/gozz-plugins).
+[gozz-doc-examples](https://github.com/go-zing/gozz-doc-examples) contains examples for all builtin plugins,
+[Plugins](plugins) would provide comparative reading.
+
+Also, you can explore more external plugins in [gozz-plugins](https://github.com/go-zing/gozz-plugins).
+These externals were based on [Golang .so plugin](https://pkg.go.dev/plugin),
+and we provide command tool to [install plugin](getting-started.md#gozz-install) automatically.
+So developers could do expand development easily.
 
 :::tip Style
 `Gozz` emphasizes progressive idempotent equation generation,

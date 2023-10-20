@@ -9,7 +9,12 @@
 
 `Gozz` 包含一系列[内置插件](plugins)，致力于提供部分以往总结沉淀的技术性需求的工具化解决方案。
 
+[gozz-doc-examples](https://github.com/go-zing/gozz-doc-examples) 项目中包含了所有内置插件的基础示例，
+[插件](plugins)部分提供了对照阅读。
+
 同时我们还提供了可根据需求自行选择的[外部插件](https://github.com/go-zing/gozz-plugins)。
+这些插件基于 [Golang .so plugin](https://pkg.go.dev/plugin) 机制运行，
+`Gozz` 提供了自动化插件安装[指令](getting-started.md#gozz-install)，用户可以自由地进行二次开发和接入。
 
 :::tip 风格
 `Gozz` 强调可递进的幂等式生成，在用户项目需求不断变更的过程中，可以通过一致的命令和配置提供稳定的自动化代码迭代集成。
