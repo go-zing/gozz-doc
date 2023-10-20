@@ -19,7 +19,6 @@ features:
 
 ## 功能快览
 
-
 ### 示例一
 
 这里有一个非常常见的服务接口和结构体定义文件 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/overview01)
@@ -67,7 +66,7 @@ features:
 
 <<<@/gozz-doc-examples/overview02/.types.raw.go
 
-给它添加上一些注解，说明构造和依赖关系
+给它添加上一些注解，大概说明用作构造依赖和或依赖关系：
 
 <<<@/gozz-doc-examples/overview02/.types.pre.go{14,39,58,64,76,91,97}
 
@@ -77,7 +76,6 @@ features:
 
 并且在 `wire_zzaop.go` 中生成了为 `ServiceHandler` 接口提供类型安全静态AOP调用代理
 
-
 <<<@/gozz-doc-examples/overview02/wire_zzaop.go{15,16}
 
-### [点击这里开始来一起探索更多 →](guide)
+### [点击这里开始探索更多 →](guide)
