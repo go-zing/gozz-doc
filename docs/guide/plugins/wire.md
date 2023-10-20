@@ -22,7 +22,7 @@ All objects.
 
 #### `bind`
 
-Bind annotated type with specify interface.
+Bind annotated type with specify interface, if used on function type, bind with first return type.
 
 Example:`+zz:wire:bind=io.ReadCloser`
 
