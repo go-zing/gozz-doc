@@ -24,10 +24,6 @@
 
 示例：`+zz:wire:bind=io.ReadCloser`
 
-若对象为类型，即使用 `wire.Bind(new(InterfaceType), new(T))`
-
-若对象为值，即使用 `wire.InterfaceValue(new(InterfaceType), Value)`
-
 #### `aop`
 
 当对象已经使用了 `bind` 时，为绑定的接口创建接口调用代理，并替换绑定。
