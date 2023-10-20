@@ -29,7 +29,7 @@ features:
 
 <<<@/gozz-doc-examples/overview01/.types.pre.go{10-12,16,19,22,25,28,32,33,36,42}
 
-运行指令 `gozz run -p "doc" -p "api" -p "impl" -p "tag" ./`
+运行指令 `gozz run -p "doc" -p "api:prefix=book" -p "impl" -p "tag" ./`
 
 意思是使用这些插件进行分析并处理
 

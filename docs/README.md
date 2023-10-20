@@ -31,7 +31,7 @@ Add some annotations in code's comments, the syntax be like `+zz:plugin_name:plu
 
 <<<@/gozz-doc-examples/overview01/.types.pre.go{10-12,16,19,22,25,28,32,33,36,42}
 
-Execute `gozz run -p "doc" -p "api" -p "impl" -p "tag" ./` ,
+Execute `gozz run -p "doc" -p "api:prefix=book" -p "impl" -p "tag" ./`,
 
 meaning that to analysis these plugin's name annotations and allow them to do something.
 
