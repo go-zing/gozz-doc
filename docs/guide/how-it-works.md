@@ -31,7 +31,7 @@ In `Golang AST`, we can consider most of the codes blocks below `package` as `De
 
 `Decl` has two types: `GenDecl` (generic declaration) and `FuncDecl` (function declaration).
 
-We could simply consider most of the declarations except `func` were `GenDecl`.
+Except for `func`, most of the declarations are `GenDecl`.
 
 Example:
 
@@ -75,7 +75,7 @@ func G() {}
 
 ```
 
-Except of `FuncDecl`, codes object in `GenDecl` blocks would be called `Spec`,
+Codes object in `GenDecl` blocks would be called `Spec`,
 with types `TypeSpec / ValueSpec / ImportSpec`.
 
 `Spec` does not contains keywords token,
