@@ -115,13 +115,13 @@ If it was specified, build plugins with this relative filepath from repository r
 Example:
 
 ```bash
-gozz install https://github.com/go-zing/gozz-plugins -f ./ormdrivers/mysql -o sqlite.so
+gozz install https://github.com/go-zing/gozz-plugins -f ./ormdrivers/mysql -o orm-mysql.so
 ```
 
 `Gozz` would download this remote repo and build it with command:
 
 ```
-go build --buildmode=plugin -o sqlite.so ./ormdrivers/mysql
+go build --buildmode=plugin -o orm-mysql.so ./ormdrivers/mysql
 ```
 
 #### Precondition for install plugins

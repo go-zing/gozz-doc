@@ -103,13 +103,13 @@ gozz install [--output/-o] [--filepath/-f] [repository]
 例：
 
 ```shell
-gozz install https://github.com/go-zing/gozz-plugins -f ./ormdrivers/mysql -o sqlite.so
+gozz install https://github.com/go-zing/gozz-plugins -f ./ormdrivers/mysql -o orm-mysql.so
 ```
 
 则会下载远程项目，在项目内进行插件编译
 
 ```
-go build --buildmode=plugin -o sqlite.so ./ormdrivers/mysql
+go build --buildmode=plugin -o orm-mysql.so ./ormdrivers/mysql
 ```
 
 #### 使用该指令成功安装外部插件需要满足以下前提：
