@@ -31,7 +31,7 @@ In `Golang AST`, we can consider most of the codes blocks below `package` as `De
 
 `Decl` has two types: `GenDecl` (generic declaration) and `FuncDecl` (function declaration).
 
-We could simply consider codes declarations except `func` are `GenDecl`.
+We could simply consider most of the declarations except `func` were `GenDecl`.
 
 Example:
 
