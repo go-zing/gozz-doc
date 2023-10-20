@@ -4,7 +4,7 @@ export default ({router}) => {
             const h = decodeURIComponent(window.location.hash.substring(1))
             if (h) {
                 setTimeout(() => {
-                    document.getElementById(h)?.scrollIntoView()
+                    document.getElementById(h)?.getElementsByClassName("header-anchor")[0]?.click()
                 }, 200)
             }
         })
