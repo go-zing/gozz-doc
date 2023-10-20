@@ -1,6 +1,6 @@
 # Wire
 
-Provide automatic DI and static AOP proxy generate.
+Provide autowire DI and static AOP proxy generate.
 
 The DI core implement was based on [wire](https://github.com/google/wire).
 
