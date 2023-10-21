@@ -1,4 +1,4 @@
-# Plugins
+# Builtin Plugins
 
 `Gozz` provides a series of awesome builtin plugins.
 Rather than `Gozz` provides these built-in plugins,

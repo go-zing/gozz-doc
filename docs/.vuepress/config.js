@@ -36,6 +36,7 @@ function getNavSidebar(lang, home, guide, story, plugin) {
                             title: plugin,
                             path: lang + "guide/plugins/",
                             collapsable: false,
+                            sidebarDepth: 0,
                             children: getPlugins(lang),
                         },
                     ]
@@ -80,7 +81,7 @@ module.exports = {
             '/': {
                 lang: 'en-US',
                 label: 'English',
-                ...getNavSidebar('/', 'Home', 'Guide', 'Story', 'Plugins'),
+                ...getNavSidebar('/', 'Home', 'Guide', 'Story', 'Builtin Plugins'),
             },
             '/zh/': {
                 lang: 'zh-CN',
@@ -89,7 +90,7 @@ module.exports = {
                 ariaLabel: '选择语言',
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
-                ...getNavSidebar('/zh/', '首页', '指南', '前世今生', '插件'),
+                ...getNavSidebar('/zh/', '首页', '指南', '前世今生', '内置插件'),
             }
         },
         displayAllHeaders: true,
