@@ -2,7 +2,7 @@
 
 `Gozz` was made from two parts：
 
-- [gozz](https://github.com/go-zing/gozz) is CLI for the project.
+- [gozz](https://github.com/go-zing/gozz) is CLI (Command-Line Interface) for the project.
   It manages the runtime of process,
   parses commands and invokes plugins or extension plugins.
 - [gozz-core](https://github.com/go-zing/gozz-core) provides core library,
