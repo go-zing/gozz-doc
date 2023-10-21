@@ -13,7 +13,7 @@
 [插件](plugins)部分提供了对照阅读。
 
 同时我们还提供了可根据需求自行选择的[外部插件](https://github.com/go-zing/gozz-plugins)。
-这些插件基于 [Golang .so plugin](https://pkg.go.dev/plugin) 机制运行，
+这些插件基于 [Golang plugin](https://pkg.go.dev/plugin) 机制运行，
 `Gozz` 提供了自动化插件安装[指令](getting-started.md#gozz-install)，用户可以自由地进行二次开发和接入。
 
 :::tip 风格

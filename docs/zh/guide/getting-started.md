@@ -22,6 +22,10 @@ gozz [--GLOBAL-FLAGS] [COMMAND] [--COMMAND-FLAGS] [ARGS]
 
 使用者可以通过指定环境变量 `GOZZ_PLUGINS_DIR` 来变更默认的插件安装目录。
 
+:::tip 项目环境
+请确保使用的项目运作在 [go modules](https://go.dev/blog/using-go-modules) 模式
+:::
+
 ## 指令
 
 `Gozz` 支持以下指令：

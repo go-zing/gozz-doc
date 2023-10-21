@@ -23,6 +23,10 @@ exception raised during these default plugins loading would be ignored.
 
 Use env `GOZZ_PLUGINS_DIR` to specify the default plugins install directory.
 
+:::tip Project Environment
+Ensure your project is in [go modules](https://go.dev/blog/using-go-modules) mode.
+:::
+
 ## Command
 
 `Gozz` supports commands as follows:

@@ -18,7 +18,7 @@ that have been summarized and accumulated in the past.
 [Plugins](plugins) would provide comparative reading.
 
 Also, you can explore more external plugins in [gozz-plugins](https://github.com/go-zing/gozz-plugins).
-These externals were based on [Golang .so plugin](https://pkg.go.dev/plugin),
+These externals were based on [Golang plugin](https://pkg.go.dev/plugin),
 and we provide command tool to [install plugin](getting-started.md#gozz-install) automatically.
 So developers could do expand development easily.
 
