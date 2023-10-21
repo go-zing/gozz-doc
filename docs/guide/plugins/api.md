@@ -28,7 +28,7 @@ type T interface {
 
 Example:
 
-```go
+```go{3,5}
 package x
 
 // +zz:api:./:prefix=book:public
@@ -46,7 +46,7 @@ Specify generate filename.
 
 Example:
 
-```go
+```go{3}
 package x
 
 // +zz:api:./
@@ -61,7 +61,7 @@ would be main property in `API Routing Map`
 
 Example:
 
-```go
+```go{5}
 package x
 
 // +zz:api:./
@@ -78,7 +78,7 @@ They would be collect into `API Routing Map`'s field `options` as a `map[string]
 
 options on `interface` would try override `field` options：
 
-```go
+```go{3}
 package x
 
 // +zz:api:./:prefix=book:role=read
@@ -96,7 +96,7 @@ type BookService interface {
 
 is equal to:
 
-```go
+```go{5,7,9,11}
 package x
 
 // +zz:api:./
