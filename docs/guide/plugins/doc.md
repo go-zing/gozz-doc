@@ -2,6 +2,14 @@
 
 Generates comments mapping table for annotated object, as well as fields comments.
 
+In common development we maintain docs and codes comments, but in some cases,
+they should be same, it causes another problem is that what we had worked in code comments,
+we should have it done once again in docs.
+
+So this is why this plugin were designed,
+it could parse our comments in structure and could be used in Golang runtime.
+So we could develop toolkits to do some secondary generate from them.
+
 ## Usage
 
 ### Annotation
