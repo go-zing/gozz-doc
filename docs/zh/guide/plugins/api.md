@@ -49,7 +49,7 @@ type BookService interface {
 
 示例：
 
-```go
+```go{3}
 package x
 
 // +zz:api:./
@@ -58,17 +58,13 @@ type T interface{}
 
 ### 用于 `interface` 方法 的 必填参数
 
-#### `method`
-
-会作为 `API路由表` 中的一级属性
-
 #### `resource`
 
 会作为 `API路由表` 中的一级属性
 
 示例：
 
-```go
+```go{5}
 package x
 
 // +zz:api:./
@@ -84,7 +80,7 @@ type T interface {
 
 `interface` 对象的可选参数 会尝试覆盖到 接口方法上。例：
 
-```go
+```go{3}
 package x
 
 // +zz:api:./:prefix=book:role=read
@@ -102,7 +98,7 @@ type BookService interface {
 
 等价于
 
-```go
+```go{5,7,9,11}
 package x
 
 // +zz:api:./
