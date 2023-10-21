@@ -152,7 +152,7 @@ Exception raised during these plugins load would print error and exit process.
 Annotations are comments that stick with object, and match syntax as follows:
 
 ```go
-// +zz:[PLUGIN]:[ARGS]:[OPTIONS]
+// +zz:[PLUGIN][:ARGS][:OPTIONS]
 type T interface{}
 ```
 

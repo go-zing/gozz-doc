@@ -6,7 +6,7 @@ Generates comments mapping table for annotated object, as well as fields comment
 
 ### Annotation
 
-`+zz:doc:[...options]`
+`+zz:doc[:options...]`
 
 ### Annotation Target
 

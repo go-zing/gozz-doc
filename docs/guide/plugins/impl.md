@@ -9,7 +9,7 @@ Exist methods signature would be synced, and missing methods would be appended i
 
 ### Annotation
 
-`+zz:impl:[filename]:[...options]`
+`+zz:impl:[filename][:options...]`
 
 ### Annotation Target
 

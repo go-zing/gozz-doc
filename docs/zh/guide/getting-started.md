@@ -141,7 +141,7 @@ gozz -x plugin.so run -p "plugin" ./
 以**注释**形式紧贴**代码声明对象**
 
 ```go
-// +zz:[PLUGIN]:[ARGS]:[OPTIONS]
+// +zz:[PLUGIN][:ARGS][:OPTIONS]
 type T interface{}
 ```
 

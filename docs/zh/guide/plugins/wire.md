@@ -10,7 +10,7 @@
 
 ### 注解
 
-`+zz:wire:[...options]`
+`+zz:wire[:options...]`
 
 ### 注解对象
 

@@ -12,7 +12,7 @@ could be much more simply and easier.
 
 ### Annotation
 
-`+zz:wire:[...options]`
+`+zz:wire[:options...]`
 
 ### Annotation Target
 

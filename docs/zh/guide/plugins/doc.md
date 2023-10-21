@@ -6,7 +6,7 @@
 
 ### 注解
 
-`+zz:doc:[...options]`
+`+zz:doc[:options...]`
 
 ### 注解对象
 

@@ -6,7 +6,7 @@
 
 ### 注解
 
-`+zz:orm:[schema]:[...options]`
+`+zz:orm:[schema][:options...]`
 
 ### 注解对象
 

@@ -8,7 +8,7 @@
 
 ### 注解
 
-`+zz:impl:[filename]:[...options]`
+`+zz:impl:[filename][:options...]`
 
 ### 注解对象
 

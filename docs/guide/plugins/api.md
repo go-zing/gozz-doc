@@ -12,9 +12,9 @@ Add annotations on `interface` and method fields
 ```go
 package x
 
-// +zz:api:[filename]:[...options]
+// +zz:api:[filename][:options...]
 type T interface {
-	// +zz:api:[resource]:[...options]
+	// +zz:api:[resource][:options...]
 	Method(param Param) (result Result, err error)
 
 	// method without annotations would be ignored

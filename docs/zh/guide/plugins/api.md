@@ -11,9 +11,9 @@
 ```go
 package x
 
-// +zz:api:[filename]:[...options]
+// +zz:api:[filename][:options...]
 type T interface {
-	// +zz:api:[resource]:[...options]
+	// +zz:api:[resource][:options...]
 	Method(param Param) (result Result, err error)
 
 	// 没有注解的方法会被忽略

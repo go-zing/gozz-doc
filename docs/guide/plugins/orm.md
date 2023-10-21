@@ -7,7 +7,7 @@ loads `schema` info for generating `ORM` struct and codes.
 
 ### Annotation
 
-`+zz:orm:[schema]:[...options]`
+`+zz:orm:[schema][:options...]`
 
 ### Exact Arguments
 
