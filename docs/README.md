@@ -27,7 +27,7 @@ There is a common service interface and entity definition file.
 
 <<<@/gozz-doc-examples/overview01/.types.raw.go
 
-Add some annotations in code's comments, the syntax be like `+zz:plugin_name:plugin_args`。
+Add some annotations in code's comments, the syntax be like `+zz:plugin_name:plugin_args`.
 
 <<<@/gozz-doc-examples/overview01/.types.pre.go{10-12,16,19,22,25,28,32,33,36,42}
 

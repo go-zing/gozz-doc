@@ -77,7 +77,7 @@ It would get constructor: `func Initialize_T(context.Context) (T, func(), error)
 If `set` was specified, object would be collected into independent `wire.NewSet` named `_${set}Set`,
 or use default global set named `_Set`.
 
-- You could use `!` prefix to do flexibly grouping, just like `go build -tags`。
+- You could use `!` prefix to do flexibly grouping, just like `go build -tags`.
 
 Example:`+zz:wire:set=!mock` / `+zz:wire:set=mock,unittest`
 
@@ -187,8 +187,8 @@ At last, we got `wire_gen.go` from `wire`, the DI constructor to provide target 
 
 In this example
 
-- We provided struct `Implement` to bind with `Interface`。
-- And `Interface` was bind with `InterfaceX` and `InterfaceX2`, but `InterfaceX2` uses option `aop`。
+- We provided struct `Implement` to bind with `Interface`.
+- And `Interface` was bind with `InterfaceX` and `InterfaceX2`, but `InterfaceX2` uses option `aop`.
 - The inject target was `Target`, depends on `Interface`,`InterfaceX`,`InterfaceX2`.
 
 Execute `gozz run -p "wire" ./`, and focus on `wire_gen.go`.

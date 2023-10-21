@@ -129,7 +129,7 @@ go build --buildmode=plugin -o orm-mysql.so ./ormdrivers/mysql
 - Version must be match between `gozz` built from and environment.
 - Plugin Repo `gozz-core` must be adapted with gozz CLI.
 - Others factors effect compatibility of `go/plugin`.
-  checkout: [Understand Go Plugin](https://tonybai.com/2021/07/19/understand-go-plugin/)。
+  checkout: [Understand Go Plugin](https://tonybai.com/2021/07/19/understand-go-plugin/).
 
 ### Global Flags
 

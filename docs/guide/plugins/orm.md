@@ -35,7 +35,7 @@ This `driver` is not `sql.Driver`,
 but it is the interface for plugin loading different kind of database schema.
 External extension interface could be loaded from `.so`.
 
-default: `mysql`。
+default: `mysql`.
 
 Example: `+zz:orm:schema:driver=sqlite`
 
