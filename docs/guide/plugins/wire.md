@@ -244,6 +244,7 @@ This Example show complex cases：
 - Inject provider function.
 - Inject struct fields as providers.
 - Group sets by option `set`.
+- Additional set from `wire.NewSet`
 
 <<< @/gozz-doc-examples/wire03/types.go
 

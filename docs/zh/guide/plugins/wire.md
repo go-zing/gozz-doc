@@ -234,6 +234,7 @@ var Buff = &bytes.Buffer{}
 - 使用指定函数提供注入类型
 - 使用结构体字段值进行注入
 - 使用 `set` 对注入进行分组
+- 使用额外的原生 `wire.NewSet`
 
 <<< @/gozz-doc-examples/wire03/types.go
 
