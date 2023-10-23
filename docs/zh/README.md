@@ -78,4 +78,15 @@ features:
 
 <<<@/gozz-doc-examples/overview02/wire_zzaop.go{15,16}
 
+使用 [gozz-kit](https://github.com/go-zing/gozz-kit) 中 `ztree` 对实例化结构体进行运行时分析，可以生成如下的对象结构图：
+
+<div align=center>
+
+<a target="_blank" href="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview02/structure.svg">
+<img src="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview02/structure.svg" alt="structure"/>
+</a>
+
+</div>
+
+
 ### [点击这里开始探索更多 →](guide)
