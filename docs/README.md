@@ -71,17 +71,22 @@ different type of layers, configs and interfaces definition.
 
 <<<@/gozz-doc-examples/overview02/.types.raw.go
 
-Add some annotations to describe whats to wired and how they should be bind.
+Add some annotations to describe what were used to wired and how they should be bind.
 
-<<<@/gozz-doc-examples/overview02/.types.pre.go{14,39,58,64,76,91,97}
+<<<@/gozz-doc-examples/overview02/types.go{17,42,61,67,75,95,110,116}
 
 The complete injector constructor `wire_gen.go` were generated.
 
-<<<@/gozz-doc-examples/overview02/wire_gen.go{29-31,34}
+<<<@/gozz-doc-examples/overview02/wire_gen.go{31-33,36}
 
 And `wire_zzaop.go` generates static type-safe AOP proxy for interface `ServiceHandler`.
 
 <<<@/gozz-doc-examples/overview02/wire_zzaop.go{15,16}
 
-
 ### [Just Click Me to Start Explore →](guide)
+
+``` graphviz
+  digraph {
+    A -> B -> C, D
+  }
+```

@@ -68,11 +68,11 @@ features:
 
 给它添加上一些注解，大概说明用作构造依赖和或依赖关系：
 
-<<<@/gozz-doc-examples/overview02/.types.pre.go{14,39,58,64,76,91,97}
+<<<@/gozz-doc-examples/overview02/types.go{17,42,61,67,75,95,110,116}
 
 完整的依赖构造代码 `wire_gen.go` 被自动化生成
 
-<<<@/gozz-doc-examples/overview02/wire_gen.go{29-31,34}
+<<<@/gozz-doc-examples/overview02/wire_gen.go{31-33,36}
 
 并且在 `wire_zzaop.go` 中生成了为 `ServiceHandler` 接口提供类型安全静态AOP调用代理
 

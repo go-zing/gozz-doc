@@ -65,6 +65,7 @@ module.exports = {
     plugins: [
         ['vuepress-plugin-smooth-scroll', true],
         ['@vuepress/back-to-top', true],
+        ['graphviz', true],
     ],
     markdown: {
         lineNumbers: false
