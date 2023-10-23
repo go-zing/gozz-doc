@@ -84,9 +84,3 @@ And `wire_zzaop.go` generates static type-safe AOP proxy for interface `ServiceH
 <<<@/gozz-doc-examples/overview02/wire_zzaop.go{15,16}
 
 ### [Just Click Me to Start Explore →](guide)
-
-``` graphviz
-  digraph {
-    A -> B -> C, D
-  }
-```
