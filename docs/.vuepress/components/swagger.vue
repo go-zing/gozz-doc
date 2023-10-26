@@ -11,11 +11,6 @@ import {load} from './load'
 export default {
     name: "swagger",
     props: ['src'],
-    data() {
-        return {
-            image: ""
-        }
-    },
     mounted() {
         load('https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui-bundle.js', () => {
             SwaggerUIBundle({
