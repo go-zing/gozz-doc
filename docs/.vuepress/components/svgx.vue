@@ -11,7 +11,7 @@ export default {
             image: ""
         }
     },
-    mounted() {
+    created() {
         let req = new XMLHttpRequest();
         req.open('GET', this.src, true);
         req.send()
