@@ -62,6 +62,13 @@ There are also templates generated in directory, modify them to do any customize
 
 :::
 
+And then before we do api routes setup, wo could also use `zzgen.api.go` and `zzgen.doc.go` to generate `OpenApi`.
+
+Look at the example below:
+
+<swagger src="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview01/swagger.json">
+</swagger>
+
 ## Example-02
 
 This example display a common web project construct,

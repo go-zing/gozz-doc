@@ -49,7 +49,15 @@ function getNavSidebar(lang, home, guide, story, plugin) {
 module.exports = {
     head: [
         ['link', {rel: 'icon', href: '/favicon.ico'}],
-        // ['script', {type: 'text/javascript', src: 'https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js'}],
+        ['link', {
+            async: true, rel: 'stylesheet',
+            href: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui.css',
+        }],
+        ['script', {
+            async: true,
+            type: 'text/javascript',
+            src: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui-bundle.js'
+        }],
     ],
     title: 'GOZZ',
     base: "/gozz/",
