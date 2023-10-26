@@ -50,7 +50,7 @@ module.exports = {
     head: [
         ['link', {rel: 'icon', href: '/favicon.ico'}],
         // ['script', {type: 'text/javascript', src: 'https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js'}],
-        ['script', {type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.js'}],
+        ['script', {type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'}],
     ],
     title: 'GOZZ',
     base: "/gozz/",
