@@ -12,9 +12,14 @@ export default {
         }
     },
     mounted() {
-        axios.get(this.src).then(({data}) => {
-            this.image = data
-        })
+        let req = new XMLHttpRequest();
+        req.open('GET', this.src, true);
+        req.send()
+        req.onreadystatechange = () => {
+            if (req.readyState === 4 && req.status === 200) {
+                this.image = req.responseText;
+            }
+        };
     }
 }
 </script>
