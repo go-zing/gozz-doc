@@ -86,12 +86,7 @@ And `wire_zzaop.go` generates static type-safe AOP proxy for interface `ServiceH
 Use [gozz-kit](https://github.com/go-zing/gozz-kit) tool `ztree` to do runtime analysis for initialized object,
 we could generate a structure graph:
 
-<div align=center>
-
-<a target="_blank" href="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview02/structure.svg">
-<img src="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview02/structure.svg" alt="structure"/>
-</a>
-
-</div>
+<svgx src="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview02/structure.svg">
+</svgx>
 
 ### [Just Click Me to Start Explore →](guide)
