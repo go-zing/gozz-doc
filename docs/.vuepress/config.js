@@ -58,6 +58,11 @@ module.exports = {
             type: 'text/javascript',
             src: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui-bundle.js'
         }],
+        ['script', {
+            async: true,
+            type: 'text/javascript',
+            src: '/axios.js'
+        }],
     ],
     title: 'GOZZ',
     base: "/gozz/",
