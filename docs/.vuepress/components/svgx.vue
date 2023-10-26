@@ -1,5 +1,5 @@
 <template>
-    <div align="center" style="max-width: 100%;overflow: scroll" v-html="image"/>
+    <div v-if="image" align="center" style="max-width: 100%;overflow: scroll" v-html="image"/>
 </template>
 
 <script>
