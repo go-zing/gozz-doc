@@ -54,14 +54,6 @@ module.exports = {
             rel: 'stylesheet',
             href: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui.css',
         }],
-        // ['script', {
-        //     type: 'text/javascript',
-        //     src: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui-bundle.js'
-        // }],
-        ['script', {
-            type: 'text/javascript',
-            src: '/axios.js'
-        }],
     ],
     title: 'GOZZ',
     base: "/gozz/",

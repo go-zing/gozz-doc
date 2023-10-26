@@ -3,6 +3,13 @@ export function load(src, callback) {
         return
     }
     let head = document.getElementsByTagName('head')[0];
+    for (let node of head.childNodes) {
+        if (node.src === src) {
+            callback()
+            return
+        }
+    }
+    // load script
     let script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = src;

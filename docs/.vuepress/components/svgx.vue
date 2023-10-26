@@ -14,7 +14,7 @@ export default {
         }
     },
     mounted() {
-        load('/axios.js', () => {
+        load('https://unpkg.com/axios@1.5.1/dist/axios.min.js', () => {
             axios.get(this.src).then(({data}) => {
                 this.image = data;
             })
