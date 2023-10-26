@@ -60,6 +60,13 @@ features:
 
 :::
 
+在进行Web框架路由绑定之前，我们就可以使用 `zzgen.api.go` 和 `zzgen.doc.go` 的信息去直接生成 `OpenApi` 文档。
+
+可以参考以下的例子:
+
+<swagger src="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview01/swagger.json">
+</swagger>
+
 ## 示例二
 
 这个示例展示了一个Web项目的基本组成层级、各层的接口依赖以及依赖配置 [示例项目](https://github.com/go-zing/gozz-doc-examples/tree/main/overview02)
@@ -83,6 +90,5 @@ features:
 
 <svgx src="https://raw.githubusercontent.com/go-zing/gozz-doc-examples/main/overview02/structure.svg">
 </svgx>
-
 
 ### [点击这里开始探索更多 →](guide)
