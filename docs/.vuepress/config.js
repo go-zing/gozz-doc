@@ -50,13 +50,14 @@ module.exports = {
     head: [
         ['link', {rel: 'icon', href: '/favicon.ico'}],
         ['link', {
+            async: true,
             rel: 'stylesheet',
             href: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui.css',
         }],
-        ['script', {
-            type: 'text/javascript',
-            src: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui-bundle.js'
-        }],
+        // ['script', {
+        //     type: 'text/javascript',
+        //     src: 'https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui-bundle.js'
+        // }],
         ['script', {
             type: 'text/javascript',
             src: '/axios.js'

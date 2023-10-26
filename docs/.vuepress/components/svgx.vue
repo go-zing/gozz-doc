@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import {load} from "./load";
+
 export default {
     name: "svgx",
     props: ['src'],
@@ -12,8 +14,10 @@ export default {
         }
     },
     mounted() {
-        axios.get( this.src).then(({data})=>{
-            this.image = data;
+        load('/axios.js', () => {
+            axios.get(this.src).then(({data}) => {
+                this.image = data;
+            })
         })
     }
 }

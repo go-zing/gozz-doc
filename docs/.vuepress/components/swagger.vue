@@ -6,6 +6,8 @@
 
 <script>
 
+import {load} from './load'
+
 export default {
     name: "swagger",
     props: ['src'],
@@ -15,12 +17,12 @@ export default {
         }
     },
     mounted() {
-        SwaggerUIBundle({
-            url: this.src,
-            domNode: this.$refs.swagger,
-            presets: [
-                SwaggerUIBundle.presets.apis,
-            ],
+        load('https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui-bundle.js', () => {
+            SwaggerUIBundle({
+                url: this.src,
+                domNode: this.$refs.swagger,
+                presets: [SwaggerUIBundle.presets.apis],
+            })
         })
     }
 }
