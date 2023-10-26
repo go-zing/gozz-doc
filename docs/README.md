@@ -80,7 +80,7 @@ different type of layers, configs and interfaces definition.
 
 Add some annotations to describe what were used to wired and how they should be bind.
 
-<<<@/gozz-doc-examples/overview02/types.go{17,42,61,67,75,95,110,116}
+<<<@/gozz-doc-examples/overview02/types.go{19,44,63,69,77,97,112,118}
 
 The complete injector constructor `wire_gen.go` were generated.
 
