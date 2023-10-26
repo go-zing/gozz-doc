@@ -29,5 +29,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import url('https://unpkg.com/swagger-ui-dist@5.9.1/swagger-ui.css');
 </style>
