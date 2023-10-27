@@ -50,7 +50,11 @@ module.exports = {
     head: [
         ['meta', {
             name: 'keywords',
-            content: 'Golang,Golang Framework,Golang Tools,Golang Annotation,Golang DI,Dependency Inject,'
+            content: 'Golang,Golang Framework,Golang Tools,Golang Annotation,Golang DI,Dependency Inject,Codegen',
+        }],
+        ['meta', {
+            name: 'google-site-verification',
+            content: 'qq_r8b5FFi1KfleCEm_IBBZptYe13xE1vR3rspYRdRI',
         }],
         ['meta', {name: 'viewport', content: 'width=device-width, initial-scale=1'}],
         ['link', {rel: 'icon', href: '/favicon.ico'}],
