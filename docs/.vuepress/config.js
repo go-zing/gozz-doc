@@ -74,6 +74,7 @@ module.exports = {
     plugins: [
         ['vuepress-plugin-smooth-scroll', true],
         ['@vuepress/plugin-back-to-top', true],
+        ['sitemap', {hostname: 'https://go-zing.github.io'}]
     ],
     markdown: {
         lineNumbers: false
